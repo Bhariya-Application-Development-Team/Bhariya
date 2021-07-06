@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+
+    tools:context=".SignUpActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="serif-monospace"
+        android:textStyle="bold"
+        android:text="Hello!"
+        android:textColor="#0E7ED8"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="serif-monospace"
+        android:text="Sign up to "
+        android:textStyle="bold"
+        android:textColor="#0E7ED8"
+        android:textSize="25sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textStyle="bold"
+        android:fontFamily="serif-monospace"
+        android:text="get started !!!"
+        android:textColor="#0E7ED8"
+        android:textSize="25sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Phone Number"
+            android:textColor="#0E7ED8"
+
+            android:textStyle="bold"
+            ></com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/phonenumber"
+                android:inputType="number"
+             />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Full Name"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"
+            ></com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fullname"
+                android:inputType="text"/>
+
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"
+            android:text="Address"
+            ></com.google.android.material.textview.MaterialTextView>
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/address"
+                android:inputType="text"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"
+            android:layout_marginTop="1dp"
+            android:text="Password"
+            ></com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            app:passwordToggleEnabled="true"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:id="@+id/password"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"
+            android:text="Confirm Password"
+            ></com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+
+            app:passwordToggleEnabled="true"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:id="@+id/confirmpassword"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="#0E7ED8"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:text="Sign Up"
+        ></com.google.android.material.textview.MaterialTextView>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/arrow"
+        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="140dp"
+
+        />
+
+
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Already have an account ? "
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center_horizontal" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/Login_string"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"
+            android:clickable="true"
+
+            android:gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:text="By continuing, you agree to accept our"
+        android:textColor="#0E7ED8"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/terms"
+        android:textColor="#0E7ED8"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:gravity="center_horizontal" />
+
+
+
+
+</LinearLayout>
