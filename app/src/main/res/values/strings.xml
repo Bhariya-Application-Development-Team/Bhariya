@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bhariya</string>
+
+        <string name="Login_string"> <u>Log in here</u></string>
+    <string name="terms"> <u>Privacy Policy &amp; Terms of services </u></string>
+
 </resources>
