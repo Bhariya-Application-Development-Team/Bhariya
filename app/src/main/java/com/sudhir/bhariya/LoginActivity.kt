@@ -2,11 +2,11 @@ package com.sudhir.bhariya
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.sudhir.bhariya.Repository.UserRepository
@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-
 class LoginActivity : AppCompatActivity() {
 
     private val permissions = arrayOf(
@@ -24,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
-    private lateinit var btnLogin: Button
+    private lateinit var btnLogin: ImageView
     private lateinit var etUsername: EditText
     private lateinit var etPassword: EditText
     private lateinit var tvSignup: TextView
@@ -35,17 +34,21 @@ class LoginActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_login)
 
-        etUsername = findViewById(R.id.etUsername)
-        etPassword = findViewById(R.id.etPassword)
-        btnLogin = findViewById(R.id.btnLogin)
+        etUsername = findViewById(R.id.etphonenumber)
+        etPassword = findViewById(R.id.etpassword)
+        btnLogin = findViewById(R.id.btnlogin)
         tvSignup = findViewById(R.id.tvSignup)
-        linearLayout = findViewById(R.id.linearLayout)
         // checkRunTimePermission()
 
         btnLogin.setOnClickListener {
             login()
 
 
+        }
+
+        tvSignup.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
 
 //        tvSignup.setOnClickListener {

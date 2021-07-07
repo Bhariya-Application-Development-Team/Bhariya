@@ -1,5 +1,6 @@
 package com.sudhir.bhariya
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var  submit : ImageView
     private lateinit var addtext : TextInputLayout
     private lateinit var pwd : TextInputLayout
+    private lateinit var login : TextView
     private lateinit var  passcon : TextInputLayout
 
 //    private lateinit var adds : TextView
@@ -46,6 +48,7 @@ class SignUpActivity : AppCompatActivity() {
         submit = findViewById(R.id.register)
 
         addtext = findViewById(R.id.addtext)
+        login = findViewById(R.id.login)
 
         passcon = findViewById(R.id.passcon)
 //        adds = findViewById(R.id.adds)
@@ -65,6 +68,12 @@ class SignUpActivity : AppCompatActivity() {
             validateConfirmPassword(confirmpassword)
             checkPassword(confirmpassword, password)
         }
+
+        login.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

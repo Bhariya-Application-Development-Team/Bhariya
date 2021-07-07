@@ -7,7 +7,7 @@ import com.sudhir.bhariya.Response.LoginResponse
 import com.sudhir.bhariya.ServiceBuilder
 import com.sudhir.bhariya.UserAPI
 import com.sudhir.bhariya.entity.User
-import okhttp3.MultipartBody
+
 
 
 class UserRepository : MyApiRequest(){

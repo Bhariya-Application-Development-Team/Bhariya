@@ -58,7 +58,8 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phonenumber"
+            android:id="@+id/etphonenumber"
+
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:inputType="number" />
@@ -79,7 +80,7 @@
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
+                android:id="@+id/etpassword"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:background="#fff"
@@ -118,6 +119,7 @@
             android:layout_height="70dp"
             android:layout_marginLeft="100dp"
             android:layout_marginTop="10dp"
+            android:id="@+id/btnlogin"
             android:clickable="true"
 
             android:src="@drawable/arrow" />
@@ -143,10 +145,11 @@
 
         <TextView
             android:layout_width="106dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clickable="true"
             android:gravity="center_horizontal"
             android:text="Register here"
+            android:id="@+id/tvSignup"
             android:textAlignment="center"
             android:textColor="#0E7ED8"
 
