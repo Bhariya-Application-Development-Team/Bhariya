@@ -21,18 +21,9 @@ interface UserAPI {
     @FormUrlEncoded
     @POST("user/login/")
     suspend fun checkUser(
-        @Field("username") username :String,
+        @Field("Phonenumber") Phonenumber :String,
         @Field("password") password :String,
 
     ):Response<LoginResponse>
-
-    //for testing ony
-    @FormUrlEncoded
-    @POST("/user/login/")
-    suspend fun checkUsertest(
-        @Field("username") username :String,
-        @Field("password") password :String,
-
-        ):Response<LoginResponse>
 
 }
