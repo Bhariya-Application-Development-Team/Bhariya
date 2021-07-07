@@ -13,6 +13,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
+import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.entity.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var  fullname : EditText
@@ -33,6 +40,13 @@ class SignUpActivity : AppCompatActivity() {
 //    private lateinit var mainpwd : TextView
 //    private lateinit var  nametext :TextView
 //    private lateinit var  ptext : TextView
+
+    private lateinit var phone : String
+    private lateinit var name : String
+    private lateinit var location : String
+    private lateinit var paswd : String
+    private lateinit var cpaswd : String
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,14 +73,18 @@ class SignUpActivity : AppCompatActivity() {
         pwd = findViewById(R.id.pwd)
         submit.setOnClickListener {
 
-            val confirmpassword : String = confirmpass.text.toString()
-            val password : String = password.text.toString()
+            cpaswd = confirmpass.text.toString()
+            paswd = password.text.toString()
             validatePhone()
             validateName()
             validateAddress()
-            validatePassword(password)
-            validateConfirmPassword(confirmpassword)
-            checkPassword(confirmpassword, password)
+            validatePassword(paswd)
+            validateConfirmPassword(cpaswd)
+
+            if(validatePhone() == true && validateAddress() == true && validateName() == true && validateConfirmPassword(cpaswd)==true && validatePassword(paswd)){
+                checkPassword(cpaswd, paswd)
+            }
+
         }
 
         login.setOnClickListener {
@@ -80,7 +98,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private  fun validatePhone(): Boolean{
 
-        val phone : String = phonenumber.text.toString()
+          phone  = phonenumber.text.toString()
 
         if(phone.isEmpty()){
 
@@ -95,7 +113,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun validateName():Boolean{
-        val name : String = fullname.text.toString()
+        name = fullname.text.toString()
         if(name.isEmpty()){
 
             fnametext.setError("Full name field cannot be empty.")
@@ -109,8 +127,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun validateAddress():Boolean{
-        val address : String = address.text.toString()
-        if(address.isEmpty()){
+       location = address.text.toString()
+        if(location.isEmpty()){
 
             addtext.setError("Address field cannot be empty.")
             return false
@@ -181,6 +199,44 @@ class SignUpActivity : AppCompatActivity() {
             alertDialog.setCancelable(false)
             alertDialog.show()
         }
+
+        else{
+            register()
+        }
+    }
+
+    private fun register(){
+        val customer =
+            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val repository = UserRepository()
+                val response = repository.signupUser(customer)
+                if (response.success == true) {
+                    withContext(Dispatchers.Main) {
+                        startActivity(
+                            Intent(
+                                this@SignUpActivity,
+                                LoginActivity::class.java
+                            ))
+
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            "Registered Successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+
+                }
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@SignUpActivity, ex.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+
     }
 
 }

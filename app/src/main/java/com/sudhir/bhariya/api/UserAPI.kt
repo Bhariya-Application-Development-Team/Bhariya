@@ -8,8 +8,8 @@ import retrofit2.http.*
 
 interface UserAPI {
 
-    @POST("/app_insert/")
-    suspend fun SignupUser(
+    @POST("/register/")
+    suspend fun signupUser(
         @Body user: User
     ): Response<LoginResponse>
 
