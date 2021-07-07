@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bhariya</string>
+
+        <string name="Login_string"> <u>Log in here</u></string>
+    <string name="terms"> <u>Privacy Policy &amp; Terms of services </u></string>
+    <string name="dialogTitle">Input Error</string>
+    <string name="dialogMessage">Note: Password &amp; Confirm Password doesn\'t matches.</string>
 </resources>
