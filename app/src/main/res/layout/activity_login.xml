@@ -2,132 +2,158 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/linearLayout"
     android:background="#fff"
-    android:gravity="center"
+    android:paddingTop="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:layout_width="230dp"
-        android:layout_height="146dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_lock" />
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="BHARIYA"
-        android:textColor="@color/black"
-        android:textColorHint="#FFFFFF"
-        android:textSize="30sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUsername"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/ic_person"
-            android:drawableLeft="@drawable/ic_person"
-            android:ems="15"
-            android:hint="Username"
-            android:textSize="15sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/white"
-            android:hint="Password"
-            app:passwordToggleEnabled="true"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableLeft="@drawable/ic_lock"
-            android:inputType="textPassword"
-            android:textSize="15sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <CheckBox
-        android:layout_margin="10dp"
-        android:layout_gravity="left"
-        android:id="@+id/chkRememberMe"
-        android:text="Remember Username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/make_button_rounder"
-        android:text="LOGIN"
-        android:textColor="#FFFFFF" />
+        android:fontFamily="serif-monospace"
+        android:textStyle="bold"
+        android:text="Hello Again!"
+        android:textColor="#0E7ED8"
+        android:textSize="50sp" />
 
     <TextView
-        android:textSize="15sp"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:id="@+id/tvSignup"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No account? Signup Here" />
+
+        android:fontFamily="serif-monospace"
+        android:text="Welcome"
+        android:textStyle="bold"
+        android:textColor="#0E7ED8"
+        android:textSize="25sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textStyle="bold"
+        android:fontFamily="serif-monospace"
+        android:text="back"
+        android:textColor="#0E7ED8"
+        android:textSize="25sp" />
 
     <LinearLayout
-        android:id="@+id/llBottom"
-        android:layout_width="374dp"
-        android:layout_height="37dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="118dp"
-        android:gravity="center_horizontal|bottom">
+        android:layout_width="match_parent"
+        android:layout_height="252dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_instagram"
-            style="ImageButton"
-            android:layout_width="29dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:contentDescription="Instagram"
-            android:src="@drawable/ic_instagram" />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Phone Number"
+            android:textColor="#0E7ED8"
 
-        <ImageView
-            android:id="@+id/iv_twitter_sign"
-            style="ImageButton"
-            android:layout_width="29dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:contentDescription="Twitter"
-            android:src="@drawable/ic_twitter_new" />
+            android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
 
-        <ImageView
-            android:id="@+id/iv_facebook"
-            style="ImageButton"
-            android:layout_width="28dp"
-            android:layout_height="match_parent"
-            android:contentDescription="Facebook"
-            android:src="@drawable/ic_facebook" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:inputType="number" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:text="Password"
+            android:textColor="#0E7ED8"
+            android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="#fff"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="260dp"
+            android:layout_marginTop="20dp"
+            android:text="forgot password"
+            android:textColor="#000000" />
+
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:textColor="#0E7ED8"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:text="Sign In"
+            ></com.google.android.material.textview.MaterialTextView>
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+
+            android:src="@drawable/arrow" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="60dp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Need an account ? "
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:text="Register here"
+            android:textAlignment="center"
+            android:textColor="#0E7ED8"
+
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
 </LinearLayout>
