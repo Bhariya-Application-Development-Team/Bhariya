@@ -6,10 +6,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#fff"
-    android:paddingTop="10dp"
+    android:paddingTop="5dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-
     tools:context=".SignUpActivity">
 
 
@@ -21,127 +20,158 @@
         android:textStyle="bold"
         android:text="Hello!"
         android:textColor="#0E7ED8"
-        android:textSize="50sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:fontFamily="serif-monospace"
         android:text="Sign up to "
         android:textStyle="bold"
         android:textColor="#0E7ED8"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:textStyle="bold"
         android:fontFamily="serif-monospace"
-        android:text="get started !!!"
+        android:text="     get started !!!"
         android:textColor="#0E7ED8"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="vertical">
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:id="@+id/ptext"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="1dp"-->
+<!--            android:text="Phone Number"-->
+<!--            android:textColor="#0E7ED8"-->
+<!--            android:textStyle="bold"-->
+<!--            ></com.google.android.material.textview.MaterialTextView>-->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Phone Number"
-            android:textColor="#0E7ED8"
+            android:layout_width="match_parent"
+            android:id="@+id/pnumtext"
+            android:hint="Phone Number"
+            android:layout_marginTop="15dp"
 
-            android:textStyle="bold"
-            ></com.google.android.material.textview.MaterialTextView>
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
-
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/phonenumber"
                 android:inputType="number"
-             />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/nametext"-->
+<!--            android:text="Full Name"-->
+<!--            android:textColor="#0E7ED8"-->
+<!--            android:textStyle="bold"-->
+<!--            ></com.google.android.material.textview.MaterialTextView>-->
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="Full Name"
-            android:textColor="#0E7ED8"
-            android:textStyle="bold"
-            ></com.google.android.material.textview.MaterialTextView>
+            android:layout_width="match_parent"
+            android:id="@+id/fnametext"
+            android:hint="Full Name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
-
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/fullname"
+
                 android:inputType="text"/>
 
+        </com.google.android.material.textfield.TextInputLayout>
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="#0E7ED8"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/adds"-->
+<!--            android:text="Address"-->
+<!--            ></com.google.android.material.textview.MaterialTextView>-->
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:textColor="#0E7ED8"
-            android:textStyle="bold"
-            android:text="Address"
-            ></com.google.android.material.textview.MaterialTextView>
+            android:layout_width="match_parent"
+            android:id="@+id/addtext"
+            android:hint="Address"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
-
+            >
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/address"
                 android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#0E7ED8"
-            android:textStyle="bold"
-            android:layout_marginTop="1dp"
-            android:text="Password"
-            ></com.google.android.material.textview.MaterialTextView>
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="#0E7ED8"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/mainpwd"-->
+<!--            android:text="Password"-->
+<!--            ></com.google.android.material.textview.MaterialTextView>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="1dp"
+            android:id="@+id/pwd"
+            android:hint="Password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+
             app:passwordToggleEnabled="true"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
                 android:id="@+id/password"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="#0E7ED8"
-            android:textStyle="bold"
-            android:text="Confirm Password"
-            ></com.google.android.material.textview.MaterialTextView>
+<!--        <com.google.android.material.textview.MaterialTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+
+<!--            android:textColor="#0E7ED8"-->
+<!--            android:id="@+id/cpass"-->
+<!--            android:textStyle="bold"-->
+<!--            android:text="Confirm Password"-->
+<!--            ></com.google.android.material.textview.MaterialTextView>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-
+            android:id="@+id/passcon"
+            android:hint="Confirm Password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:passwordToggleEnabled="true"
             >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
                 android:id="@+id/confirmpassword"
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +184,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:textColor="#0E7ED8"
         android:fontFamily="monospace"
         android:textStyle="bold"
@@ -163,11 +193,12 @@
         ></com.google.android.material.textview.MaterialTextView>
 
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/arrow"
         android:clickable="true"
-        android:layout_marginTop="10dp"
+        android:id="@+id/register"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="140dp"
 
         />
@@ -178,7 +209,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:gravity="center_horizontal">
         <TextView
