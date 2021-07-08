@@ -10,48 +10,59 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     tools:context=".LoginActivity">
+<ImageView
+    android:layout_width="180dp"
+    android:layout_height="100dp"
+    android:src="@drawable/logo"
+    android:transitionName="logo_image"
+    android:id="@+id/imagel"
+    />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:id="@+id/hello"
         android:fontFamily="serif-monospace"
         android:textStyle="bold"
-        android:text="Hello Again!"
+        android:text="Hello There!"
+        android:transitionName="logo_text"
         android:textColor="#0E7ED8"
-        android:textSize="50sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:fontFamily="serif-monospace"
-        android:text="Welcome"
+        android:text="Welcome Back"
+        android:id="@+id/welcome"
+        android:transitionName="logo_desc"
         android:textStyle="bold"
         android:textColor="#0E7ED8"
         android:textSize="25sp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
 
-        android:textStyle="bold"
-        android:fontFamily="serif-monospace"
-        android:text="back"
-        android:textColor="#0E7ED8"
-        android:textSize="25sp" />
+<!--        android:textStyle="bold"-->
+<!--        android:fontFamily="serif-monospace"-->
+<!--        android:text="back"-->
+<!--        android:textColor="#0E7ED8"-->
+<!--        android:textSize="25sp" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="252dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
         <com.google.android.material.textfield.TextInputLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/phonenumbertxt"
             android:hint="Phone Number"
-            android:layout_marginTop="15dp"
+            android:transitionName="edit_trans"
+            android:layout_marginTop="5dp"
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
@@ -70,6 +81,7 @@
             android:layout_width="match_parent"
             android:id="@+id/passwordtxt"
             android:hint="Password"
+            android:transitionName="edit_trans"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
             >
@@ -87,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="230dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="5dp"
+
             android:text="forgot password?"
             android:textColor="#000000" />
 
@@ -96,7 +109,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="150dp"
@@ -117,7 +130,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/btnlogin"
             android:clickable="true"
-
+            android:transitionName="btn_trans"
             android:src="@drawable/arrow" />
 
 
@@ -126,7 +139,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:textAlignment="center"
         android:gravity="center_horizontal">
 
@@ -137,6 +150,8 @@
             android:text="Need an account ? "
             android:textAlignment="center"
             android:textColor="#000"
+            android:transitionName="already"
+            android:id="@+id/textothers"
             android:textStyle="bold" />
 
         <TextView
@@ -147,6 +162,7 @@
             android:text="Register here"
             android:id="@+id/tvSignup"
             android:textAlignment="center"
+
             android:textColor="#0E7ED8"
 
             android:textStyle="bold" />

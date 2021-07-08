@@ -10,7 +10,13 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     tools:context=".SignUpActivity">
-
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
+        android:id="@+id/imagel"
+        android:transitionName="logo_image"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,6 +25,8 @@
         android:fontFamily="serif-monospace"
         android:textStyle="bold"
         android:text="Hello!"
+        android:id="@+id/hello"
+        android:transitionName="logo_text"
         android:textColor="#0E7ED8"
         android:textSize="40sp" />
 
@@ -26,22 +34,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="serif-monospace"
-        android:text="Sign up to "
+        android:text="Sign up to get started !!! "
         android:textStyle="bold"
+        android:id="@+id/welcome"
+        android:transitionName="logo_desc"
         android:textColor="#0E7ED8"
-        android:textSize="30sp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:fontFamily="serif-monospace"
-        android:text="     get started !!!"
-        android:textColor="#0E7ED8"
-        android:textSize="30sp" />
+        android:textSize="20sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:orientation="vertical">
 <!--        <com.google.android.material.textview.MaterialTextView-->
 <!--            android:layout_width="match_parent"-->
@@ -58,8 +60,8 @@
             android:layout_width="match_parent"
             android:id="@+id/pnumtext"
             android:hint="Phone Number"
-            android:layout_marginTop="15dp"
-
+            android:layout_marginTop="5dp"
+            android:transitionName="edit_trans"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
             >
@@ -89,6 +91,7 @@
             android:layout_width="match_parent"
             android:id="@+id/fnametext"
             android:hint="Full Name"
+            android:transitionName="edit_trans"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
             >
@@ -114,6 +117,7 @@
             android:layout_width="match_parent"
             android:id="@+id/addtext"
             android:hint="Address"
+            android:transitionName="edit_trans"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
             >
@@ -140,7 +144,7 @@
             android:id="@+id/pwd"
             android:hint="Password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-
+            android:transitionName="edit_trans"
             app:passwordToggleEnabled="true"
             >
 
@@ -165,6 +169,7 @@
             android:layout_width="match_parent"
             android:id="@+id/passcon"
             android:hint="Confirm Password"
+            android:transitionName="edit_trans"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:passwordToggleEnabled="true"
             >
@@ -200,7 +205,7 @@
         android:id="@+id/register"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="140dp"
-
+        android:transitionName="btn_trans"
         />
 
 
@@ -218,6 +223,8 @@
             android:textAlignment="center"
             android:text="Already have an account ? "
             android:textStyle="bold"
+            android:id="@+id/already"
+            android:transitionName="already"
             android:textColor="#000"
             android:gravity="center_horizontal" />
         <TextView
@@ -239,6 +246,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="10dp"
+        android:id="@+id/textothers"
         android:text="By continuing, you agree to accept our"
         android:textColor="#0E7ED8"
         android:gravity="center_horizontal" />

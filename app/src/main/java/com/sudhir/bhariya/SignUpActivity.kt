@@ -1,10 +1,12 @@
 package com.sudhir.bhariya
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Pair
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import android.util.Pair as UtilPair
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var  fullname : EditText
@@ -34,6 +37,10 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var pwd : TextInputLayout
     private lateinit var login : TextView
     private lateinit var  passcon : TextInputLayout
+    private lateinit var image : ImageView
+    private lateinit var textothers : TextView
+    private lateinit var hello : TextView
+    private lateinit var welcome : TextView
 
 //    private lateinit var adds : TextView
 //    private lateinit var cpass : TextView
@@ -60,9 +67,12 @@ class SignUpActivity : AppCompatActivity() {
         fnametext = findViewById(R.id.fnametext)
         confirmpass = findViewById(R.id.confirmpassword)
         submit = findViewById(R.id.register)
-
+        image = findViewById(R.id.imagel)
         addtext = findViewById(R.id.addtext)
+        textothers = findViewById(R.id.textothers)
         login = findViewById(R.id.login)
+        hello = findViewById(R.id.hello)
+        welcome = findViewById(R.id.welcome)
 
         passcon = findViewById(R.id.passcon)
 //        adds = findViewById(R.id.adds)
@@ -89,7 +99,18 @@ class SignUpActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignUpActivity,
+                UtilPair.create(image, "logo_image"),
+                UtilPair.create(phonenumber, "edit_trans"),
+                UtilPair.create(password, "edit_trans"),
+                UtilPair.create(address, "edit_trans"),
+                UtilPair.create(fullname, "edit_trans"),
+                UtilPair.create(submit, "btn_trans"),
+                UtilPair.create(login, "btn_trans"),
+                UtilPair.create(textothers, "logo_text"),
+                UtilPair.create(hello, "logo_text")
+            )
+            startActivity(intent, options.toBundle())
         }
 
     }
@@ -205,6 +226,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun register(){
         val customer =
             User(Phonenumber = phone, Fullname = name, Address = location, password = paswd)
@@ -213,12 +235,27 @@ class SignUpActivity : AppCompatActivity() {
                 val repository = UserRepository()
                 val response = repository.signupUser(customer)
                 if (response.success == true) {
+
                     withContext(Dispatchers.Main) {
+                        val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignUpActivity,
+                            UtilPair.create(image, "logo_image"),
+                            UtilPair.create(phonenumber, "edit_trans"),
+                            UtilPair.create(password, "edit_trans"),
+                            UtilPair.create(address, "edit_trans"),
+                            UtilPair.create(fullname, "edit_trans"),
+                            UtilPair.create(submit, "btn_trans"),
+                            UtilPair.create(login, "btn_trans"),
+                            UtilPair.create(textothers, "already"),
+                            UtilPair.create(hello, "logo_text"),
+                                    UtilPair.create(welcome, "logo_desc")
+
+                        )
                         startActivity(
+
                             Intent(
                                 this@SignUpActivity,
                                 LoginActivity::class.java
-                            ))
+                            ), options.toBundle())
 
                         Toast.makeText(
                             this@SignUpActivity,
