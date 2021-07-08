@@ -1,14 +1,18 @@
 package com.sudhir.bhariya
 
+import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Pair
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 
 class SplashActivity : AppCompatActivity() {
    private lateinit var  topanimation : Animation
@@ -18,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
    private lateinit var slogs : TextView
     var phonenumber = ""
     var password = ""
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -36,10 +41,15 @@ class SplashActivity : AppCompatActivity() {
 
         val secondsDelayed = 1
         if (phonenumber == "" && password == "") {
+
             Handler().postDelayed(Runnable {
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                finish()
-            }, (secondsDelayed * 2000).toLong())
+                val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity,
+                    Pair.create(logo, "logo_image"))
+                startActivity(Intent(this, LoginActivity::class.java),
+                    options.toBundle()
+                )
+                    finish()
+            }, (secondsDelayed * 3000).toLong())
         } else {
             Handler().postDelayed(Runnable {
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))

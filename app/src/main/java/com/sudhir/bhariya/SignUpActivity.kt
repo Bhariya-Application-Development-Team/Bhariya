@@ -58,7 +58,9 @@ class SignUpActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_sign_up)
+
         fullname = findViewById(R.id.fullname)
         phonenumber = findViewById(R.id.phonenumber)
         address = findViewById(R.id.address)

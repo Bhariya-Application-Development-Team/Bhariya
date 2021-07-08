@@ -74,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(LoginActivity@this, SignUpActivity::class.java)
 
           val options :   ActivityOptions  = ActivityOptions.makeSceneTransitionAnimation(LoginActivity@this,
               UtilPair.create(image, "logo_image"),
