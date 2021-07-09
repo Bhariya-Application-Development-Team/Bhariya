@@ -1,11 +1,119 @@
 package com.sudhir.bhariya
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import com.bumptech.glide.Glide
+import com.sudhir.bhariya.Repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileActivity : AppCompatActivity() {
+
+    private lateinit var editprofile: CardView
+    private lateinit var language: CardView
+    private lateinit var userimg: ImageView
+    private lateinit var etfullname: TextView
+    private lateinit var etphonenumber: TextView
+    private lateinit var etaddress: TextView
+    private lateinit var etgender: TextView
+    private lateinit var logout: CardView
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        userimg = findViewById(R.id.userimg)
+        etfullname = findViewById(R.id.etfullname)
+        etphonenumber = findViewById(R.id.etphonenumber)
+        etaddress = findViewById(R.id.etaddress)
+//        etgender = findViewById(R.id.etgender)
+
+        language = findViewById(R.id.language)
+        editprofile = findViewById(R.id.editprofile)
+        logout = findViewById(R.id.logout)
+
+        language.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@ProfileActivity,
+                    SplashActivity::class.java
+                )
+
+            )
+        }
+        editprofile.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@ProfileActivity,
+                    SplashActivity::class.java
+                )
+
+            )
+        }
+        logout.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@ProfileActivity,
+                    LoginActivity::class.java
+                )
+
+            )
+        }
+
+        ProfileDetail();
+
+
+    }
+
+    private fun ProfileDetail() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userRepository = UserRepository()
+                val response = userRepository.viewUser()
+                if (response.success == true) {
+                    var phonenumber = response.phonenumber.toString()
+                    var fullname = response.fullname.toString()
+                    var address = response.address.toString()
+//                    var gender = response.gender.toString()
+
+
+                    var imagePath = ServiceBuilder.loadprofilePath() + response.image.toString()
+                    imagePath = imagePath.replace("\\", "/")
+
+                    withContext(Dispatchers.Main) {
+
+
+                        etphonenumber.text = phonenumber;
+                        etfullname.text = fullname;
+                        etaddress.text = address;
+//                        etgender.text = gender;
+                        Glide.with(this@ProfileActivity)
+                            .load(imagePath)
+                            .fitCenter()
+                            .into(userimg)
+                    }
+
+
+                }
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@ProfileActivity,
+                        "Error : ${ex.toString()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+
     }
 }

@@ -4,6 +4,7 @@ package com.sudhir.bhariya.Repository
 
 import com.sudhir.bhariya.MyApiRequest
 import com.sudhir.bhariya.Response.LoginResponse
+import com.sudhir.bhariya.Response.UserResponse
 import com.sudhir.bhariya.ServiceBuilder
 import com.sudhir.bhariya.UserAPI
 import com.sudhir.bhariya.entity.User
@@ -23,6 +24,12 @@ class UserRepository : MyApiRequest(){
     suspend fun checkUser(phonenumber: String, password: String): LoginResponse {
         return apiRequest {
             userAPI.checkUser(phonenumber, password)
+        }
+    }
+
+    suspend fun  viewUser(): UserResponse {
+        return apiRequest {
+            userAPI.viewUser(ServiceBuilder.token!!)
         }
     }
 
