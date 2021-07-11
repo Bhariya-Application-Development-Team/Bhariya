@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: ImageView
     private lateinit var etphonenumber: EditText
     private lateinit var etpassword: EditText
+    private lateinit var tvForgotpassword : TextView
     private lateinit var image : ImageView
     private lateinit var tvSignup: TextView
     private lateinit var textothers : TextView
@@ -52,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
 
         etphonenumber = findViewById(R.id.etphonenumber)
         etpassword = findViewById(R.id.etpassword)
+        tvForgotpassword = findViewById(R.id.tvForgotpassword)
         btnLogin = findViewById(R.id.btnlogin)
         tvSignup = findViewById(R.id.tvSignup)
         image = findViewById(R.id.imagel)
@@ -68,9 +70,11 @@ class LoginActivity : AppCompatActivity() {
             val etpassword : String = etpassword.text.toString()
             validatePhonenumber()
             validatePassword(etpassword)
+        }
 
-
-
+        tvForgotpassword.setOnClickListener{
+            val intent = Intent(this,ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         tvSignup.setOnClickListener {

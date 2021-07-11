@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "451004747487",
+    "project_id": "bhariya-7db42",
+    "storage_bucket": "bhariya-7db42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451004747487:android:4d6464bd27e6c40621236a",
+        "android_client_info": {
+          "package_name": "com.sudhir.bhariya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451004747487-1k3alrjs4umovat6ccsso8c758200gdp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sudhir.bhariya",
+            "certificate_hash": "fc697269be099f0e212d8d784f81b1b65e09c566"
+          }
+        },
+        {
+          "client_id": "451004747487-itbr9m741teeqv36m2eso7kjkq7454nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC83P_iI4fAAOoggP-xKJtkTNhu8JBWRJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451004747487-itbr9m741teeqv36m2eso7kjkq7454nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
