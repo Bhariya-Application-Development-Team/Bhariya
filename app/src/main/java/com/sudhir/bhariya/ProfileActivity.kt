@@ -79,9 +79,9 @@ class ProfileActivity : AppCompatActivity() {
                 val userRepository = UserRepository()
                 val response = userRepository.viewUser()
                 if (response.success == true) {
-                    var phonenumber = response.phonenumber.toString()
-                    var fullname = response.fullname.toString()
-                    var address = response.address.toString()
+                    var phonenumber = response.PhoneNumber.toString()
+                    var fullname = response.Fullname.toString()
+                    var address = response.Address.toString()
 //                    var gender = response.gender.toString()
 
 
