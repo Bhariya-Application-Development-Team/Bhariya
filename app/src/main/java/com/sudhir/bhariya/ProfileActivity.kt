@@ -73,7 +73,7 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this@ProfileActivity,
-                    ProfileActivity::class.java
+                    ProfileEditActivity::class.java
                 )
 
             )
