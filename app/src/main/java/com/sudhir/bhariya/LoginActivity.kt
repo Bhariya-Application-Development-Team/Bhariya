@@ -167,7 +167,7 @@ class LoginActivity : AppCompatActivity() {
                         Intent(
 
                             this@LoginActivity,
-                            MainActivity::class.java
+                            ProfileActivity::class.java
                         )
                     )
                     finish()

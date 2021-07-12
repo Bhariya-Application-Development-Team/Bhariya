@@ -18,7 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
+
+        <activity android:name=".ProfileActivity"></activity>
+
         <activity android:name=".ForgotPasswordActivity"></activity>
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

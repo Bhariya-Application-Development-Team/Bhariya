@@ -82,6 +82,7 @@
             android:id="@+id/passwordtxt"
             android:hint="Password"
             android:transitionName="edit_trans"
+            app:passwordToggleEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
             >

@@ -5,4 +5,17 @@
     <string name="terms"> <u>Privacy Policy &amp; Terms of services </u></string>
     <string name="dialogTitle">Input Error</string>
     <string name="dialogMessage">Note: Password &amp; Confirm Password doesn\'t matches.</string>
+    <string name="logout">Logout</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="google">Google</string>
+    <string name="male">Male</string>
+    <string name="sankhuwasabha">Sankhuwasabha</string>
+    <string name="address">Address</string>
+    <string name="_9852051425">9852051425</string>
+    <string name="phone_number">Phone number</string>
+    <string name="sabin_simkhada">Sabin Simkhada</string>
+    <string name="verified_name">Verified name</string>
+    <string name="gender">Gender</string>
+    <string name="todo">TODO</string>
+    <string name="language">Language</string>
 </resources>
