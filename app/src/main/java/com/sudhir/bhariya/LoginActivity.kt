@@ -167,9 +167,10 @@ class LoginActivity : AppCompatActivity() {
                         Intent(
 
                             this@LoginActivity,
-                            ProfileActivity::class.java
+                            SharedPreferenceActivity::class.java
+                        ).putExtra("phonenumber", phonenumber)
+                            .putExtra("password", password)
                         )
-                    )
                     finish()
                 } else {
                     withContext(Dispatchers.Main) {
