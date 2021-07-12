@@ -24,7 +24,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
     }
     private fun save(){
-        val sharedPreference = getSharedPreferences("MyPref", MODE_PRIVATE)
+        val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
         val editor = sharedPreference.edit()
         editor.putString("phonenumber",phonenumber)
         editor.putString("password",password)
@@ -32,7 +32,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
         Toast.makeText(this@SharedPreferenceActivity, "Saved Data!", Toast.LENGTH_SHORT).show()
     }
     private fun get(){
-        val sharedPreference = getSharedPreferences("MyPref", MODE_PRIVATE)
+        val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
         phonenumber = sharedPreference.getString("phonenumber", "").toString()
         password = sharedPreference.getString("password", "").toString()
         Toast.makeText(this, "LOGIN SUCESSFUL", Toast.LENGTH_SHORT).show()
