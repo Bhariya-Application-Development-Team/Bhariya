@@ -2,6 +2,7 @@ package com.sudhir.bhariya
 
 
 import com.sudhir.bhariya.Response.LoginResponse
+import com.sudhir.bhariya.Response.UserResponse
 import com.sudhir.bhariya.entity.User
 import retrofit2.Response
 import retrofit2.http.*
@@ -13,10 +14,10 @@ interface UserAPI {
         @Body user: User
     ): Response<LoginResponse>
 
-//    @GET("user/single/")
-//    suspend fun viewUser(
-//        @Header("Authorization") token: String,
-//    ):Response<UserResponse>
+    @GET("user/single/")
+    suspend fun viewUser(
+        @Header("Authorization") token: String,
+    ):Response<UserResponse>
 
     @FormUrlEncoded
     @POST("user/login/")
