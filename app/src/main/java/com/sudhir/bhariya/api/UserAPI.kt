@@ -27,4 +27,11 @@ interface UserAPI {
 
     ):Response<LoginResponse>
 
+    @FormUrlEncoded
+    @PUT("user/password/reset")
+    suspend fun resetPassword(
+        @Field("Phonenumber") Phonenumber :String,
+        @Field("password") password :String,
+    ): Response<LoginResponse>
+
 }

@@ -18,9 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfileEditActivity"></activity>
-        <activity android:name=".SharedPreferenceActivity" />
-        <activity android:name=".ProfileActivity" />
+
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
