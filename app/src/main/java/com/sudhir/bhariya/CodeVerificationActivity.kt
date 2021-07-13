@@ -1,9 +1,13 @@
 package com.sudhir.bhariya
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.google.android.gms.common.api.ApiException
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.safetynet.SafetyNet
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseException
@@ -16,6 +20,10 @@ import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
 class CodeVerificationActivity : AppCompatActivity() {
+    private lateinit var tvNocode : TextView
+    private lateinit var btnContinue : Button
+    private lateinit var etCode : EditText
+    var code = ""
     private var storedVerificationId: String? = ""
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -25,20 +33,71 @@ class CodeVerificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
 
+//        tvNocode = findViewById(R.id.tvNocode)
+
         FirebaseApp.initializeApp(this)
         val firebaseAppCheck = FirebaseAppCheck.getInstance()
         firebaseAppCheck.installAppCheckProviderFactory(
             SafetyNetAppCheckProviderFactory.getInstance())
 
+        SafetyNet.getClient(this)
+            .enableVerifyApps()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result?.isVerifyAppsEnabled == true) {
+                        Log.d("MY_APP_TAG", "The user gave consent to enable the Verify Apps feature.")
+                    } else {
+                        Log.d(
+                            "MY_APP_TAG",
+                            "The user didn't give consent to enable the Verify Apps feature."
+                        )
+                    }
+                } else {
+                    Log.e("MY_APP_TAG", "A general error occurred.")
+                }
+            }
+
+        SafetyNet.getClient(this)
+            .isVerifyAppsEnabled
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result?.isVerifyAppsEnabled == true) {
+                        println("Reached Here")
+                        Log.d("MY_APP_TAG", "The Verify Apps feature is enabled.")
+                    } else {
+                        Log.d("MY_APP_TAG", "The Verify Apps feature is disabled.")
+                    }
+                } else {
+                    Log.e("MY_APP_TAG", "A general error occurred.")
+                }
+            }
+
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                // This callback will be invoked in two si  tuations:
+                // This callback will be invoked in two situations:
                 // 1 - Instant verification. In some cases the phone number can be instantly
                 //     verified without needing to send or enter a verification code.
                 // 2 - Auto-retrieval. On some devices Google Play services can automatically
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
+
+                code = credential.smsCode.toString()
+                print(credential)
+
+                if(code != null){
+                    etCode.setText(code)
+                }
+
+                val intent = Intent(this@CodeVerificationActivity, ChangePasswordActivity::class.java)
+                intent.putExtra("phonenumber", etCode.text.toString())
+                startActivity(intent)
+
+                println("#############################")
+                println("#############################")
+                println("#############################")
+
+
                 Log.d(TAG, "onVerificationCompleted:$credential")
                 signInWithPhoneAuthCredential(credential)
             }
@@ -54,6 +113,11 @@ class CodeVerificationActivity : AppCompatActivity() {
                 } else if (e is FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
                 }
+
+
+                println("#############################")
+                println("############### ERROR ##############")
+                println("#############################")
                 // Show a message and update the UI
             }
 
@@ -70,19 +134,48 @@ class CodeVerificationActivity : AppCompatActivity() {
                 storedVerificationId = verificationId
                 resendToken = token
 
+                println(token)
+                println("##########################")
+                println("##########################")
+                println("######## This is the code ########")
+
                 var phoneNumber: String = ""
 
             }
 
         }
         setContentView(R.layout.activity_code_verification)
+        etCode = findViewById(R.id.etCode)
+        btnContinue = findViewById(R.id.btnContinue)
+
+
         val intent = intent
         var phonenumber = intent.getStringExtra("phonenumber")
         if (phonenumber != null) {
             sendVerificationCodeToUser(phonenumber)
         }
 
+
+//        tvNocode.setOnClickListener {
+//            if (phonenumber != null) {
+//                sendVerificationCodeToUser(phonenumber)
+//            }
+//        }
+
+        btnContinue.setOnClickListener {
+            callbacks
+
+            if(etCode.text.toString() == code) {
+                Toast.makeText(this, "CODE VERIFIED", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this,ChangePasswordActivity::class.java)
+                intent.putExtra("phonenumber",phonenumber)
+                startActivity(intent)
+            }
+            else
+                Toast.makeText(this, "CODE UNVERIFIED", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         // [START verify_with_code]
@@ -133,4 +226,6 @@ class CodeVerificationActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "PhoneAuthActivity"
     }
+
+
 }

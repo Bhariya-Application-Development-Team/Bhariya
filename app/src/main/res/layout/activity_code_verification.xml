@@ -26,66 +26,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="Please enter the 4 digits sent to the Phone Number"
+        android:text="Please enter the 6 digits sent to the Phone Number"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="15dp"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/tvCode2"
-        android:layout_width="46dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="44dp"
+    <EditText
+        android:id="@+id/etCode"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:hint="Enter the Code..."
         android:textAlignment="center"
-        android:textSize="50dp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toEndOf="@+id/tvCode1"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/tvCode3"
-        android:layout_width="46dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center_horizontal"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/tvCode2"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/tvCode1"
-        android:layout_width="46dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center_horizontal"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.128"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/tvCode4"
-        android:layout_width="46dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="44dp"
-        android:gravity="center_horizontal"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvCode3"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
