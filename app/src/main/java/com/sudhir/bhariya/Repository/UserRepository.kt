@@ -27,7 +27,15 @@ class UserRepository : MyApiRequest(){
         }
     }
 
+    suspend fun changePassword(phonenumber: String, password: String): LoginResponse {
+        return apiRequest {
+            userAPI.resetPassword(phonenumber, password)
+        }
+    }
 
+    suspend fun  viewUser(): UserResponse {
+        return apiRequest {
+            userAPI.viewUser(ServiceBuilder.token!!)
         }
     }
 
