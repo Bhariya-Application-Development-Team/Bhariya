@@ -26,7 +26,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var logout: CardView
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -121,7 +120,6 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
         }
-
+    }
 
     }
-}
