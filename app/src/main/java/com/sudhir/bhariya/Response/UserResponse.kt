@@ -5,7 +5,6 @@ data class UserResponse(
     val PhoneNumber : String?= null,
     val Fullname : String?= null,
     val Address : String?= null,
-//    val gender : String?= null,
     val image : String?= null
 
 )

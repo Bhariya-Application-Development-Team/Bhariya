@@ -92,19 +92,16 @@ class ProfileActivity : AppCompatActivity() {
                     var phonenumber = response.PhoneNumber.toString()
                     var fullname = response.Fullname.toString()
                     var address = response.Address.toString()
-//                    var gender = response.gender.toString()
+
 
 
                     var imagePath = ServiceBuilder.loadprofilePath() + response.image.toString()
                     imagePath = imagePath.replace("\\", "/")
 
                     withContext(Dispatchers.Main) {
-
-
                         etphonenumber.text = phonenumber;
                         etfullname.text = fullname;
                         etaddress.text = address;
-//                        etgender.text = gender;
                         Glide.with(this@ProfileActivity)
                             .load(imagePath)
                             .fitCenter()
