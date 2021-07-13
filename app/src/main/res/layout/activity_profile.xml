@@ -78,25 +78,6 @@
             android:text="@string/sankhuwasabha"
             android:textSize="20sp"
             android:textStyle="bold|normal" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gender"
-            android:textSize="10sp"
-            android:textStyle="normal"
-            tools:ignore="SmallSp" />
-
-        <TextView
-            android:id="@+id/etgender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/male"
-            android:textSize="20sp"
-            android:textStyle="bold|normal" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/language"

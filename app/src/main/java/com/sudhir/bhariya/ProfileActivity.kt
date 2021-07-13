@@ -44,25 +44,36 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this@ProfileActivity,
-                    SplashActivity::class.java
-                )
-
-            )
-        }
-        editprofile.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@ProfileActivity,
-                    SplashActivity::class.java
+                    ProfileActivity::class.java
                 )
 
             )
         }
         logout.setOnClickListener {
+            val sharedPreference = getSharedPreferences(
+                "MyPreference",
+                AppCompatActivity.MODE_PRIVATE
+            )
+            val editor = sharedPreference?.edit()
+            if (editor != null) {
+                editor.remove("phonenumber")
+
+                editor.remove("password")
+                editor.commit()
+                startActivity(
+                    Intent(
+                        this@ProfileActivity,
+                        LoginActivity::class.java
+                    )
+
+                )
+            }
+        }
+        editprofile.setOnClickListener {
             startActivity(
                 Intent(
                     this@ProfileActivity,
-                    LoginActivity::class.java
+                    ProfileEditActivity::class.java
                 )
 
             )

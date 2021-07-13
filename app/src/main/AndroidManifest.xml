@@ -18,11 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ProfileActivity"></activity>
-
-        <activity android:name=".ForgotPasswordActivity"></activity>
-
+        <activity android:name=".ProfileEditActivity"></activity>
+        <activity android:name=".SharedPreferenceActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +31,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
