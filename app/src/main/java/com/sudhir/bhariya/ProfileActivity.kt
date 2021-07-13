@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var editprofile: CardView
-    private lateinit var language: CardView
+    private lateinit var driverprofile: CardView
     private lateinit var userimg: ImageView
     private lateinit var etfullname: TextView
     private lateinit var etphonenumber: TextView
@@ -35,11 +35,11 @@ class ProfileActivity : AppCompatActivity() {
         etaddress = findViewById(R.id.etaddress)
 //        etgender = findViewById(R.id.etgender)
 
-        language = findViewById(R.id.language)
+        driverprofile = findViewById(R.id.driverprofile)
         editprofile = findViewById(R.id.editprofile)
         logout = findViewById(R.id.logout)
 
-        language.setOnClickListener {
+        driverprofile.setOnClickListener {
             startActivity(
                 Intent(
                     this@ProfileActivity,
