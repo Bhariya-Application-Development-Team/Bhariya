@@ -11,21 +11,32 @@ class UserTest {
 
 //    Test
 
+
     @Test
     fun checkSignup()= runBlocking {
         userRepository= UserRepository()
-        val response=userRepository.signupUser(User("9813910902","wangchhu","kapan","1234wang"))
+        val response=userRepository.signupUser(User("9863841998","wangchhu","kapan","wangchhu123"))
         val expectResult = true
         val actualResult =response.success
         Assert.assertEquals(expectResult,actualResult)
     }
 
     @Test
-    fun checklogin()= runBlocking {
+    fun loginCheck()= runBlocking {
         userRepository= UserRepository()
-        val response =userRepository.checkUser("9813910902","1234wang")
+        val response =userRepository.checkUser("9863841998","wangchhu123")
         val expectedResult= true
         val actualResult =response.success
+        Assert.assertEquals(expectedResult,actualResult)
+    }
+
+    @Test
+    fun profileTest()= runBlocking {
+        userRepository= UserRepository()
+        val response=User("9863841998","wangchhu","kapan","wangchhu123")
+        ServiceBuilder.token="Bearer"+userRepository.checkUser("9863841998","wangchhu123").token
+        val expectedResult= "9863841998"
+        val actualResult =response.Phonenumber
         Assert.assertEquals(expectedResult,actualResult)
     }
 }
