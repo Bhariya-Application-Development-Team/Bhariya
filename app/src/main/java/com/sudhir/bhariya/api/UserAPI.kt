@@ -30,7 +30,7 @@ interface UserAPI {
     @FormUrlEncoded
     @PUT("user/password/reset")
     suspend fun resetPassword(
-        @Field("Phonenumber") Phonenumber :String,
+        @Field("phonenumber") phonenumber :String,
         @Field("password") password :String,
     ): Response<LoginResponse>
 

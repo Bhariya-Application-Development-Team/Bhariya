@@ -78,48 +78,48 @@ class ProfileActivity : AppCompatActivity() {
             )
         }
 
-        ProfileDetail();
+//        ProfileDetail();
 
 
     }
 
-    private fun ProfileDetail() {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val userRepository = UserRepository()
-                val response = userRepository.viewUser()
-                if (response.success == true) {
-                    var phonenumber = response.PhoneNumber.toString()
-                    var fullname = response.Fullname.toString()
-                    var address = response.Address.toString()
-
-
-
-                    var imagePath = ServiceBuilder.loadprofilePath() + response.image.toString()
-                    imagePath = imagePath.replace("\\", "/")
-
-                    withContext(Dispatchers.Main) {
-                        etphonenumber.text = phonenumber;
-                        etfullname.text = fullname;
-                        etaddress.text = address;
-                        Glide.with(this@ProfileActivity)
-                            .load(imagePath)
-                            .fitCenter()
-                            .into(userimg)
-                    }
-
-
-                }
-            } catch (ex: Exception) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@ProfileActivity,
-                        "Error : ${ex.toString()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
+//    private fun ProfileDetail() {
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                val userRepository = UserRepository()
+//                val response = userRepository.viewUser()
+//                if (response.success == true) {
+//                    var phonenumber = response.PhoneNumber.toString()
+//                    var fullname = response.Fullname.toString()
+//                    var address = response.Address.toString()
+//
+//
+//
+//                    var imagePath = ServiceBuilder.loadprofilePath() + response.image.toString()
+//                    imagePath = imagePath.replace("\\", "/")
+//
+//                    withContext(Dispatchers.Main) {
+//                        etphonenumber.text = phonenumber;
+//                        etfullname.text = fullname;
+//                        etaddress.text = address;
+//                        Glide.with(this@ProfileActivity)
+//                            .load(imagePath)
+//                            .fitCenter()
+//                            .into(userimg)
+//                    }
+//
+//
+//                }
+//            } catch (ex: Exception) {
+//                withContext(Dispatchers.Main) {
+//                    Toast.makeText(
+//                        this@ProfileActivity,
+//                        "Error : ${ex.toString()}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        }
+//    }
 
     }
