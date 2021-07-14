@@ -73,6 +73,8 @@ class ChangePasswordActivity : AppCompatActivity() {
             try {
                 var userRepository = UserRepository()
                 var response = userRepository.changePassword(phonenumber, password)
+                println("##########")
+                println(phonenumber)
 
                 if(response.success==true){
                     val intent = Intent(this@ChangePasswordActivity, LoginActivity::class.java)
