@@ -31,7 +31,7 @@ class UserRepository : MyApiRequest(){
         }
     }
 
-}
+
     suspend fun  viewUser(): UserResponse {
         return apiRequest {
             userAPI.viewUser(ServiceBuilder.token!!)
