@@ -4,6 +4,7 @@ package com.sudhir.bhariya
 import com.sudhir.bhariya.Response.LoginResponse
 import com.sudhir.bhariya.Response.UserResponse
 import com.sudhir.bhariya.entity.User
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -34,14 +35,14 @@ interface UserAPI {
         @Field("password") password :String,
     ): Response<LoginResponse>
 
-    @FormUrlEncoded
+    @Multipart
     @PUT("user/update")
     suspend fun updateUser(
-        @Header("Authorization") token: String,
-        @Field("id") id : String,
-        @Field("Fullname") fullname : String,
-        @Field("Address") address : String,
-        @Field("Phonenumber") phonenumber: String
+        @Part("id") id : String,
+        @Part("Fullname") fullname : String,
+        @Part("Address") address : String,
+        @Part("Phonenumber") phonenumber: String,
+        @Part file: MultipartBody.Part
     ): Response<LoginResponse>
 
 }
