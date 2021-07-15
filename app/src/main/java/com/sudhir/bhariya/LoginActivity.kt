@@ -169,7 +169,6 @@ class LoginActivity : AppCompatActivity() {
                     ServiceBuilder.token = "Bearer ${response.token}"
                     startActivity(
                         Intent(
-
                             this@LoginActivity,
                             SharedPreferenceActivity::class.java
                         ).putExtra("phonenumber", phonenumber)

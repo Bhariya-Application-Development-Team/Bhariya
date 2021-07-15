@@ -59,6 +59,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 editor.remove("password")
                 editor.commit()
+                finish()
                 startActivity(
                     Intent(
                         this@ProfileActivity,
@@ -69,13 +70,12 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
         editprofile.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@ProfileActivity,
-                    ProfileEditActivity::class.java
-                )
+            val intent = Intent(this, ProfileEditActivity::class.java)
+            intent.putExtra("fullname",etfullname.text.toString())
+            intent.putExtra("address",etaddress.text.toString())
+            intent.putExtra("phonenumber",etphonenumber.text.toString())
+            startActivity(intent)
 
-            )
         }
 
         ProfileDetail();
