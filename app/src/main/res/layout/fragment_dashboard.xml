@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragments.DashboardFragment"
     android:background="#ffff"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -44,6 +47,7 @@
         android:fontFamily="@font/caveat_brush"
         android:text="Welcome to the Dashboard"
         android:editable="true"
+        android:textColor="#000"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"/>
     <RelativeLayout
@@ -167,16 +171,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:orientation="vertical">
 
-    <TextView
+        <com.google.android.material.textview.MaterialTextView
         android:id="@+id/New"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:text="Our Latest Trends"
         android:editable="true"
+        android:textColor="#000"
         android:padding="10dp"
+
         android:textSize="18sp"
      />
 
@@ -187,6 +194,106 @@
             android:text="Vehicle"
             android:textStyle="bold"
             app:backgroundTint="#FF0303" />
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselviews"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="4dp"
+            android:fitsSystemWindows="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 
-</LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Invite &amp; Get Discounts "
+        android:textColor="#000"
+        android:padding="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:textSize="18sp"
+        />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:padding="2dp"
+
+            android:src="@drawable/invite"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/getdisc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textStyle="bold"
+            android:text="Invite Friends and Get Discounts On Booking "
+            android:textColor="#020202"
+            android:padding="10dp"
+            android:textSize="15sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/disctext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Share your referall code and get chances to win the heavy discounts while booking the trucks. Copy the code below and share it to your friends"
+                android:justificationMode="inter_word"
+            android:padding="10dp"
+            android:paddingTop="2dp"
+            android:textSize="13sp"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/disctext"
+                android:layout_marginLeft="20dp"
+                android:background="#ffff"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="8dp"
+                >
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Share your Code : XHyt78"
+                    android:textAlignment="center"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_horizontal" />
+
+
+
+
+            </RelativeLayout>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btninvite"
+                android:text="Invite "
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="15dp"
+
+                android:textStyle="bold"
+                app:backgroundTint="#FF0303"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
