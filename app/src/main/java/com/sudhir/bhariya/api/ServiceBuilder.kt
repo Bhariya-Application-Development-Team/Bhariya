@@ -9,7 +9,7 @@ object ServiceBuilder {
         // For Running on Emulator
     "http://10.0.2.2:3000/"
         // For Running on a real Device
-//        "http://192.168.0.102:3000/"
+//        "http://192.168.43.169:3000/"
 
     var token: String? = null
     private  val okHttp = OkHttpClient.Builder()
