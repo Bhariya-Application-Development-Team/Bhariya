@@ -34,4 +34,14 @@ interface UserAPI {
         @Field("password") password :String,
     ): Response<LoginResponse>
 
+    @FormUrlEncoded
+    @PUT("user/update")
+    suspend fun updateUser(
+        @Header("Authorization") token: String,
+        @Field("id") id : String,
+        @Field("Fullname") fullname : String,
+        @Field("Address") address : String,
+        @Field("Phonenumber") phonenumber: String
+    ): Response<LoginResponse>
+
 }

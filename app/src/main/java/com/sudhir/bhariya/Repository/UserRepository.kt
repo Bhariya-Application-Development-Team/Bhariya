@@ -38,4 +38,10 @@ class UserRepository : MyApiRequest(){
         }
     }
 
+    suspend fun updateUser(id : String, fullname : String, address : String, phonenumber : String): LoginResponse{
+        return apiRequest {
+            userAPI.updateUser(ServiceBuilder.token!!,id = id, fullname = fullname, address = address, phonenumber = phonenumber)
+        }
+    }
+
 }

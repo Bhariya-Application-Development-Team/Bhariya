@@ -39,7 +39,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
         startActivity(
             Intent(
-                this@SharedPreferenceActivity, MainActivity::class.java
+                this@SharedPreferenceActivity, ProfileActivity::class.java
             )
         )
 
