@@ -6,7 +6,7 @@ import com.sudhir.bhariya.Response.UserResponse
 import com.sudhir.bhariya.ServiceBuilder
 import com.sudhir.bhariya.UserAPI
 import com.sudhir.bhariya.entity.User
-
+import okhttp3.MultipartBody
 
 
 class UserRepository : MyApiRequest(){
@@ -38,9 +38,9 @@ class UserRepository : MyApiRequest(){
         }
     }
 
-    suspend fun updateUser(id : String, fullname : String, address : String, phonenumber : String): LoginResponse{
+    suspend fun updateUser(id : String, fullname : String, address : String, phonenumber : String, body : MultipartBody.Part): LoginResponse{
         return apiRequest {
-            userAPI.updateUser(ServiceBuilder.token!!,id = id, fullname = fullname, address = address, phonenumber = phonenumber)
+            userAPI.updateUser(id = id, fullname = fullname, address = address, phonenumber = phonenumber,body)
         }
     }
 
