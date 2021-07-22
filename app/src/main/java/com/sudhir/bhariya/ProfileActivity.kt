@@ -43,7 +43,7 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     this@ProfileActivity,
-                    ProfileActivity::class.java
+                    DriverRegistrationActivity::class.java
                 )
 
             )
