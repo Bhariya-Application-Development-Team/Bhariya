@@ -87,7 +87,6 @@ class SettingFragment : Fragment() {
 
         }
 
-<<<<<<< HEAD
         ProfileDetail();
 
 
@@ -134,7 +133,4 @@ class SettingFragment : Fragment() {
         }
     }
 }
-=======
-}
 
->>>>>>> 3367fd8cca1d18a3c972faa519d0c4058b499a00
