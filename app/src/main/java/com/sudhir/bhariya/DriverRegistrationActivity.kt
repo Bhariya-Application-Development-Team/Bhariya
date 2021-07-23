@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.sudhir.bhariya.Repository.DriverRepository
 import com.sudhir.bhariya.Repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
     private var imageUrl3 : String? = null
     private var pointer : Int? = 0
 
+
     private val permissions = arrayOf(
         android.Manifest.permission.CAMERA,
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -51,7 +53,8 @@ class DriverRegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_driver_registration)
-
+        //Using Static Phone Number for Test
+        var phonenumber = "9860059091"
         imagePicker = findViewById(R.id.picker_image1)
         imagePicker2 = findViewById(R.id.picker_image2)
         imagePicker3 = findViewById(R.id.picker_image3)
@@ -103,38 +106,96 @@ class DriverRegistrationActivity : AppCompatActivity() {
             pointer = 3
         }
 
-//        btnSave.setOnClickListener{
-//            if(validation(true)) {
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    try {
-//                        val file = File(imageUrl!!)
-//                        val mimeType = getMimeType(file);
-//                        val reqFile =
-//                            RequestBody.create(MediaType.parse(mimeType!!), file)
-//                        val body =
-//                            MultipartBody.Part.createFormData("image", file.name, reqFile)
-//                        val repository = UserRepository().updateUser(
-//                            fullname = "Test"
-//                        )
-//                        println("##########################")
-//                        println(body.toString())
-//                        val response = repository
-//                        if(response.success==true){
-//                            println("Successfully Updated")
-//                            finish()
-//                            startActivity(Intent(this@DriverRegistrationActivity,ProfileActivity::class.java))
-//
-//                        }
-//                        else{
-//                            println("Update Unsuccessful")
-//                        }
-//                    }
-//                    catch(ex : Exception){
-//                        println(ex)
-//                    }
-//                }
-//            }
-//        }
+        btnSave.setOnClickListener{
+            if(validation()) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val file = File(imageUrl!!)
+                        val mimeType = getMimeType(file);
+                        val reqFile =
+                            RequestBody.create(MediaType.parse(mimeType!!), file)
+                        val body =
+                            MultipartBody.Part.createFormData("image", file.name, reqFile)
+                        val repository = DriverRepository().imageOneUpload(
+                            phonenumber = phonenumber,
+                            body
+                        )
+                        println("##########################")
+                        println(body.toString())
+                        val response = repository
+                        if(response.success==true){
+                            println("Successfully Updated")
+                            finish()
+                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+
+                        }
+                        else{
+                            println("Update Unsuccessful")
+                        }
+                    }
+                    catch(ex : Exception){
+                        println(ex)
+                    }
+
+                    try {
+                        val file = File(imageUrl2!!)
+                        val mimeType = getMimeType(file);
+                        val reqFile =
+                            RequestBody.create(MediaType.parse(mimeType!!), file)
+                        val body =
+                            MultipartBody.Part.createFormData("image", file.name, reqFile)
+                        val repository = DriverRepository().imageTwoUpload(
+                            phonenumber = phonenumber,
+                            body
+                        )
+                        println("##########################")
+                        println(body.toString())
+                        val response = repository
+                        if(response.success==true){
+                            println("Successfully Updated")
+                            finish()
+                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+
+                        }
+                        else{
+                            println("Update Unsuccessful")
+                        }
+                    }
+                    catch(ex : Exception){
+                        println(ex)
+                    }
+
+
+                    try {
+                        val file = File(imageUrl3!!)
+                        val mimeType = getMimeType(file);
+                        val reqFile =
+                            RequestBody.create(MediaType.parse(mimeType!!), file)
+                        val body =
+                            MultipartBody.Part.createFormData("image", file.name, reqFile)
+                        val repository = DriverRepository().imageThreeUpload(
+                            phonenumber = phonenumber,
+                            body
+                        )
+                        println("##########################")
+                        println(body.toString())
+                        val response = repository
+                        if(response.success==true){
+                            println("Successfully Updated")
+                            finish()
+                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+
+                        }
+                        else{
+                            println("Update Unsuccessful")
+                        }
+                    }
+                    catch(ex : Exception){
+                        println(ex)
+                    }
+                }
+            }
+        }
 
     }
 
@@ -277,7 +338,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
         startActivityForResult(cameraIntent, REQUEST_CAMERA_CODE)
     }
 
-    private fun validation(bool : Boolean) : Boolean{
+    private fun validation() : Boolean{
 
         return true
     }
