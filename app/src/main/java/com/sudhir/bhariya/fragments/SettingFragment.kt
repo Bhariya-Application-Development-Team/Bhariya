@@ -133,5 +133,4 @@ class SettingFragment : Fragment() {
         }
     }
 }
-}
 
