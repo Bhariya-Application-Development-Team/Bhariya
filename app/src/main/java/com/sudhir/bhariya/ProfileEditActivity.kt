@@ -17,11 +17,13 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.sudhir.bhariya.Repository.UserRepository
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -48,6 +50,7 @@ class ProfileEditActivity : AppCompatActivity() {
     private var REQUEST_GALLERY_CODE = 0
     private var REQUEST_CAMERA_CODE = 1
     private var imageUrl: String? = null
+    var imagepath : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_edit)
@@ -58,6 +61,15 @@ class ProfileEditActivity : AppCompatActivity() {
         etaddress.setText(intent.getStringExtra("address"))
         etphonenumber.setText(intent.getStringExtra("phonenumber"))
         primary_phone = intent.getStringExtra("phonenumber").toString()
+        imagepath = intent.getStringExtra("imagepath").toString()
+
+        var imagePath = ServiceBuilder.loadprofilePath() + imagepath
+        imagePath = imagePath.replace("\\", "/")
+
+            Glide.with(this@ProfileEditActivity)
+                .load(imagePath)
+                .fitCenter()
+                .into(userImage)
 
 
         userImage.setOnClickListener{
