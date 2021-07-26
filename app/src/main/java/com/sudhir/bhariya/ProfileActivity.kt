@@ -24,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var etaddress: TextView
     private lateinit var etgender: TextView
     private lateinit var logout: CardView
+    var imagepath : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +75,7 @@ class ProfileActivity : AppCompatActivity() {
             intent.putExtra("fullname",etfullname.text.toString())
             intent.putExtra("address",etaddress.text.toString())
             intent.putExtra("phonenumber",etphonenumber.text.toString())
+            intent.putExtra("imagepath",imagepath)
             startActivity(intent)
 
         }
@@ -92,6 +94,7 @@ class ProfileActivity : AppCompatActivity() {
                     var phonenumber = response.PhoneNumber.toString()
                     var fullname = response.Fullname.toString()
                     var address = response.Address.toString()
+                    imagepath = response.image.toString()
 
 
 
