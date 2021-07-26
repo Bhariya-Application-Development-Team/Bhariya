@@ -166,7 +166,7 @@ class CodeVerificationActivity : AppCompatActivity() {
         btnContinue.setOnClickListener {
             callbacks
 
-            if(etCode.text.toString() == code) {
+            if(etCode.text.toString()!= "" && etCode.text.toString() == code) {
                 Toast.makeText(this, "CODE VERIFIED", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,ChangePasswordActivity::class.java)
                 intent.putExtra("phonenumber",phonenumber)
