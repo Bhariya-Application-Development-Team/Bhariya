@@ -6,10 +6,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ServiceBuilder {
     private const val BASE_URL =
-        // For Running on Emulator
+//         For Running on Emulator
     "http://10.0.2.2:3000/"
         // For Running on a real Device
-//        "http://192.168.43.169:3000/"
+//        "http://192.168.0.124:3000/"
 
     var token: String? = null
     private  val okHttp = OkHttpClient.Builder()
