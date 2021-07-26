@@ -41,11 +41,12 @@ class ProfileActivity : AppCompatActivity() {
         logout = findViewById(R.id.logout)
 
         driverprofile.setOnClickListener {
+
             startActivity(
                 Intent(
                     this@ProfileActivity,
                     DriverRegistrationActivity::class.java
-                )
+                ).putExtra("Phonenumber",etphonenumber.text.toString())
 
             )
         }

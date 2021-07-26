@@ -44,4 +44,10 @@ class UserRepository : MyApiRequest(){
         }
     }
 
+    suspend fun updateUserText(id : String, fullname : String, address : String, phonenumber : String): LoginResponse{
+        return apiRequest {
+            userAPI.updateUserText(id = id, fullname = fullname, address = address, phonenumber = phonenumber)
+        }
+    }
+
 }

@@ -45,4 +45,16 @@ interface UserAPI {
         @Part file: MultipartBody.Part
     ): Response<LoginResponse>
 
+    @FormUrlEncoded
+    @PUT("user/updateText")
+    suspend fun updateUserText(
+        @Field("id") id : String,
+        @Field("Fullname") fullname : String,
+        @Field("Address") address : String,
+        @Field("Phonenumber") phonenumber: String,
+    ): Response<LoginResponse>
+
+
+
+
 }

@@ -81,44 +81,84 @@ class ProfileEditActivity : AppCompatActivity() {
             if(validation()) {
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val file = File(imageUrl!!)
-                        val mimeType = getMimeType(file);
-                        val reqFile =
-                            RequestBody.create(MediaType.parse(mimeType!!), file)
-                        val body =
-                            MultipartBody.Part.createFormData("image", file.name, reqFile)
-                        val repository = UserRepository().updateUser(
-                            primary_phone,
-                            etfullname.text.toString(),
-                            etaddress.text.toString(),
-                            etphonenumber.text.toString(),
-                            body
-                        )
-                        println("##########################")
-                        println(body.toString())
-                        val response = repository
-                        if(response.success==true){
-                            println("Successfully Updated")
+                        if (imageUrl != null) {
+                            val file = File(imageUrl!!)
+                            val mimeType = getMimeType(file);
+                            val reqFile =
+                                RequestBody.create(MediaType.parse(mimeType!!), file)
+                            val body =
+                                MultipartBody.Part.createFormData("image", file.name, reqFile)
+                            val repository = UserRepository().updateUser(
+                                primary_phone,
+                                etfullname.text.toString(),
+                                etaddress.text.toString(),
+                                etphonenumber.text.toString(),
+                                body
+                            )
+                            println("##########################")
+                            println(body.toString())
+                            startActivity(
+                                Intent(
+                                    this@ProfileEditActivity,
+                                    ProfileActivity::class.java
+                                )
+                            )
                             finish()
-                            startActivity(Intent(this@ProfileEditActivity,ProfileActivity::class.java))
+                            val response = repository
+                            if (response.success == true) {
+                                println("Successfully Updated")
+
+
+
+                            } else {
+                                val intent = Intent(this@ProfileEditActivity, ProfileActivity::class.java)
+                                finish()
+                                startActivity(intent)
+                            }
+                        }
+                        else {
+                            println("######HELLO####################")
+
+                            val repository = UserRepository().updateUserText(
+                                primary_phone,
+                                etfullname.text.toString(),
+                                etaddress.text.toString(),
+                                etphonenumber.text.toString(),
+                            )
+                            println("##########################")
+                            startActivity(
+                                Intent(
+                                    this@ProfileEditActivity,
+                                    ProfileActivity::class.java
+                                )
+                            )
+                            finish()
+                            val response = repository
+                            if (response.success == true) {
+                                println("Successfully Updated")
+                                startActivity(
+                                    Intent(
+                                        this@ProfileEditActivity,
+                                        ProfileActivity::class.java
+                                    )
+                                )
+                                finish()
+
+                            } else {
+                                println("Update Unsuccessful")
+                            }
 
                         }
-                        else{
-                            println("Update Unsuccessful")
+
+                    }
+                        catch(ex : Exception) {
+                            println(ex)
                         }
                     }
-                    catch(ex : Exception){
-                        println(ex)
-                    }
+
                 }
             }
         }
-
-
-
-
-
-    }
 
     private fun retrieveValue(){
         userImage = findViewById(R.id.userimg)
