@@ -39,4 +39,13 @@ class UserTest {
         val actualResult =response.Phonenumber
         Assert.assertEquals(expectedResult,actualResult)
     }
+
+    @Test
+    fun editprofileTest()= runBlocking {
+        userRepository= UserRepository()
+        val response = userRepository.updateUserText("9821455357","GauravTest","Manipal","9821455350")
+        val expectedResult= true
+        val actualResult = response.success
+        Assert.assertEquals(expectedResult,actualResult)
+    }
 }
