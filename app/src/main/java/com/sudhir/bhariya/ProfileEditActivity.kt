@@ -16,6 +16,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.sudhir.bhariya.Repository.UserRepository
@@ -45,6 +46,7 @@ class ProfileEditActivity : AppCompatActivity() {
     private lateinit var etfullname : EditText
     private lateinit var etphonenumber : EditText
     private lateinit var etaddress : EditText
+    private lateinit var deactive : CardView
     private lateinit var btnSave : Button
     var primary_phone : String = ""
     private var REQUEST_GALLERY_CODE = 0
@@ -54,6 +56,21 @@ class ProfileEditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_edit)
+
+        //deactive account intent
+        deactive = findViewById(R.id.deactive)
+
+        deactive.setOnClickListener {
+
+            startActivity(
+                Intent(
+                    this@ProfileEditActivity,
+                    DeactiveActivity::class.java
+                )
+
+            )
+        }
+
         val intent = intent
 
         retrieveValue()
