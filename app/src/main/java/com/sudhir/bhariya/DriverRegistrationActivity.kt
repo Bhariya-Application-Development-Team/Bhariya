@@ -126,7 +126,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         if(response.success==true){
                             println("Successfully Updated")
                             finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+                            startActivity(Intent(this@DriverRegistrationActivity,Blank_Test::class.java))
 
                         }
                         else{
@@ -154,7 +154,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         if(response.success==true){
                             println("Successfully Updated")
                             finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+                            startActivity(Intent(this@DriverRegistrationActivity,Blank_Test::class.java))
 
                         }
                         else{
@@ -183,7 +183,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         if(response.success==true){
                             println("Successfully Updated")
                             finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+                            startActivity(Intent(this@DriverRegistrationActivity,Blank_Test::class.java))
 
                         }
                         else{
