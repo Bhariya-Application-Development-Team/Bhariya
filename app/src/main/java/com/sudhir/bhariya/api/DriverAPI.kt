@@ -8,7 +8,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.PUT
 import retrofit2.http.Part
 
-interface DriverAPI {
+interface  DriverAPI {
 
     @Multipart
     @PUT("/driver/registration/citizenship")
