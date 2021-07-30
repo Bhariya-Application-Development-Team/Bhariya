@@ -122,16 +122,6 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         )
                         println("##########################")
                         println(body.toString())
-                        val response = repository
-                        if(response.success==true){
-                            println("Successfully Updated")
-                            finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
-
-                        }
-                        else{
-                            println("Update Unsuccessful")
-                        }
                     }
                     catch(ex : Exception){
                         println(ex)
@@ -150,16 +140,6 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         )
                         println("##########################")
                         println(body.toString())
-                        val response = repository
-                        if(response.success==true){
-                            println("Successfully Updated")
-                            finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
-
-                        }
-                        else{
-                            println("Update Unsuccessful")
-                        }
                     }
                     catch(ex : Exception){
                         println(ex)
@@ -183,7 +163,7 @@ class DriverRegistrationActivity : AppCompatActivity() {
                         if(response.success==true){
                             println("Successfully Updated")
                             finish()
-                            startActivity(Intent(this@DriverRegistrationActivity,SignUpActivity::class.java))
+                            startActivity(Intent(this@DriverRegistrationActivity,DriverVerificationActivity::class.java))
 
                         }
                         else{

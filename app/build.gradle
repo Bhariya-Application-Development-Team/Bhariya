@@ -113,6 +113,8 @@ dependencies {
     
     implementation platform('com.google.firebase:firebase-bom:28.3.0')
 
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
     // Declare the dependencies for the Dynamic Links and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
