@@ -24,6 +24,7 @@ class SettingFragment : Fragment() {
 
     private lateinit var editprofile: CardView
     private lateinit var driverprofile: CardView
+    private lateinit var rating: CardView
     private lateinit var userimg: ImageView
     private lateinit var etfullname: TextView
     private lateinit var etphonenumber: TextView
@@ -44,7 +45,17 @@ class SettingFragment : Fragment() {
         driverprofile = view.findViewById(R.id.driverprofile)
         editprofile = view.findViewById(R.id.editprofile)
         logout = view.findViewById(R.id.logout)
+        rating = view.findViewById(R.id.rating)
         // Inflate the layout for this fragment
+        rating.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    RatingActivity::class.java
+                )
+
+            )
+        }
         driverprofile.setOnClickListener {
             startActivity(
                 Intent(
