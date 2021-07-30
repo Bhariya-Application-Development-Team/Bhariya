@@ -20,6 +20,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.fragments.SettingFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -117,7 +118,7 @@ class ProfileEditActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(
                                     this@ProfileEditActivity,
-                                    ProfileActivity::class.java
+                                    SettingFragment::class.java
                                 )
                             )
                             finish()
@@ -128,7 +129,7 @@ class ProfileEditActivity : AppCompatActivity() {
 
 
                             } else {
-                                val intent = Intent(this@ProfileEditActivity, ProfileActivity::class.java)
+                                val intent = Intent(this@ProfileEditActivity, SettingFragment::class.java)
                                 finish()
                                 startActivity(intent)
                             }
@@ -146,7 +147,7 @@ class ProfileEditActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(
                                     this@ProfileEditActivity,
-                                    ProfileActivity::class.java
+                                    SettingFragment::class.java
                                 )
                             )
                             finish()
@@ -156,7 +157,7 @@ class ProfileEditActivity : AppCompatActivity() {
                                 startActivity(
                                     Intent(
                                         this@ProfileEditActivity,
-                                        ProfileActivity::class.java
+                                        SettingFragment::class.java
                                     )
                                 )
                                 finish()
