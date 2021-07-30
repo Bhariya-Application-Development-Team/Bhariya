@@ -108,6 +108,48 @@
             android:layout_height="wrap_content"
             android:text="SAVE"
             android:textSize="20dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/deactive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="6dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="10dp"
+                android:padding="15dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="25dp">
+
+                <TextView
+
+                    android:id="@+id/tvdeactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:text="Deactive Account"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_logout"
+                    app:drawableTint="@color/black" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_next"
+                    app:tint="@color/black"
+                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/todo" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </LinearLayout>
