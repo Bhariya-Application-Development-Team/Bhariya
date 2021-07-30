@@ -49,7 +49,7 @@ class SettingFragment : Fragment() {
             startActivity(
                 Intent(
                     context,
-                    ProfileActivity::class.java
+                    DriverRegistrationActivity::class.java
                 )
 
             )
