@@ -43,8 +43,8 @@ class DashboardFragment : Fragment() {
 
         val carouselView = root.findViewById(R.id.carouselviews) as CarouselView;
 
-            val pop = inflater.inflate(R.layout.custompopup, container, false)
-            carouselView.setImageListener(imageListener);
+        val pop = inflater.inflate(R.layout.custompopup, container, false)
+        carouselView.setImageListener(imageListener);
         carouselView.setPageCount(sampleImages.size);
         miniButton = root.findViewById(R.id.btnMini)
         mediumButton = root.findViewById(R.id.mediumButton)
@@ -52,14 +52,14 @@ class DashboardFragment : Fragment() {
         InviteButton = root.findViewById(R.id.btninvite)
         myDialog = context?.let { Dialog(it) }!!
 
-            miniButton.setOnClickListener{
-                getAttr(pop)
-                typeVehicle.setText("Mini Truck")
-                vehicleImage.setImageResource(R.drawable.truck1)
-                showPopup(pop)
-            }
+        miniButton.setOnClickListener{
+            getAttr(pop)
+            typeVehicle.setText("Mini Truck")
+            vehicleImage.setImageResource(R.drawable.truck1)
+            showPopup(pop)
+        }
 
-            mediumButton.setOnClickListener{
+        mediumButton.setOnClickListener{
             getAttr(pop)
             typeVehicle.setText("Medium Truck")
             vehicleImage.setImageResource(R.drawable.truck3)
@@ -80,7 +80,7 @@ class DashboardFragment : Fragment() {
         InviteButton.setOnClickListener {
 
             createLink();
-    }
+        }
 
         return root
 
@@ -88,8 +88,8 @@ class DashboardFragment : Fragment() {
 
     private fun createLink(){
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
-            link = Uri.parse("www.bhariya.com/")
-            domainUriPrefix = "https://bhariya.page.link"
+            link = Uri.parse("https://www.bhariya.com/")
+            domainUriPrefix = "https://bhariyaapp.page.link"
             // Open links with this app on Android
             androidParameters { }
             // Open links with com.example.ios on iOS
@@ -97,7 +97,7 @@ class DashboardFragment : Fragment() {
         }
 
         val dynamicLinkUri = dynamicLink.uri
-    //click --- link --- google play store --- installed or not ----
+        //click --- link --- google play store --- installed or not ----
 
 //    val shareLinkText : String = "https://bhariya.page.link/?"+
 //            "link=http://www.bhariyaapp.com/"+
@@ -121,7 +121,7 @@ class DashboardFragment : Fragment() {
         }.addOnSuccessListener { (shortLink, flowChartLink) ->
             // You'll need to import com.google.firebase.dynamiclinks.ktx.component1 and
             // com.google.firebase.dynamiclinks.ktx.component2
-                Log.e("main", "Short link = $shortLink")
+            Log.e("main", "Short link = $shortLink")
             // Short link created
 //            processShortLink(shortLink, flowChartLink)
 
@@ -155,7 +155,7 @@ class DashboardFragment : Fragment() {
 
 
     private fun showPopup(view: View){
-            myDialog.setContentView(view)
+        myDialog.setContentView(view)
         myDialog.show()
     }
 

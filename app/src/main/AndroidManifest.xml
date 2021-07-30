@@ -14,15 +14,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DriverVerificationActivity">
-        <activity android:name=".DeactiveActivity"></activity>
-        <activity android:name=".RatingActivity" />
-        <activity android:name=".DriverRegistrationActivity" />
+        <activity android:name=".DriverRegistrationActivity"/>
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
@@ -39,22 +36,18 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data
-                    android:host="bhariya.page.link"
+                    android:host="bhariyaapp.page.link"
                     android:scheme="https"/>
             </intent-filter>
         </activity>
-        <activity android:name=".DriverRegistrationActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".SplashActivity">
-
-        </activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity" />
-        <activity android:name=".ProfileEditActivity"></activity>
-        <activity android:name=".ProfileEditActivity" />
+        <activity android:name=".ProfileEditActivity" >
+
+        </activity>
+
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".CodeVerificationActivity" />
 
