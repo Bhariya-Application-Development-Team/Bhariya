@@ -10,9 +10,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.slidingpanelayout.widget.SlidingPaneLayout
+import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +26,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -28,8 +42,14 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener.Builder.withContext
 import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener.Builder.withContext
 import com.karumi.dexter.listener.single.PermissionListener
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sudhir.bhariya.R
+import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.api.Common
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,19 +65,51 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private lateinit var mMap: GoogleMap
     private lateinit var mapFragment: SupportMapFragment
+    private lateinit var slidingUpPanelLayout : SlidingUpPanelLayout
+    private lateinit var txt_welcome: TextView
+    private lateinit var autocompleteSupportFragment : AutocompleteSupportFragment
 
     //To Use Location
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    //Data Online
+//    private lateinit var onlineRef: DatabaseReference
+//    private lateinit var currentUserRef : DatabaseReference
+//    private lateinit var driversLocationRef: DatabaseReference
+//    private lateinit var geoFire : GeoFire
+//
+//    private val onlineValueEventListener = object : ValueEventListener {
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            if(snapshot.exists())
+//                currentUserRef.onDisconnect().removeValue()
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            Snackbar.make(mapFragment.requireView(), error.message, Snackbar.LENGTH_LONG).show()
+//        }
+
+
+
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onDestroy() {
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+//        geoFire.removeLocation(FirebaseAuth.getInstance().currentUser!!.uid)
+//        onlineRef.removeEventListener(onlineValueEventListener)
         super.onDestroy()
     }
+
+    override fun onResume() {
+        super.onResume()
+//        registerOnlineSystem()
+    }
+//
+//    private fun registerOnlineSystem() {
+//        onlineRef.addValueEventListener(onlineValueEventListener)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,14 +126,53 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_maps, container, false)
         init()
+        initViews(root)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         return root
     }
 
-    @SuppressLint("MissingPermission")
+    private fun initViews(root: View?) {
+        slidingUpPanelLayout = root!!.findViewById(R.id.activity_main) as SlidingUpPanelLayout
+        txt_welcome = root!!.findViewById(R.id.txt_welcome) as  TextView
+        Common.setWelcomeMessage(txt_welcome )
+    }
+
     private fun init() {
+//        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected")
+//        driversLocationRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE)
+//        currentUserRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE).child(
+//            FirebaseAuth.getInstance().currentUser!!.uid
+//        )
+        Places.initialize(requireContext(),getString(R.string.google_maps_key))
+        autocompleteSupportFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
+        Place.Field.ADDRESS,
+        Place.Field.LAT_LNG,
+        Place.Field.NAME))
+        autocompleteSupportFragment.setOnPlaceSelectedListener(object:PlaceSelectionListener{
+            override fun onPlaceSelected(p0: Place) {
+                Snackbar.make(requireView(),"" + p0.latLng!!, Snackbar.LENGTH_LONG).show()
+
+            }
+
+            override fun onError(p0: Status) {
+                Snackbar.make(requireView(),p0.statusMessage, Snackbar.LENGTH_LONG).show()
+            }
+        })
+        var currentUserReference : String = ""
+        CoroutineScope(Dispatchers.IO).launch {
+            val repository = UserRepository()
+            val response = repository.viewUser()
+            if(response.success==true)
+                Snackbar.make(mapFragment.requireView(), response.Fullname.toString(), Snackbar.LENGTH_LONG).show()
+                currentUserReference = response.PhoneNumber.toString()
+        }
+
+//        geoFire = GeoFire(driversLocationRef)
+//
+//        registerOnlineSystem()
         locationRequest = LocationRequest()
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
         locationRequest.setFastestInterval(3000)
@@ -94,6 +185,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                 val newPos = LatLng(p0!!.lastLocation.latitude, p0!!.lastLocation.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 18f))
+
+                //Location Update
+//                geoFire.setLocation(
+//                    FirebaseAuth.getInstance().currentUser!!.uid,
+//                    GeoLocation(p0.lastLocation.latitude,p0.lastLocation.longitude)
+//                ){key:String?, error:DatabaseError? ->
+//                    if(error!=null)
+//                        Snackbar.make(mapFragment.requireView(),error.message,Snackbar.LENGTH_LONG).show()
+//                    else
+//                        Snackbar.make(mapFragment.requireView(),"Online!!!",Snackbar.LENGTH_SHORT).show()
+//                }
+
             }
         }
 

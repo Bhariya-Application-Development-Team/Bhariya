@@ -45,11 +45,7 @@
         <activity android:name=".DriverRegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -65,7 +61,13 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".RatingActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity" />
         <activity android:name=".ProfileEditActivity"></activity>

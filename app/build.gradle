@@ -123,9 +123,17 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
     implementation 'com.karumi:dexter:4.2.0'
 
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
 
+    implementation 'com.firebase:geofire-android:3.0.0'
+
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
 }
 configurations.all {
