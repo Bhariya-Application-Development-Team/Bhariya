@@ -3,6 +3,7 @@ package com.sudhir.bhariya.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
@@ -45,10 +46,13 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sudhir.bhariya.R
 import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.RequestDriverActivity
 import com.sudhir.bhariya.api.Common
+import com.sudhir.bhariya.entity.EventBus.SelectedPlaceEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -153,8 +157,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Place.Field.NAME))
         autocompleteSupportFragment.setOnPlaceSelectedListener(object:PlaceSelectionListener{
             override fun onPlaceSelected(p0: Place) {
-                Snackbar.make(requireView(),"" + p0.latLng!!, Snackbar.LENGTH_LONG).show()
+                fusedLocationProviderClient!!
+                    .lastLocation.addOnSuccessListener { location ->
+                        val origin = LatLng(location.latitude,location.longitude)
+                        val destination = LatLng(p0.latLng!!.latitude,p0.latLng!!.longitude)
 
+                        startActivity(Intent(requireContext(),RequestDriverActivity::class.java))
+                        EventBus.getDefault().postSticky(SelectedPlaceEvent(origin,destination))
+
+                    }
             }
 
             override fun onError(p0: Status) {

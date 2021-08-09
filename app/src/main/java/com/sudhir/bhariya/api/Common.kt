@@ -1,6 +1,7 @@
 package com.sudhir.bhariya.api
 
 import android.widget.TextView
+import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 object Common {
@@ -13,6 +14,23 @@ object Common {
         else
             txtWelcome.setText(java.lang.StringBuilder("Good Evening"))
     }
+
+
+
+    fun formatDuration(duration: String): CharSequence? {
+        if(duration.contains("mins"))
+            return duration.substring(0,duration.length-1)
+        else
+            return duration
+    }
+
+    fun formatAddress(startAddress: String): CharSequence? {
+
+        val firstIndexComma = startAddress.indexOf(",")
+        return startAddress.substring(0,firstIndexComma)
+
+    }
+
 
     val DRIVERS_LOCATION_REFERENCE: String = "DriversLocation"
 
