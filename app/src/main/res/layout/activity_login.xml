@@ -171,6 +171,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:text="test"
+        android:textSize="16dp"
+        android:visibility="invisible" />
 
 
 </LinearLayout>

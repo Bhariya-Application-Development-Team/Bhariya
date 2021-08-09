@@ -24,7 +24,7 @@ class UserSignup_Test {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(SignUpActivity::class.java)
 
     @Test
     fun userSignup_Test() {
