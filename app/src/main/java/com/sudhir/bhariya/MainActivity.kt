@@ -7,16 +7,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.internal.NavigationMenuItemView
 import com.google.android.material.internal.NavigationMenuView
 import com.google.android.material.navigation.NavigationView
-import com.sudhir.bhariya.fragments.DashboardFragment
-import com.sudhir.bhariya.fragments.HistoryFragment
-import com.sudhir.bhariya.fragments.ProfileFragment
-import com.sudhir.bhariya.fragments.SettingFragment
+import com.sudhir.bhariya.fragments.*
 
 class MainActivity : AppCompatActivity() {
     private val dashboardFragment = DashboardFragment()
     private val historyFragment = HistoryFragment()
     private val settingFragment = SettingFragment()
     private val profileFragment = ProfileFragment()
+    private val mapsFragment = MapsFragment()
     private lateinit var button_nav : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.ic_dashboard -> replaceFragment(dashboardFragment)
                 R.id.ic_history -> replaceFragment(historyFragment)
-                R.id.ic_notification -> replaceFragment(profileFragment)
+                R.id.ic_notification -> replaceFragment(mapsFragment)
                 R.id.ic_setting -> replaceFragment(settingFragment)
             }
             true

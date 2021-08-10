@@ -152,7 +152,7 @@ class CodeVerificationActivity : AppCompatActivity() {
 
         val intent = intent
         phonenumber = intent.getStringExtra("phonenumber").toString()
-        if (phonenumber != null) {
+        if (phonenumber != null && etCode.text.toString()!="") {
             sendVerificationCodeToUser(phonenumber)
         }
 

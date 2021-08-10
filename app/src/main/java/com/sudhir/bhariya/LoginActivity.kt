@@ -51,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_login)
 
+
         etphonenumber = findViewById(R.id.etphonenumber)
         etpassword = findViewById(R.id.etpassword)
         tvForgotpassword = findViewById(R.id.tvForgotpassword)
@@ -63,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         passwordtxt = findViewById(R.id.passwordtxt)
         hello = findViewById(R.id.hello)
         welcome = findViewById(R.id.welcome)
-        // checkRunTimePermission()
+         checkRunTimePermission()
 
         btnLogin.setOnClickListener {
             login()
