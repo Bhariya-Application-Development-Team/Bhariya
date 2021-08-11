@@ -155,6 +155,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Place.Field.ADDRESS,
         Place.Field.LAT_LNG,
         Place.Field.NAME))
+        autocompleteSupportFragment.setHint(getString(R.string.where_to))
         autocompleteSupportFragment.setOnPlaceSelectedListener(object:PlaceSelectionListener{
             override fun onPlaceSelected(p0: Place) {
                 fusedLocationProviderClient!!
