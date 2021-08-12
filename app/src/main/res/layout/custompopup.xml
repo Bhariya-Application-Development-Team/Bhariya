@@ -75,7 +75,7 @@
             android:textSize="16dp" />
 
         <TextView
-            android:id="@+id/button2"
+            android:id="@+id/btnmin"
             android:layout_width="50dp"
             android:layout_height="32dp"
             android:layout_marginStart="12dp"
@@ -104,7 +104,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/btnminus"
+            android:id="@+id/btnadd"
             android:layout_width="50dp"
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
@@ -130,7 +130,6 @@
             android:layout_width="150dp"
             android:text="Cancel"
             android:background="#d50000"
-
 
             android:textColor="@color/white"
             android:id="@+id/btnCancel"
