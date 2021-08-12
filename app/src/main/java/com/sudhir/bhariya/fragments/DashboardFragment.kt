@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
 import com.sudhir.bhariya.R
@@ -29,6 +28,7 @@ class DashboardFragment : Fragment() {
     private lateinit var miniButton  : LinearLayout
     private lateinit var mediumButton  : LinearLayout
     private lateinit var  typeVehicle : TextView
+    private val mapsFragment = MapsFragment()
     private lateinit var vehicleImage : ImageView
     private lateinit var  heavyButton : LinearLayout
     private lateinit var InviteButton  : Button
@@ -114,19 +114,33 @@ class DashboardFragment : Fragment() {
 
         }
 
+
         btnProceed.setOnClickListener{
-//              val vehicleCategory = typeVehicle.text.toString()
+              val vehicleCategory = typeVehicle.text.toString()
+            Log.e("main", "This is $vehicleCategory ")
 //            val intent = Intent(context, MapsFragment::class.java)
 //            intent.putExtra("Number_Of_Worker", worker)
 //            intent.putExtra("Vehicle",vehicleCategory )
 //            startActivity(intent)
-
+            Log.e("main", " Number of worker is $worker")
 //
             myDialog.dismiss()
-            val mapsFragment = MapsFragment()
-            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.ic_dashboard, mapsFragment)
-            transaction.commit()
+
+            val ldf = MapsFragment()
+            val args = Bundle()
+            //sending value to the mapfragment
+            args.putString("VehicleType", "$vehicleCategory")
+            args.putString("num_Workers", "$worker")
+            ldf.setArguments(args)
+
+            getFragmentManager()?.beginTransaction()?.add(R.id.fragmentcontainer, ldf)?.commit();
+//            val mapsFragment = MapsFragment()
+//            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+//            transaction.replace(R.id.activity_main, mapsFragment)
+//            transaction.commit()
+//           replaceFragment(mapsFragment)
+
+
         }
 
 
@@ -140,6 +154,14 @@ class DashboardFragment : Fragment() {
         return root
 
     }
+//    private  fun replaceFragment(fragment: Fragment){
+//
+//        if(fragment != null){
+//            val transaction = requireFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragmentcontainer, fragment)
+//            transaction.commit()
+//        }
+//    }
 
     private fun createLink(){
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {

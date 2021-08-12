@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.ic_dashboard -> replaceFragment(dashboardFragment)
                 R.id.ic_history -> replaceFragment(historyFragment)
-                R.id.ic_notification -> replaceFragment(mapsFragment)
+                R.id.ic_notification -> replaceFragment(profileFragment)
                 R.id.ic_setting -> replaceFragment(settingFragment)
             }
             true
