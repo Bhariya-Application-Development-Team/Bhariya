@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var hello : TextView
 
 
+
     private lateinit var phonenumbertxt: TextInputLayout
     private lateinit var passwordtxt : TextInputLayout
     private lateinit var linearLayout: LinearLayout
@@ -64,7 +65,8 @@ class LoginActivity : AppCompatActivity() {
         passwordtxt = findViewById(R.id.passwordtxt)
         hello = findViewById(R.id.hello)
         welcome = findViewById(R.id.welcome)
-         checkRunTimePermission()
+
+        checkRunTimePermission()
 
         btnLogin.setOnClickListener {
             login()
