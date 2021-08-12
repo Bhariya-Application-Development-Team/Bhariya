@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -78,6 +79,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityRequestDriverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -86,6 +88,17 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
          mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val intent = intent
+        if(intent.extras !=null){
+            val worker = intent.getStringExtra("Number_Of_Worker")
+            val type = intent.getStringExtra("Vehicle")
+
+            val num = worker.toString()
+            val cat = type.toString()
+            Log.e("main", " $num is for $cat")
+
+        }
     }
 
     private fun init() {
@@ -130,7 +143,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         compositeDisposable.add(iGoogleAPI.getDirections("driving",
         "less_driving",
         selectedPlaceEvent.originString,selectedPlaceEvent.destinationString,
-        getString(R.string.google_api_key))
+       "AIzaSyC88v00XL7qZe0KaylSIKUmNRjBQ1wII9Q")
         !!.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { returnResult ->
