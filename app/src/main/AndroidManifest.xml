@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
+        <activity android:name=".FeedbackActivity"></activity>
         <activity android:name=".EsewaActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -58,14 +59,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".RatingActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".RatingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity" />
         <activity android:name=".ProfileEditActivity" />
