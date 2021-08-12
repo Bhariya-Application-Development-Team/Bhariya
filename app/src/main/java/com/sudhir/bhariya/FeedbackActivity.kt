@@ -49,11 +49,8 @@ class FeedbackActivity : AppCompatActivity() {
 
                     feedbackRecyclerview.adapter = FeedbackAdapter(feedbackArrayList)
 
-
                 }
-
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
