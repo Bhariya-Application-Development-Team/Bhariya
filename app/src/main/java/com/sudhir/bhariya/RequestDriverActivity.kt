@@ -54,6 +54,10 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private var originMarker: Marker?=null
     private var destinationMarker : Marker?= null
 
+    private lateinit var txt_distance : TextView
+    private lateinit var txt_time : TextView
+    private lateinit var txt_fare : TextView
+
 
 
 
@@ -84,6 +88,10 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         init()
+
+        txt_distance = findViewById(R.id.txt_distance)
+        txt_time = findViewById(R.id.txt_time)
+        txt_fare = findViewById(R.id.txt_fare)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
          mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -143,8 +151,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         compositeDisposable.add(iGoogleAPI.getDirections("driving",
         "less_driving",
         selectedPlaceEvent.originString,selectedPlaceEvent.destinationString,
-       "AIzaSyC88v00XL7qZe0KaylSIKUmNRjBQ1wII9Q")
-        !!.subscribeOn(Schedulers.io())
+       "AIzaSyC88v00XL7qZe0KaylSIKUmNRjBQ1wII9Q")!!.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { returnResult ->
             Log.d("API_RETURN",returnResult)
@@ -202,9 +209,18 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val time = legsObject.getJSONObject("duration")
                 val duration = time.getString("text")
+                val distance = legsObject.getJSONObject("distance")
+                val distanceText = distance.getString("text")
 
                 val start_address = legsObject.getString("start_address")
                 val end_address = legsObject.getString("end_address")
+
+                //Value Setting
+
+                txt_distance.text = distanceText
+                txt_time.text = duration
+
+                fare(distanceText.toString(),3)
 
                 addOriginMarker(duration,start_address)
                 addDestinationMarker(end_address)
@@ -221,6 +237,14 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    private fun fare(distance: String, labour: Int) {
+        var total_fare = 0.0
+        val km = distance.split(" ")[0]
+
+        total_fare = 500 + (km.toDouble() * 50) + (labour*500)
+        txt_fare.text = "Rs. " + total_fare.toString()
+    }
+
     private fun addDestinationMarker(endAddress: String) {
 
         val view = layoutInflater.inflate(R.layout.destination_info_windows,null)
@@ -233,7 +257,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         generator.setBackground(ColorDrawable(Color.TRANSPARENT))
         val icon = generator.makeIcon()
 
-        destinationMarker = mMap.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(icon))
+        destinationMarker = mMap.addMarker(MarkerOptions()
             .position(selectedPlaceEvent!!.destination))
     }
 
@@ -245,7 +269,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         val txt_origin = view.findViewById<View>(R.id.txt_origin) as TextView
 
         txt_time.text = Common.formatDuration(duration)
-        txt_origin.text = Common.formatAddress(startAddress)
+        txt_origin.text = "My Location"
 
         val generator = IconGenerator(this)
         generator.setContentView(view)
