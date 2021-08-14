@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class VehicleANDLabour_Test {
+class Referral_Test {
 
     @Rule
     @JvmField
@@ -38,7 +38,7 @@ class VehicleANDLabour_Test {
         )
 
     @Test
-    fun vehicleANDLabour_Test() {
+    fun referral_Test() {
         val appCompatImageView = onView(
             allOf(
                 withId(R.id.btnlogin),
@@ -54,64 +54,34 @@ class VehicleANDLabour_Test {
         )
         appCompatImageView.perform(click())
 
-        val linearLayout = onView(
+        val appCompatImageView2 = onView(
             allOf(
-                withId(R.id.mediumButton),
+                withId(R.id.btnlogin),
                 childAtPosition(
                     childAtPosition(
                         withClassName(`is`("android.widget.LinearLayout")),
-                        2
+                        4
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageView2.perform(click())
+
+        val materialButton = onView(
+            allOf(
+                withId(R.id.btninvite), withText("Invite "),
+                childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.LinearLayout")),
+                        8
                     ),
                     1
                 )
             )
         )
-        linearLayout.perform(scrollTo(), click())
-
-        val materialTextView = onView(
-            allOf(
-                withId(R.id.btnadd), withText("+"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.LinearLayout")),
-                        2
-                    ),
-                    3
-                ),
-                isDisplayed()
-            )
-        )
-        materialTextView.perform(click())
-
-        val appCompatButton = onView(
-            allOf(
-                withId(R.id.btnProceed), withText("Proceed"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.LinearLayout")),
-                        3
-                    ),
-                    1
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatButton.perform(click())
-
-        val imageView = onView(
-            allOf(
-                withContentDescription("My Location"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.FrameLayout")),
-                        2
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        imageView.perform(click())
+        materialButton.perform(scrollTo(), click())
     }
 
     private fun childAtPosition(
