@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Feedback(
-    var Username : String? = null,
-    var Feedback: String? = null,
+    var feedback: String? = null,
+    var username : String? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var userId : Int = 0

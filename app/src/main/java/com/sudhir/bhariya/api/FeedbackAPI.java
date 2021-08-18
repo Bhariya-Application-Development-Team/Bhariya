@@ -8,10 +8,10 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 interface FeedbackAPI {
-
-    @POST("/feedback_insert/")
-    suspend fun userFeedback(
-            @Body feedback : Feedback
-    ): Response<FeedbackResponse>
+//
+//    @POST("/feedback_insert/")
+//    suspend fun userFeedback(
+//            @Body feedback : Feedback
+//    ): Response<FeedbackResponse>
 
 }
