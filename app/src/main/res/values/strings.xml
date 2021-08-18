@@ -22,4 +22,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_request_driver">Map</string>
+    <string name="where_to">Set your Destination</string>
+    <string name="cash_on_delivery">Cash On Delivery</string>
+    <string name="confirm_ride">Confirm Ride</string>
+    <string name="distance">Distance</string>
+    <string name="time">Time</string>
 </resources>

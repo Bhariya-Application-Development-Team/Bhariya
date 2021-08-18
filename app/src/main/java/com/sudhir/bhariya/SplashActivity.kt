@@ -1,8 +1,14 @@
 package com.sudhir.bhariya
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,54 +17,28 @@ import android.util.Pair
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.webkit.WebView
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.firebase.ui.auth.AuthMethodPickerLayout
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
-import java.util.*
-import java.util.Arrays.asList
 
 class SplashActivity : AppCompatActivity() {
-   private lateinit var  topanimation : Animation
-   private lateinit var  buttonanimation : Animation
-   private lateinit var logo : ImageView
-   private  lateinit var  textslogan : TextView
-   private lateinit var slogs : TextView
-
+    private lateinit var  topanimation : Animation
+    private lateinit var  buttonanimation : Animation
+    private lateinit var logo : ImageView
+    private  lateinit var  textslogan : TextView
+    private lateinit var slogs : TextView
     var phonenumber = ""
     var password = ""
-
-    companion object{
-        private val LOGIN_REQUEST_CODE = 7171
-    }
-
-    private lateinit var providers : List<AuthUI.IdpConfig>
-    private lateinit var firebaseAuth : FirebaseAuth
-    private lateinit var listener : FirebaseAuth.AuthStateListener
-
-    override fun onStart() {
-        super.onStart()
-        delaySplashScreen()
-    }
-
-    private fun delaySplashScreen() {
-        firebaseAuth.addAuthStateListener(listener)
-    }
-
-    override fun onStop() {
-        if(firebaseAuth != null && listener != null) firebaseAuth.removeAuthStateListener(listener)
-        super.onStop()
-    }
-
+    private lateinit var webview : WebView
+    private lateinit var triagain : Button
+    private lateinit var myDialog : Dialog
+    @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        init()
         //hooks
         logo = findViewById(R.id.logo)
         textslogan = findViewById(R.id.textslogan)
@@ -72,68 +52,70 @@ class SplashActivity : AppCompatActivity() {
         textslogan.setAnimation(buttonanimation)
         slogs.setAnimation(buttonanimation)
 
-        val secondsDelayed = 1
-        if (phonenumber == "" && password == "") {
 
-            Handler().postDelayed(Runnable {
-                val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity,
-                    Pair.create(logo, "logo_image"))
-                startActivity(Intent(this, LoginActivity::class.java),
-                    options.toBundle()
-                )
-                    finish()
-            }, (secondsDelayed * 3000).toLong())
-        } else {
-            Handler().postDelayed(Runnable {
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                finish()
-            }, (secondsDelayed * 2000).toLong())
+        webview = findViewById(R.id.webview)
 
-        }
+        val webSetting = webview.settings
+        webSetting.javaScriptEnabled = true
 
-    }
+        //Initialized Connectivity Manager
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    private fun init() {
-        providers = Arrays.asList(
-            AuthUI.IdpConfig.PhoneBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
-        )
-        
-        firebaseAuth = FirebaseAuth.getInstance()
-        listener = FirebaseAuth.AuthStateListener { myFirebaseAuth ->
-            val user = myFirebaseAuth.currentUser
-            if(user!=null)
-                Toast.makeText(this, "Welcome", Toast.LENGTH_SHORT).show()
-            else
-                loginShow()
-        }
-    }
+        //Get network info
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        if((activeNetwork == null || !activeNetwork.isConnected()) || (activeNetwork == null || !activeNetwork.isAvailable())){
+        // Check Network Status
+//        if(activeNetwork == null ||  activeNetwork.isAvailable()){
+            //when Internet is inactive
 
-    private fun loginShow() {
-        val authMethodPickerLayout = AuthMethodPickerLayout.Builder(R.layout.activity_login)
-            .setGoogleButtonId(R.id.btnGmail)
-            .setPhoneButtonId(R.id.btnPhone)
-            .build();
+            //Initialize dialog
+            myDialog = Dialog(this@SplashActivity)
+            myDialog.setContentView(R.layout.nointernet)
+            triagain = myDialog.findViewById(R.id.tryagain)
+            myDialog.setCanceledOnTouchOutside(false);
+            //set dialog width and height
+            myDialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT
+            )
+            myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        startActivityForResult(AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAuthMethodPickerLayout(authMethodPickerLayout)
-            .setAvailableProviders(providers)
-            .setIsSmartLockEnabled(false)
-            .build(), LOGIN_REQUEST_CODE)
+            //set animation
+            myDialog.window?.attributes?.windowAnimations = android.R.style.Animation_Dialog
 
-    }
+            //Initialize dialog Variable
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == LOGIN_REQUEST_CODE){
-            val response = IdpResponse.fromResultIntent(data)
-            if (resultCode == Activity.RESULT_OK){
-                val user = FirebaseAuth.getInstance().currentUser
+
+            //perform click operation
+
+            triagain.setOnClickListener{
+                recreate()
             }
-            else
-                Toast.makeText(this, ""+response!!.error!!, Toast.LENGTH_SHORT).show()
+
+            myDialog.show()
+
+
         }
-    }
+        else{
+            val secondsDelayed = 1
+            if (phonenumber == "" && password == "") {
+
+                Handler().postDelayed(Runnable {
+                    val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity,
+                        Pair.create(logo, "logo_image"))
+                    startActivity(Intent(this, LoginActivity::class.java),
+                        options.toBundle()
+                    )
+                    finish()
+                }, (secondsDelayed * 3000).toLong())
+            } else {
+                Handler().postDelayed(Runnable {
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                    finish()
+                }, (secondsDelayed * 2000).toLong())
+
+            }
+
+        }
+        }
 
 }

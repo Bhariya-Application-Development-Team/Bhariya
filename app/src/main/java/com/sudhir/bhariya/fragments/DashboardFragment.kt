@@ -8,16 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
 import com.sudhir.bhariya.R
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
+import java.lang.Integer.parseInt
 
 
 class DashboardFragment : Fragment() {
@@ -30,9 +28,16 @@ class DashboardFragment : Fragment() {
     private lateinit var miniButton  : LinearLayout
     private lateinit var mediumButton  : LinearLayout
     private lateinit var  typeVehicle : TextView
+    private val mapsFragment = MapsFragment()
     private lateinit var vehicleImage : ImageView
     private lateinit var  heavyButton : LinearLayout
     private lateinit var InviteButton  : Button
+    private lateinit var addlabour : TextView
+    private lateinit var  numlabour : TextView
+    private lateinit var btnProceed : Button
+    private lateinit var laborsub : TextView
+
+   var worker : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +55,11 @@ class DashboardFragment : Fragment() {
         mediumButton = root.findViewById(R.id.mediumButton)
         heavyButton = root.findViewById(R.id.heavyButton)
         InviteButton = root.findViewById(R.id.btninvite)
+        addlabour = pop.findViewById(R.id.btnadd)
+        laborsub = pop.findViewById(R.id.btnmin)
+        numlabour = pop.findViewById(R.id.txtquan)
+        btnProceed = pop.findViewById(R.id.btnProceed)
+
         myDialog = context?.let { Dialog(it) }!!
 
         miniButton.setOnClickListener{
@@ -76,6 +86,65 @@ class DashboardFragment : Fragment() {
             showPopup(pop)
         }
 
+        addlabour.setOnClickListener {
+            worker = parseInt(numlabour.text.toString())
+            if (worker >= 5){
+                Toast.makeText(context,"Maximum Labour Limit Exceeded. ", Toast.LENGTH_SHORT)
+                    .show()
+                numlabour.text = "5"
+            }
+            else{
+                worker += 1
+                numlabour.text = worker.toString()
+            }
+
+        }
+
+        laborsub.setOnClickListener {
+            worker = parseInt(numlabour.text.toString())
+            if (worker <= 1){
+                Toast.makeText(context,"Minimum Labour Limit Exceeded. ", Toast.LENGTH_SHORT)
+                    .show()
+                numlabour.text = "1"
+            }
+            else{
+                worker -= 1
+                numlabour.text = worker.toString()
+            }
+
+        }
+
+
+        btnProceed.setOnClickListener{
+              val vehicleCategory = typeVehicle.text.toString()
+            Log.e("main", "This is $vehicleCategory ")
+//            val intent = Intent(context, MapsFragment::class.java)
+//            intent.putExtra("Number_Of_Worker", worker)
+//            intent.putExtra("Vehicle",vehicleCategory )
+//            startActivity(intent)
+            Log.e("main", " Number of worker is $worker")
+//
+            myDialog.dismiss()
+
+            val ldf = MapsFragment()
+            val args = Bundle()
+            //sending value to the mapfragment
+            args.putString("VehicleType", "$vehicleCategory")
+            args.putString("num_Workers", "$worker")
+            ldf.setArguments(args)
+
+            getFragmentManager()?.beginTransaction()?.add(R.id.fragmentcontainer, ldf)?.commit();
+//            val mapsFragment = MapsFragment()
+//            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+//            transaction.replace(R.id.activity_main, mapsFragment)
+//            transaction.commit()
+//           replaceFragment(mapsFragment)
+
+
+        }
+
+
+
 
         InviteButton.setOnClickListener {
 
@@ -85,6 +154,14 @@ class DashboardFragment : Fragment() {
         return root
 
     }
+//    private  fun replaceFragment(fragment: Fragment){
+//
+//        if(fragment != null){
+//            val transaction = requireFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragmentcontainer, fragment)
+//            transaction.commit()
+//        }
+//    }
 
     private fun createLink(){
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {

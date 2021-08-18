@@ -28,22 +28,6 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/etname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_bg"
-            android:hint="Full Name"
-            android:inputType="textPersonName"
-            android:padding="15dp"
-            android:textColor="@color/purple_500"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
             android:id="@+id/etfeedback"
             android:layout_width="match_parent"
             android:layout_height="152dp"
@@ -52,11 +36,54 @@
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/shape_bg"
-            android:hint="Message"
+            android:hint="Feedback"
             android:padding="15dp"
             android:textColor="@color/purple_500"
             android:textSize="18sp"
             android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etusername"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_bg"
+            android:hint="Username"
+            android:padding="15dp"
+            android:textColor="@color/purple_500"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="25dp"
+            android:padding="5dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="150dp"
+                android:text="Cancel"
+                android:background="#d50000"
+
+
+                android:textColor="@color/white"
+                android:id="@+id/btnCancel"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="150dp"
+                android:text="Send"
+                android:id="@+id/btnSend"
+                android:background="#0d47a1"
+                android:textColor="@color/bluelight"
+                android:layout_marginLeft="25dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
 
 
 
