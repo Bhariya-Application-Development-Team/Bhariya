@@ -41,11 +41,12 @@
             android:label="@string/title_activity_request_driver" />
         <activity android:name=".DriverRegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".EsewaActivity" >
+
+        </activity>
+
         <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -61,7 +62,12 @@
         <activity android:name=".RatingActivity" />
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".FeedbackActivity"></activity>
-        <activity android:name=".FeedbackFormActivity"></activity>
+        <activity android:name=".FeedbackFormActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity">
         </activity>
