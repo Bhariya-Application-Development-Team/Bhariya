@@ -8,6 +8,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
+
     defaultConfig {
         applicationId "com.sudhir.bhariya"
         minSdkVersion 16
@@ -42,9 +44,15 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+
+
+
+
 }
 
 dependencies {
+
 
     //Firebase Imported
     implementation 'com.google.firebase:firebase-analytics-ktx'
@@ -145,6 +153,8 @@ dependencies {
 
     //Maps Utils
     implementation 'com.google.maps.android:android-maps-utils-v3:2.0.3'
+
+
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
