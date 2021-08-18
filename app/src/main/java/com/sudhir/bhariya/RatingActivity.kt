@@ -11,7 +11,7 @@ class RatingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rating)
 
-        rb_ratingBar = findViewById(R.id.rb_ratingBar)
+        rb_ratingBar = findViewById(R.id.rb_ratingBar1)
 
 
 
