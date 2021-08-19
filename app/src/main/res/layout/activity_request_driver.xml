@@ -19,8 +19,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/confirm_layout"
         android:layout_alignParentBottom="true">
+
         <include layout="@layout/layout_confirm_ride"/>
 
+        <include layout="@layout/layout_confirm_pickup"/>
     </FrameLayout>
 
 </RelativeLayout>

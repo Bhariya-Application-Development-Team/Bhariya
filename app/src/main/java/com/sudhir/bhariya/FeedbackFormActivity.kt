@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.sudhir.bhariya.Repository.FeedbackRepository
 import com.sudhir.bhariya.adapter.FeedbackAdapter
 import com.sudhir.bhariya.db.UserDB
 import com.sudhir.bhariya.entity.Feedback
@@ -56,12 +57,26 @@ class FeedbackFormActivity : AppCompatActivity() {
                 dialog,_->
             val text = etfeedback.text.toString()
             val name = etusername.text.toString()
+
             userList.add(Feedback("$text"," $name"))
+            CoroutineScope(Dispatchers.IO).launch {
+                val feedbackRepository = FeedbackRepository()
+                val feedback = Feedback(
+                    username = "admin",
+                    feedback = text
+                )
+                val response = feedbackRepository.insertFeedback(feedback)
+                if(response.success == true){
+                    println("#############################")
+                    println("Successfully Feedback Posted")
+                }
+            }
             feedbackAdapter.notifyDataSetChanged()
-            Toast.makeText(this,"Feedback successfully added.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FeedbackFormActivity,"Feedback successfully added.",Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
-        addDialog.setNegativeButton("Cancel"){
+        addDialog.setNegativeButton(
+            "Cancel"){
                 dialog,_->
             dialog.dismiss()
             Toast.makeText(this,"Cancel",Toast.LENGTH_SHORT).show()
