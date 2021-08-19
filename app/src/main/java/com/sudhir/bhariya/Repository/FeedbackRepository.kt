@@ -16,5 +16,15 @@ class FeedbackRepository : MyApiRequest(){
             feedbackAPI.record_feedback(feedback)
         }
     }
+    suspend fun showFeedback(feedback : Feedback): FeedbackResponse {
+        return apiRequest {
+            feedbackAPI.showFeedback(feedback)
+        }
+    }
 
+    suspend fun getAllFeedback(feedback : Feedback):FeedbackResponse{
+        return apiRequest {
+            feedbackAPI.getAllFeedback(feedback)
+        }
+    }
 }

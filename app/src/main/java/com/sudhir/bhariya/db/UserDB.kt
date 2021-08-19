@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.sudhir.bhariya.dao.FeedbackDAO
 import com.sudhir.bhariya.dao.UserDAO
+import com.sudhir.bhariya.entity.Feedback
 import com.sudhir.bhariya.entity.User
 
 @Database(
 
-    entities = [(User::class)],
+    entities = [(User::class), (Feedback::class)],
     version = 1,
     exportSchema =  false
 
@@ -17,7 +19,8 @@ import com.sudhir.bhariya.entity.User
 abstract class UserDB : RoomDatabase(){
 
     abstract fun getUserDAO() : UserDAO
-    abstract fun getFeedbackDAO() : UserDAO
+//    abstract fun getFeedbackDAO() : UserDAO
+    abstract  fun getFeedbackDAO(): FeedbackDAO
 
     companion object{
         @Volatile
