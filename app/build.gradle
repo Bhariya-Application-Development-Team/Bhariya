@@ -21,7 +21,9 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -51,7 +53,7 @@ android {
 
 dependencies {
     //esewa
-    compile(name: 'eSewaSdk', ext: 'aar')
+    implementation(name: 'eSewaSdk', ext: 'aar')
     //noinspection GradleCompatible
     implementation 'com.android.support:cardview-v7:27.1.1'
     //noinspection GradleCompatible
@@ -156,6 +158,8 @@ dependencies {
 
     //Maps Utils
     implementation 'com.google.maps.android:android-maps-utils-v3:2.0.3'
+
+    testImplementation 'org.json:json:20180813'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

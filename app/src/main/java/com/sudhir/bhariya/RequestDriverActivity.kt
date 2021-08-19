@@ -1,6 +1,7 @@
 package com.sudhir.bhariya
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
@@ -123,6 +124,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -133,7 +135,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             true
 
         }
-
+        Log.d("Selected", selectedPlaceEvent.toString())
         drawPath(selectedPlaceEvent!! )
         val locationButton = (findViewById<View>("1".toInt())!!.parent!! as View)
             .findViewById<View>("2".toInt())
@@ -206,7 +208,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                 val objects = jsonArray.getJSONObject(0)
                 val legs = objects.getJSONArray("legs")
                 val legsObject = legs.getJSONObject(0)
-
+                Log.d("Leg", legsObject.toString())
                 val time = legsObject.getJSONObject("duration")
                 val duration = time.getString("text")
                 val distance = legsObject.getJSONObject("distance")
@@ -219,7 +221,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 txt_distance.text = distanceText
                 txt_time.text = duration
-
+                Log.d("Distance test", distanceText.toString())
                 fare(distanceText.toString(),3)
 
                 addOriginMarker(duration,start_address)

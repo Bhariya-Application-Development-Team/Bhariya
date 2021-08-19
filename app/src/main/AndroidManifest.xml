@@ -22,9 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,6 +34,13 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
+
+        </activity>
         <activity
             android:name=".RequestDriverActivity"
             android:label="@string/title_activity_request_driver" />
@@ -45,28 +50,19 @@
 
         </activity>
 
-        <activity android:name=".SplashActivity">
 
-        </activity>
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="bhariyaapp.page.link"
-                    android:scheme="https" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".RatingActivity" />
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".FeedbackActivity"></activity>
         <activity android:name=".FeedbackFormActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity">

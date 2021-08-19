@@ -1,6 +1,7 @@
 package com.sudhir.bhariya.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -139,6 +140,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Common.setWelcomeMessage(txt_welcome )
     }
 
+    @SuppressLint("MissingPermission")
     private fun init() {
 //        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected")
 //        driversLocationRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE)
@@ -153,7 +155,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Place.Field.NAME))
         autocompleteSupportFragment.setHint(getString(R.string.where_to))
         autocompleteSupportFragment.setOnPlaceSelectedListener(object:PlaceSelectionListener{
+            @SuppressLint("MissingPermission")
             override fun onPlaceSelected(p0: Place) {
+                Log.d("Location place", p0.toString())
                 fusedLocationProviderClient!!
                     .lastLocation.addOnSuccessListener { location ->
                         val origin = LatLng(location.latitude,location.longitude)
@@ -222,6 +226,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Dexter.withActivity(context as Activity?)
             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
             .withListener(object : PermissionListener {
+                @SuppressLint("MissingPermission")
                 override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                     mMap.isMyLocationEnabled = true
                     mMap.uiSettings.isMyLocationButtonEnabled = true
