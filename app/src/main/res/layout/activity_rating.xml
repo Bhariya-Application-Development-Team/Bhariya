@@ -1,26 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".RatingActivity">
 
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/rvfeedback"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                tools:layout_editor_absoluteX="0dp"-->
+<!--                tools:layout_editor_absoluteY="117dp">-->
+
+            <RatingBar
+                android:id="@+id/rb_ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp" />
+
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar5"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar6"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:text="Ramesh Khanal"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="15dp" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="40dp"-->
+<!--                android:text="He is Professional Driver." />-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/rb_ratingBar7"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_marginLeft="40dp" />-->
+
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="USER NAME"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="30dp"
-        />
-
-    <RatingBar
-        android:id="@+id/rb_ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="30dp"/>
-
-</RelativeLayout>
+</LinearLayout>

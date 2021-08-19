@@ -24,10 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EsewaActivity"></activity>
+        <activity
+            android:name=".RecieptActivity"
+            android:exported="true" />
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,11 +45,11 @@
         <activity
             android:name=".RequestDriverActivity"
             android:label="@string/title_activity_request_driver" />
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
         <activity android:name=".DriverRegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".EsewaActivity">
+
+        </activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,14 +71,11 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".RatingActivity" />
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".LoginActivity">
-
-        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".FeedbackFormActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".SharedPreferenceActivity">
-
-        </activity>
+        <activity android:name=".SharedPreferenceActivity"></activity>
         <activity android:name=".ProfileEditActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".CodeVerificationActivity" />

@@ -17,6 +17,7 @@ import com.sudhir.bhariya.entity.User
 abstract class UserDB : RoomDatabase(){
 
     abstract fun getUserDAO() : UserDAO
+    abstract fun getFeedbackDAO() : UserDAO
 
     companion object{
         @Volatile
@@ -36,7 +37,7 @@ abstract class UserDB : RoomDatabase(){
                 Room.databaseBuilder(
                         context.applicationContext,
                         UserDB::class.java,
-                        "ConsultancyDatabase"
+                        "BhariyaDatabase"
                 ).build()
 
     }

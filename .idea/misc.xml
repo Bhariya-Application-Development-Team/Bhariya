@@ -3,7 +3,46 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/drawable/background_history.xml" value="0.2712820512820513" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.2712820512820513" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/drawable/mapviewhistory.xml" value="0.2712820512820513" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/drawable/shape_bg.xml" value="0.2712820512820513" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/drawable/toolbar_bg.xml" value="0.2712820512820513" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_change_password.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_code_verification.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_deactive.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_driver_registration.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_driver_verification.xml" value="0.20516304347826086" />
         <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_esewa.xml" value="0.176" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_feedback.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_feedback_form.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_forgot_password.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_login.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_main.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_maps.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_maps2.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_profile.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_profile_edit.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_rating.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_reciept.xml" value="0.264" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_request_driver.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_shared_preference.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_sign_up.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/activity_splash.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/custompopup.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/destination_info_windows.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/fragment_dashboard.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/fragment_history.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/fragment_maps.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/fragment_profile.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/fragment_setting.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/history.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/layout_confirm_ride.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/nointernet.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/toolbar.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/layout/user_item.xml" value="0.20516304347826086" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/menu/image_upload_layout.xml" value="0.259375" />
+        <entry key="..\:/Bhariyaaugust2/app/src/main/res/menu/menu.xml" value="0.259375" />
       </map>
     </option>
   </component>

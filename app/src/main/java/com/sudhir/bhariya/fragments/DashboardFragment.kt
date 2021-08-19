@@ -12,7 +12,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
+import com.sudhir.bhariya.EsewaActivity
 import com.sudhir.bhariya.R
+import com.sudhir.bhariya.RecieptActivity
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
 import java.lang.Integer.parseInt
@@ -80,10 +82,13 @@ class DashboardFragment : Fragment() {
         }
 
         heavyButton.setOnClickListener {
-            getAttr(pop)
-            typeVehicle.setText("Heavy Truck")
-            vehicleImage.setImageResource(R.drawable.truck2)
-            showPopup(pop)
+//            getAttr(pop)
+//            typeVehicle.setText("Heavy Truck")
+//            vehicleImage.setImageResource(R.drawable.truck2)
+//            showPopup(pop)
+
+            val intent = Intent(context,  EsewaActivity::class.java)
+            startActivity(intent)
         }
 
         addlabour.setOnClickListener {
