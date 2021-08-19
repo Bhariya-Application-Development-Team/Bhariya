@@ -6,12 +6,15 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintSet
 import com.bumptech.glide.Glide
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -57,6 +60,11 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var txt_distance : TextView
     private lateinit var txt_time : TextView
     private lateinit var txt_fare : TextView
+    private lateinit var btn_confirm_ride : Button
+    private lateinit var txt_address : TextView
+
+    private lateinit var confirm_pickup_layout : View
+    private lateinit var confirm_ride_layout : View
 
 
 
@@ -87,11 +95,20 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityRequestDriverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init()
 
         txt_distance = findViewById(R.id.txt_distance)
         txt_time = findViewById(R.id.txt_time)
         txt_fare = findViewById(R.id.txt_fare)
+        txt_address = findViewById(R.id.txt_address)
+        btn_confirm_ride = findViewById(R.id.btn_confirm_ride)
+
+
+
+        confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
+        confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
+        init()
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
          mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -112,6 +129,38 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun init() {
         iGoogleAPI = RetrofitClient.getInstance()!!.create(IGoogleAPI::class.java)
 
+        //Event
+        btn_confirm_ride.setOnClickListener {
+
+
+            confirm_pickup_layout.visibility = View.VISIBLE
+            confirm_ride_layout.visibility = View.GONE
+
+            setDataPickup()
+        }
+
+    }
+
+    private fun setDataPickup() {
+        //This is the Code
+//        txt_address.text = if(txt_origin!=null) txt_origin.text else "None"
+
+        txt_address.text = "Balaju"
+        mMap.clear()
+        addPickupMarker()
+    }
+
+    private fun addPickupMarker() {
+        val view = layoutInflater.inflate(R.layout.pickup_info_window, null)
+
+        val generator = IconGenerator(this)
+        generator.setContentView(view)
+        generator.setBackground(ColorDrawable(Color.TRANSPARENT))
+        val icon = generator.makeIcon()
+
+        originMarker = mMap.addMarker(MarkerOptions()
+            .icon(BitmapDescriptorFactory.fromBitmap(icon))
+            .position(selectedPlaceEvent!!.origin))
     }
 
     /**
@@ -126,23 +175,23 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        mMap.isMyLocationEnabled = true
-        mMap.uiSettings.isMyLocationButtonEnabled = true
-        mMap.setOnMyLocationClickListener {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedPlaceEvent!!  .origin,18f))
-            true
-
-        }
+//        mMap.isMyLocationEnabled = true
+//        mMap.uiSettings.isMyLocationButtonEnabled = true
+//        mMap.setOnMyLocationClickListener {
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedPlaceEvent!!  .origin,18f))
+//            true
+//
+//        }
 
         drawPath(selectedPlaceEvent!! )
-        val locationButton = (findViewById<View>("1".toInt())!!.parent!! as View)
-            .findViewById<View>("2".toInt())
-        val params = locationButton.layoutParams as RelativeLayout.LayoutParams
-        params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0)
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE)
-        params.bottomMargin = 250
-
-        mMap.uiSettings.isZoomControlsEnabled = true
+//        val locationButton = (findViewById<View>("1".toInt())!!.parent!! as View)
+//            .findViewById<View>("2".toInt())
+//        val params = locationButton.layoutParams as RelativeLayout.LayoutParams
+//        params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0)
+//        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE)
+//        params.bottomMargin = 250
+//
+//        mMap.uiSettings.isZoomControlsEnabled = true
 
     }
 

@@ -27,4 +27,8 @@
     <string name="confirm_ride">Confirm Ride</string>
     <string name="distance">Distance</string>
     <string name="time">Time</string>
+    <string name="confirm_pickup_point">Confirm Pickup</string>
+    <string name="address_demo">1010 Kathmandu</string>
+    <string name="confirm_pickup">Confirm Pickup</string>
+    <string name="meet_driver_here">Meetup Point</string>
 </resources>
