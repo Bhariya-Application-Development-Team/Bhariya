@@ -7,14 +7,18 @@
     tools:context=".fragments.HistoryFragment">
 
 
-    <TextView
-        android:id="@+id/history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello this is history"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/historyrecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:isScrollContainer="true"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp"
+
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="30sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
