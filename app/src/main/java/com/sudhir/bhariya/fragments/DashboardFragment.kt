@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
 import com.sudhir.bhariya.EsewaActivity
+import com.sudhir.bhariya.NotifyallActivity
 import com.sudhir.bhariya.R
 import com.sudhir.bhariya.RecieptActivity
 import com.synnapps.carouselview.CarouselView
@@ -72,12 +73,13 @@ class DashboardFragment : Fragment() {
         }
 
         mediumButton.setOnClickListener{
-            getAttr(pop)
-            typeVehicle.setText("Medium Truck")
-            vehicleImage.setImageResource(R.drawable.truck3)
-            showPopup(pop)
+//            getAttr(pop)
+//            typeVehicle.setText("Medium Truck")
+//            vehicleImage.setImageResource(R.drawable.truck3)
+//            showPopup(pop)
 
-
+            val intent = Intent(context,  NotifyallActivity::class.java)
+            startActivity(intent)
 
         }
 
