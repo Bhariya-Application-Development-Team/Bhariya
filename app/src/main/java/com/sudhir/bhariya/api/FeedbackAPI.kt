@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface FeedbackAPI {
     //
     @POST("/feedback_insert/")
-    suspend fun userFeedback(
+    suspend fun insertFeedback(
         @Body feedback : Feedback
     ): Response<FeedbackResponse>
 

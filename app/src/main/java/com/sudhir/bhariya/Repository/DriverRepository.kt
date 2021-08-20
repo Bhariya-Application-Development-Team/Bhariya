@@ -2,13 +2,9 @@ package com.sudhir.bhariya.Repository
 
 import com.sudhir.bhariya.MyApiRequest
 import com.sudhir.bhariya.Response.DriverResponse
-import com.sudhir.bhariya.Response.LoginResponse
 import com.sudhir.bhariya.ServiceBuilder
-import com.sudhir.bhariya.UserAPI
 import com.sudhir.bhariya.api.DriverAPI
-import com.sudhir.bhariya.entity.User
 import okhttp3.MultipartBody
-import retrofit2.http.Multipart
 
 class DriverRepository : MyApiRequest() {
 
