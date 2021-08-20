@@ -61,14 +61,14 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".RatingActivity" />
         <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".FeedbackActivity"></activity>
-        <activity android:name=".FeedbackFormActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".FeedbackActivity"></activity>
+        <activity android:name=".FeedbackFormActivity">
+
         </activity>
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity">
