@@ -82,8 +82,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     //
     private val onlineValueEventListener = object : ValueEventListener {
     override fun onDataChange(snapshot: DataSnapshot) {
-        if (snapshot.exists())
-            println("Working")
+//        if (snapshot.exists())
+//            println("Working")
 //            currentUserRef.onDisconnect().removeValue()
     }
 
@@ -188,14 +188,14 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 Snackbar.make(requireView(),p0.statusMessage, Snackbar.LENGTH_LONG).show()
             }
         })
-        var currentUserReference : String = ""
-        CoroutineScope(Dispatchers.IO).launch {
-            val repository = UserRepository()
-            val response = repository.viewUser()
-            if(response.success==true)
-                Snackbar.make(mapFragment.requireView(), response.Fullname.toString(), Snackbar.LENGTH_LONG).show()
-                currentUserReference = response.PhoneNumber.toString()
-        }
+//        var currentUserReference : String = ""
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val repository = UserRepository()
+//            val response = repository.viewUser()
+//            if(response.success==true)
+//                Snackbar.make(mapFragment.requireView(), response.Fullname.toString(), Snackbar.LENGTH_LONG).show()
+////                currentUserReference = response.PhoneNumber.toString()
+//        }
 
 //        geoFire = GeoFire(driversLocationRef)
 //

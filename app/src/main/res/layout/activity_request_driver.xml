@@ -11,6 +11,7 @@
         android:layout_above="@+id/confirm_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    </FrameLayout>
 
         <fragment
             android:id="@+id/map"
@@ -24,9 +25,7 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/darker_map"
-
-    </FrameLayout>
+            android:background="@color/darker_map"/>
 
 
 
@@ -40,7 +39,7 @@
 
         <include layout="@layout/layout_confirm_pickup"/>
 
-        <include layout="@layout/layout_searching_driver"
+        <include layout="@layout/layout_searching_driver"/>
     </FrameLayout>
 
 </RelativeLayout>
