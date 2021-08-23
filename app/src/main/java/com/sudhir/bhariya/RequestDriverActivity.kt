@@ -1,5 +1,6 @@
 package com.sudhir.bhariya
 
+import android.animation.Animator
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -15,6 +16,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import com.bumptech.glide.Glide
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,6 +42,17 @@ import org.json.JSONObject
 import org.w3c.dom.Text
 
 class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    //Animation for Spinning
+    var animator : ValueAnimator? = null
+    private val DESIRED_NUM_OF_SPINS = 3
+    private val DESIRED_SECONDS_PER_ONE_FULL_SPIN = 60
+
+    //Searching Animation
+    var lastUserCircle : Circle? = null
+    val duration = 1000
+    var lastPulseAnimator : ValueAnimator? = null
+    var used : Boolean? = false
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityRequestDriverBinding
@@ -65,6 +79,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var confirm_pickup_layout : View
     private lateinit var confirm_ride_layout : View
+    private lateinit var fill_maps : View
+    private lateinit var searching_driver : View
 
 
 
@@ -106,6 +122,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
         confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
         confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
+        fill_maps = findViewById(R.id.fill_maps)
+        searching_driver = findViewById(R.id.searching_driver)
         init()
 
 
@@ -139,6 +157,80 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             setDataPickup()
         }
 
+        btn_confirm_ride.setOnClickListener{
+            if(mMap == null) return@setOnClickListener
+            if(selectedPlaceEvent == null) return@setOnClickListener
+
+            //Map Clearing
+            mMap.clear()
+
+            //Tilting
+
+            val cameraPos = CameraPosition.Builder().target(selectedPlaceEvent!!.origin)
+                .tilt(45f)
+                .zoom(16f)
+                .build()
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
+
+            addMarkerWithPulseAnimation()
+        }
+
+    }
+
+    private fun addMarkerWithPulseAnimation() {
+        confirm_pickup_layout.visibility = View.GONE
+        fill_maps.visibility = View.VISIBLE
+        searching_driver.visibility = View.VISIBLE
+
+        originMarker = mMap.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker())
+            .position(selectedPlaceEvent!!.origin))
+
+            addPulsatingEffect(selectedPlaceEvent!!.origin)
+    }
+
+    private fun addPulsatingEffect(origin: LatLng) {
+        lastPulseAnimator?.cancel()
+        if(lastUserCircle != null) lastUserCircle!!.center = origin
+        lastPulseAnimator = Common.valueAnimate(duration, object:ValueAnimator.AnimatorUpdateListener{
+            override fun onAnimationUpdate(p0: ValueAnimator?) {
+                if(lastUserCircle != null) lastUserCircle!!.radius = p0!!.animatedValue.toString().toDouble() else{
+                    lastUserCircle = mMap.addCircle(CircleOptions()
+                        .center(origin)
+                        .radius(p0!!.animatedValue.toString().toDouble())
+                        .strokeColor(Color.WHITE)
+                        .fillColor(ContextCompat.getColor(this@RequestDriverActivity,R.color.darker_map)))
+
+                }
+            }
+
+        })!!
+
+        //Start Rotation
+        startMapCameraSpinningAnimation(mMap.cameraPosition.target)
+    }
+
+    private fun startMapCameraSpinningAnimation(target: LatLng?) {
+        if(animator!= null) animator!!.cancel()
+        animator = ValueAnimator.ofFloat(0f,(DESIRED_NUM_OF_SPINS*360).toFloat())
+        animator!!.duration = (DESIRED_NUM_OF_SPINS*DESIRED_SECONDS_PER_ONE_FULL_SPIN * 1000).toLong()
+        animator!!.interpolator = LinearInterpolator()
+        animator!!.startDelay = (100)
+        animator!!.addUpdateListener { valueAnimator ->
+            val newBearingValue = valueAnimator.animatedValue as Float
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.Builder()
+                .target(target)
+                .zoom(16f)
+                .tilt(45f)
+                .bearing(newBearingValue)
+                .build()
+            ))
+        }
+        animator!!.start()
+    }
+
+    override fun onDestroy() {
+        if(animator != null) animator!!.end()
+        super.onDestroy()
     }
 
     private fun setDataPickup() {

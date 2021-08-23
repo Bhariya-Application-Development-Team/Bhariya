@@ -1,5 +1,6 @@
 package com.sudhir.bhariya.api
 
+import android.animation.ValueAnimator
 import android.widget.TextView
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
@@ -29,6 +30,16 @@ object Common {
         val firstIndexComma = startAddress.indexOf(",")
         return startAddress.substring(0,firstIndexComma)
 
+    }
+
+    fun valueAnimate(duration: Int, listener: ValueAnimator.AnimatorUpdateListener): ValueAnimator?{
+        val va = ValueAnimator.ofFloat(0f, 100f)
+        va.duration = duration.toLong()
+        va.addUpdateListener(listener)
+        va.repeatCount = ValueAnimator.INFINITE
+        va.repeatMode = ValueAnimator.RESTART
+        va.start()
+        return va
     }
 
 
