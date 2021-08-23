@@ -10,4 +10,5 @@
     <color name="green">#eaad43</color>
     <color name="white">#FFFFFFFF</color>
     <color name ="extra">#0E7ED8</color>
+    <color name="darker_map">#6633333</color>
 </resources>

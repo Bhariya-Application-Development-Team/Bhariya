@@ -13,6 +13,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.firebase.geofire.GeoFire
+import com.firebase.geofire.GeoLocation
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,6 +27,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -37,7 +40,9 @@ import com.sudhir.bhariya.R
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.RequestDriverActivity
 import com.sudhir.bhariya.api.Common
+import com.sudhir.bhariya.entity.Driver
 import com.sudhir.bhariya.entity.EventBus.SelectedPlaceEvent
+import com.sudhir.bhariya.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,37 +73,45 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     //Data Online
-//    private lateinit var onlineRef: DatabaseReference
+    private lateinit var onlineRef: DatabaseReference
 //    private lateinit var currentUserRef : DatabaseReference
-//    private lateinit var driversLocationRef: DatabaseReference
-//    private lateinit var geoFire : GeoFire
-//
-//    private val onlineValueEventListener = object : ValueEventListener {
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            if(snapshot.exists())
-//                currentUserRef.onDisconnect().removeValue()
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//            Snackbar.make(mapFragment.requireView(), error.message, Snackbar.LENGTH_LONG).show()
-//        }
+    private lateinit var driversLocationRef: DatabaseReference
+    private lateinit var geoFire : GeoFire
+    lateinit var database: DatabaseReference
+
+    //
+    private val onlineValueEventListener = object : ValueEventListener {
+    override fun onDataChange(snapshot: DataSnapshot) {
+        if (snapshot.exists())
+            println("Working")
+//            currentUserRef.onDisconnect().removeValue()
+    }
+
+    override fun onCancelled(error: DatabaseError) {
+        Snackbar.make(mapFragment.requireView(), error.message, Snackbar.LENGTH_LONG).show()
+    }
+}
 
 
 
     private var param1: String? = null
     private var param2: String? = null
 
-    override fun onDestroy() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+//    override fun onDestroy() {
+//        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
 //        geoFire.removeLocation(FirebaseAuth.getInstance().currentUser!!.uid)
 //        onlineRef.removeEventListener(onlineValueEventListener)
-        super.onDestroy()
-    }
+//        super.onDestroy()
+//    }
 
-    override fun onResume() {
-        super.onResume()
+//    override fun onResume() {
+//        super.onResume()
 //        registerOnlineSystem()
-    }
+//    }
+//
+//    private fun registerOnlineSystem() {
+//        onlineRef.addValueEventListener(onlineValueEventListener)
+//    }
 //
 //    private fun registerOnlineSystem() {
 //        onlineRef.addValueEventListener(onlineValueEventListener)
@@ -110,6 +123,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        database = FirebaseDatabase.getInstance().reference
 
         val vehicleType = getArguments()?.getString("VehicleType")
         val Labour = getArguments()?.getString("num_Workers")
@@ -140,11 +154,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun init() {
-//        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected")
-//        driversLocationRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE)
+        onlineRef = FirebaseDatabase.getInstance().getReference().child(".info/connected")
+        driversLocationRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE)
 //        currentUserRef = FirebaseDatabase.getInstance().getReference(Common.DRIVERS_LOCATION_REFERENCE).child(
 //            FirebaseAuth.getInstance().currentUser!!.uid
 //        )
+
+        geoFire = GeoFire(driversLocationRef)
+
+
+//        registerOnlineSystem()
         Places.initialize(requireContext(),getString(R.string.google_maps_key))
         autocompleteSupportFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
@@ -195,12 +214,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 18f))
 
                 //Location Update
+                driverLocation("DriverPhone","Driver Name", p0.lastLocation.latitude.toString(), p0.lastLocation.longitude.toString())
+
+                println("###################")
+                println(p0.lastLocation.latitude.toString() + " ### " + p0.lastLocation.longitude.toString())
 //                geoFire.setLocation(
-//                    FirebaseAuth.getInstance().currentUser!!.uid,
+//                    "user",
 //                    GeoLocation(p0.lastLocation.latitude,p0.lastLocation.longitude)
-//                ){key:String?, error:DatabaseError? ->
+//                )
+//
+//                {key:String?, error:DatabaseError? ->
 //                    if(error!=null)
-//                        Snackbar.make(mapFragment.requireView(),error.message,Snackbar.LENGTH_LONG).show()
+//                         Snackbar.make(mapFragment.requireView(),error.message,Snackbar.LENGTH_LONG).show()
 //                    else
 //                        Snackbar.make(mapFragment.requireView(),"Online!!!",Snackbar.LENGTH_SHORT).show()
 //                }
@@ -282,5 +307,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 //        val sydney = LatLng(-34.0, 151.0)
 //        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))    }
+    }
+
+    fun driverLocation(phonenumber : String, name : String, latitude: String, longitude : String) {
+        val driver = Driver(phonenumber, name, longitude, latitude)
+
+        database.child("Driver-Location").child(phonenumber).setValue(driver)
     }
 }

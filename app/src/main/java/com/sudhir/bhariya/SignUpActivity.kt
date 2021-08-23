@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Pair
 import android.widget.EditText
 import android.widget.ImageView
@@ -15,6 +16,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.entity.User
 import kotlinx.coroutines.CoroutineScope
@@ -53,6 +58,9 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var location : String
     private lateinit var paswd : String
     private lateinit var cpaswd : String
+    lateinit var database: DatabaseReference
+
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -77,12 +85,22 @@ class SignUpActivity : AppCompatActivity() {
         welcome = findViewById(R.id.welcome)
 
         passcon = findViewById(R.id.passcon)
+        database = FirebaseDatabase.getInstance().reference
 //        adds = findViewById(R.id.adds)
 //        cpass = findViewById(R.id.cpass)
 //        mainpwd = findViewById(R.id.mainpwd)
 //        ptext = findViewById(R.id.ptext)
 //        nametext = findViewById(R.id.nametext)
         pwd = findViewById(R.id.pwd)
+
+//        val builder = AlertDialog.Builder(this, R.style)
+
+//        if(FirebaseAuth.getInstance().currentUser!!.phoneNumber != null &&
+//                !TextUtils.isDigitsOnly(FirebaseAuth.getInstance().currentUser!!.phoneNumber))
+//                    phonenumber.setText(FirebaseAuth.getInstance().currentUser!!.phoneNumber)
+//
+//        //View
+
         submit.setOnClickListener {
 
             cpaswd = confirmpass.text.toString()
@@ -232,6 +250,8 @@ class SignUpActivity : AppCompatActivity() {
     private fun register(){
         val customer =
             User(Phonenumber = phone, Fullname = name, Address = location, password = paswd)
+
+        registerNewUser(phone,name, location,paswd)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val repository = UserRepository()
@@ -264,6 +284,7 @@ class SignUpActivity : AppCompatActivity() {
                             "Registered Successfully",
                             Toast.LENGTH_SHORT
                         ).show()
+
                     }
 
 
@@ -276,6 +297,17 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
+
+
     }
+
+    fun registerNewUser(phonenumber : String, name : String, location: String, password : String) {
+        val user = User(phonenumber, name, location, password)
+
+        database.child("users").child(phonenumber).setValue(user)
+    }
+
+
+
 
 }
