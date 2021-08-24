@@ -25,6 +25,16 @@
         android:id="@+id/fragmentcontainer"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/botton_nav"
-        />
+        >
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="test"
+            android:textSize="16dp"
+            android:visibility="invisible" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
