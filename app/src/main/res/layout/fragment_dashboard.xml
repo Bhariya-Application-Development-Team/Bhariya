@@ -320,6 +320,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100px"/>
+            <TextView
+                android:id="@+id/test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:textSize="16dp"
+                android:visibility="invisible" />
 
         </LinearLayout>
 

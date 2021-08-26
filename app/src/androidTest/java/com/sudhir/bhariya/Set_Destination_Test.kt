@@ -1,6 +1,7 @@
 package com.sudhir.bhariya
 
 
+import android.Manifest
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -21,18 +22,22 @@ import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
 @LargeTest
-@RunWith(AndroidJUnit4::class)
+@RunWith(JUnit4::class)
 class Set_Destination_Test {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
 
-    @Rule
-    @JvmField
-    var mGrantPermissionRule =
+    @get:Rule
+    var grantPermissionRule = GrantPermissionRule.grant(Manifest.permission.SYSTEM_ALERT_WINDOW)
+
+
+    @get:Rule
+     var activityGrantPermissionRule =
         GrantPermissionRule.grant(
             "android.permission.ACCESS_FINE_LOCATION",
             "android.permission.CAMERA",
