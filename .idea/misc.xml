@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/accepttrip.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/activity_main.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/activity_notifyall.xml" value="0.259375" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/activity_request_driver.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/fragment_dashboard.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/layout_confirm_pickup.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/layout_confirm_ride.xml" value="0.22327898550724637" />
+        <entry key="..\:/Bhariyaaugust26/app/src/main/res/layout/layout_searching_driver.xml" value="0.22327898550724637" />
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.20052083333333334" />
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/layout/activity_feedback_form.xml" value="0.2" />
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/layout/activity_notifyall.xml" value="0.17395833333333333" />

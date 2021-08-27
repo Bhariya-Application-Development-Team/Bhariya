@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.maps.android.ui.IconGenerator
 import com.sudhir.bhariya.Remote.IGoogleAPI
 import com.sudhir.bhariya.Remote.RetrofitClient
@@ -41,6 +42,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import org.w3c.dom.Text
 
+const val  TOPIC1 = "/topics/myTopic1"
 class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //Animation for Spinning
@@ -76,9 +78,10 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var txt_fare : TextView
     private lateinit var btn_confirm_ride : Button
     private lateinit var txt_address : TextView
-
+    private  lateinit var  btnAcceptTrip : Button
     private lateinit var confirm_pickup_layout : View
     private lateinit var confirm_ride_layout : View
+    private lateinit var accepttrip : View
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
 
@@ -120,11 +123,22 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
+
         confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
         confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
         fill_maps = findViewById(R.id.fill_maps)
         searching_driver = findViewById(R.id.searching_driver)
+        accepttrip = findViewById(R.id.accepttrip)
+        btnAcceptTrip = findViewById(R.id.btn_acccpet_trip)
+        //Changed code
+
+
+
         init()
+        btnAcceptTrip.setOnClickListener{
+
+
+        }
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -154,6 +168,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             confirm_pickup_layout.visibility = View.VISIBLE
             confirm_ride_layout.visibility = View.GONE
 
+
             setDataPickup()
         }
 
@@ -176,6 +191,15 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+
+
+
+
+
+
+
+
+
 
     private fun addMarkerWithPulseAnimation() {
         confirm_pickup_layout.visibility = View.GONE
