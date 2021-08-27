@@ -1,12 +1,14 @@
 package com.sudhir.bhariya
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.Pair
 import android.widget.EditText
 import android.widget.ImageView
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.ServiceBuilder.token
@@ -31,6 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import android.util.Pair as UtilPair
+
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var  fullname : EditText
@@ -65,6 +69,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var paswd : String
     private lateinit var cpaswd : String
     lateinit var database: DatabaseReference
+    var firebaseToken = " "
 
 
 
@@ -321,6 +326,16 @@ class SignUpActivity : AppCompatActivity() {
         database.child("users").child(phonenumber).setValue(user)
 
         Toast.makeText(this, "Firebase Stored Data!", Toast.LENGTH_SHORT).show()
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
+             firebaseToken = it.result!!.token
+            Log.e("main", "token is $firebaseToken")
+            FirebaseService.token = it.result!!.token
+            val user = User(phonenumber, name, location, password, firebaseToken, "User")
+
+            database.child("users").child(phonenumber).setValue(user)
+        }
+
     }
 
 

@@ -12,6 +12,7 @@ data class User(
     var password: String? = null,
     var Token : String? = null,
     var Role : String? = "User"
+
 ){
     @PrimaryKey(autoGenerate = true)
     var userId : Int = 0

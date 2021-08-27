@@ -41,7 +41,7 @@ class EsewaActivity : AppCompatActivity() {
             val eSewaPayment: ESewaPayment = ESewaPayment(
                 "900",
                 "Truck Heavy",
-                "abjbsdakjsb121",
+                "abjakjsb121",
                 "https://60efeb43a276b8d5e8ceaa9f--jolly-torvalds-099307.netlify.app/"
             )
 
