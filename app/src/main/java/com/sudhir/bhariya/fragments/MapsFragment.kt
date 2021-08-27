@@ -2,7 +2,10 @@ package com.sudhir.bhariya.fragments
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -78,6 +81,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var driversLocationRef: DatabaseReference
     private lateinit var geoFire : GeoFire
     lateinit var database: DatabaseReference
+    var fullname : String? = ""
+    var phonenumber : String? = ""
 
     //
     private val onlineValueEventListener = object : ValueEventListener {
@@ -212,9 +217,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
                 val newPos = LatLng(p0!!.lastLocation.latitude, p0!!.lastLocation.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 18f))
-
+                get()
                 //Location Update
-                driverLocation("DriverPhone","Driver Name", p0.lastLocation.latitude.toString(), p0.lastLocation.longitude.toString())
+                driverLocation(phonenumber!!,fullname!!, p0.lastLocation.latitude.toString(), p0.lastLocation.longitude.toString())
 
                 println("###################")
                 println(p0.lastLocation.latitude.toString() + " ### " + p0.lastLocation.longitude.toString())
@@ -313,5 +318,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val driver = Driver(phonenumber, name, longitude, latitude)
 
         database.child("Driver-Location").child(phonenumber).setValue(driver)
+    }
+
+    fun get(){
+        val sharefPref = requireActivity().getSharedPreferences("MyPreference", MODE_PRIVATE)
+        fullname = sharefPref.getString("fullname", "").toString()
+        phonenumber = sharefPref.getString("phonenumber","").toString()
     }
 }
