@@ -19,8 +19,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.ktx.Firebase
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.ServiceBuilder.token
 import com.sudhir.bhariya.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,6 +49,9 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var textothers : TextView
     private lateinit var hello : TextView
     private lateinit var welcome : TextView
+
+    var firebaseToken = ""
+
 
 //    private lateinit var adds : TextView
 //    private lateinit var cpass : TextView
@@ -249,7 +255,7 @@ class SignUpActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun register(){
         val customer =
-            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd)
+            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd, Token = firebaseToken)
 
         registerNewUser(phone,name, location,paswd)
         CoroutineScope(Dispatchers.IO).launch {
@@ -302,10 +308,21 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun registerNewUser(phonenumber : String, name : String, location: String, password : String) {
-        val user = User(phonenumber, name, location, password)
+
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener{
+            firebaseToken = it.result!!.token
+
+        }
+
+        val user = User(phonenumber, name, location, password, firebaseToken)
+        println("#########")
+        println(firebaseToken)
 
         database.child("users").child(phonenumber).setValue(user)
+
+        Toast.makeText(this, "Firebase Stored Data!", Toast.LENGTH_SHORT).show()
     }
+
 
 
 

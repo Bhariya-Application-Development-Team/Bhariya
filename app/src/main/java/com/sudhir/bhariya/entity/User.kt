@@ -10,6 +10,7 @@ data class User(
     var Fullname: String? = null,
     var Address: String? = null,
     var password: String? = null,
+    var Token : String? = null,
     var Role : String? = "User"
 ){
     @PrimaryKey(autoGenerate = true)

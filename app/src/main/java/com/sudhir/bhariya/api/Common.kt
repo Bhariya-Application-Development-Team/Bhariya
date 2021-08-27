@@ -4,8 +4,13 @@ import android.animation.ValueAnimator
 import android.widget.TextView
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
+import kotlin.collections.HashMap
 
 object Common {
+
+    val DRIVERS_LOCATION_REFERENCE: String = "DriversLocation"
+//    val driversFound : MutableMap<String, DriverGeoModel> = HashMap<String, DriverGeoModel>()
+
     fun setWelcomeMessage(txtWelcome: TextView) {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         if(hour >=1 && hour <= 12)
@@ -43,6 +48,5 @@ object Common {
     }
 
 
-    val DRIVERS_LOCATION_REFERENCE: String = "DriversLocation"
 
 }
