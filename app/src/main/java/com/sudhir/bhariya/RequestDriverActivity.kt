@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.maps.android.ui.IconGenerator
 import com.sudhir.bhariya.Remote.IGoogleAPI
@@ -33,6 +34,7 @@ import com.sudhir.bhariya.Remote.RetrofitClient
 import com.sudhir.bhariya.api.Common
 import com.sudhir.bhariya.databinding.ActivityRequestDriverBinding
 import com.sudhir.bhariya.entity.EventBus.SelectedPlaceEvent
+import com.sudhir.bhariya.entity.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -85,6 +87,9 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
 
+    private val TAG = "ReadAndWriteSnippets"
+
+    lateinit var database: DatabaseReference
 
 
 
@@ -114,7 +119,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityRequestDriverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        database = FirebaseDatabase.getInstance().reference
         txt_distance = findViewById(R.id.txt_distance)
         txt_time = findViewById(R.id.txt_time)
         txt_fare = findViewById(R.id.txt_fare)
@@ -234,6 +239,29 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun startMapCameraSpinningAnimation(target: LatLng?) {
+//        database.child("Driver-Location").child("DriverPhone").get().addOnSuccessListener {
+//            Log.i("firebase", "Got value ${it.value}")
+//            Toast.makeText(this, it.value.toString(), Toast.LENGTH_SHORT).show()
+//        }.addOnFailureListener{
+//            Log.e("firebase", "Error getting data", it)
+//            Toast.makeText(this, "No Data!", Toast.LENGTH_SHORT).show()
+//        }
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                val user = dataSnapshot.getValue()
+                print(user.toString())
+                println("##############")
+                    // ...
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        postListener
         if(animator!= null) animator!!.cancel()
         animator = ValueAnimator.ofFloat(0f,(DESIRED_NUM_OF_SPINS*360).toFloat())
         animator!!.duration = (DESIRED_NUM_OF_SPINS*DESIRED_SECONDS_PER_ONE_FULL_SPIN * 1000).toLong()
@@ -250,6 +278,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             ))
         }
         animator!!.start()
+
+
     }
 
     override fun onDestroy() {
@@ -445,4 +475,6 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             .position(selectedPlaceEvent!!.origin))
 
     }
+
+
 }

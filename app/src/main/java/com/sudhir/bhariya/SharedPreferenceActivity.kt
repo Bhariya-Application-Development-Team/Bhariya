@@ -9,6 +9,8 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
     var phonenumber = ""
     var password = ""
+    var username = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +18,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
         val intent = intent
         phonenumber = intent.getStringExtra("phonenumber").toString()
+        username = intent.getStringExtra("fullname").toString()
         password = intent.getStringExtra("password").toString()
 
         save()

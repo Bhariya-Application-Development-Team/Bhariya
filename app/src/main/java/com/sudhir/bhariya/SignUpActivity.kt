@@ -26,6 +26,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.ServiceBuilder.token
 import com.sudhir.bhariya.entity.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,6 +53,9 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var textothers : TextView
     private lateinit var hello : TextView
     private lateinit var welcome : TextView
+
+    var firebaseToken = ""
+
 
 //    private lateinit var adds : TextView
 //    private lateinit var cpass : TextView
@@ -256,7 +260,7 @@ class SignUpActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun register(){
         val customer =
-            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd)
+            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd, Token = firebaseToken)
 
         registerNewUser(phone,name, location,paswd)
         CoroutineScope(Dispatchers.IO).launch {
@@ -309,6 +313,19 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun registerNewUser(phonenumber : String, name : String, location: String, password : String) {
+
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener{
+            firebaseToken = it.result!!.token
+
+        }
+
+        val user = User(phonenumber, name, location, password, firebaseToken)
+        println("#########")
+        println(firebaseToken)
+
+        database.child("users").child(phonenumber).setValue(user)
+
+        Toast.makeText(this, "Firebase Stored Data!", Toast.LENGTH_SHORT).show()
         FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
         FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
              firebaseToken = it.result!!.token
@@ -320,6 +337,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
     }
+
 
 
 

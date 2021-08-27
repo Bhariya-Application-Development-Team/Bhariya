@@ -24,7 +24,6 @@ class CodeVerificationActivity : AppCompatActivity() {
     private lateinit var btnContinue : Button
     private lateinit var etCode : EditText
     var code = ""
-    var phonenumber = ""
     private var storedVerificationId: String? = ""
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
@@ -91,7 +90,7 @@ class CodeVerificationActivity : AppCompatActivity() {
                 }
 
                 val intent = Intent(this@CodeVerificationActivity, ChangePasswordActivity::class.java)
-                intent.putExtra("phonenumber", phonenumber)
+                intent.putExtra("phonenumber", etCode.text.toString())
                 startActivity(intent)
 
                 println("#############################")
@@ -151,8 +150,8 @@ class CodeVerificationActivity : AppCompatActivity() {
 
 
         val intent = intent
-        phonenumber = intent.getStringExtra("phonenumber").toString()
-        if (phonenumber != null && etCode.text.toString()!="") {
+        var phonenumber = intent.getStringExtra("phonenumber")
+        if (phonenumber != null) {
             sendVerificationCodeToUser(phonenumber)
         }
 
@@ -166,7 +165,7 @@ class CodeVerificationActivity : AppCompatActivity() {
         btnContinue.setOnClickListener {
             callbacks
 
-            if(etCode.text.toString() != "" && etCode.text.toString() == code) {
+            if(etCode.text.toString() == code) {
                 Toast.makeText(this, "CODE VERIFIED", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,ChangePasswordActivity::class.java)
                 intent.putExtra("phonenumber",phonenumber)
