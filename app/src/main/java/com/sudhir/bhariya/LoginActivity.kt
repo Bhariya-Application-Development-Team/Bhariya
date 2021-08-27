@@ -170,11 +170,15 @@ class LoginActivity : AppCompatActivity() {
                     println("Successful Login")
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
+                    val user = repository.viewUser()
+
                     startActivity(
                         Intent(
                             this@LoginActivity,
                             SharedPreferenceActivity::class.java
-                        ).putExtra("phonenumber", phonenumber)
+                        )
+                            .putExtra("fullname", user.Fullname.toString())
+                            .putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
                         )
                     finish()

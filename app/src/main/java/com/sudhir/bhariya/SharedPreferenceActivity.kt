@@ -9,7 +9,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
     var phonenumber = ""
     var password = ""
-    var username = ""
+    var fullname = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +18,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
 
         val intent = intent
         phonenumber = intent.getStringExtra("phonenumber").toString()
-        username = intent.getStringExtra("fullname").toString()
+        fullname = intent.getStringExtra("fullname").toString()
         password = intent.getStringExtra("password").toString()
 
         save()
@@ -31,11 +31,13 @@ class SharedPreferenceActivity : AppCompatActivity() {
         val editor = sharedPreference.edit()
         editor.putString("phonenumber",phonenumber)
         editor.putString("password",password)
+        editor.putString("fullname",fullname)
         editor.apply()
         Toast.makeText(this@SharedPreferenceActivity, "Saved Data!", Toast.LENGTH_SHORT).show()
     }
     private fun get(){
         val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
+        fullname = sharedPreference.getString("fullname","").toString()
         phonenumber = sharedPreference.getString("phonenumber", "").toString()
         password = sharedPreference.getString("password", "").toString()
         Toast.makeText(this, "LOGIN SUCESSFUL", Toast.LENGTH_SHORT).show()
