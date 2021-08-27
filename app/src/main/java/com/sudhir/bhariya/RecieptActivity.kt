@@ -1,11 +1,16 @@
 package com.sudhir.bhariya
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 
 class RecieptActivity : AppCompatActivity() {
     private lateinit var source: TextView
+    private lateinit var feedback: Button
+    private lateinit var ok: Button
+
     private lateinit var destination : TextView
     private lateinit var Date : TextView
     private lateinit var totalCost : TextView
@@ -18,9 +23,32 @@ class RecieptActivity : AppCompatActivity() {
         source = findViewById(R.id.source)
         destination = findViewById(R.id.destination)
         Date = findViewById(R.id.date)
+        feedback = findViewById(R.id.feedback)
+        ok = findViewById(R.id.ok)
         totalCost = findViewById(R.id.totalcost)
         refId = findViewById(R.id.referenceid)
         vehicletype = findViewById(R.id.vehicletype)
+
+        ok.setOnClickListener {
+
+            startActivity(
+                Intent(
+                    this@RecieptActivity,
+                    MainActivity::class.java
+                )
+
+            )
+        }
+        feedback.setOnClickListener {
+
+            startActivity(
+                Intent(
+                    this@RecieptActivity,
+                    FeedbackFormActivity::class.java
+                )
+
+            )
+        }
 
         val tSource = intent.getStringExtra("Source").toString()
         val tdestination = intent.getStringExtra("Destination").toString()
