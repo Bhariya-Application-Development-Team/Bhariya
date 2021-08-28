@@ -25,12 +25,6 @@
         android:id="@+id/ettoken"
         android:layout_marginTop="100dp"
         android:hint="Token"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/openActivity"
-        android:layout_marginTop="100dp"
-        android:hint="Token"/>
 
 
     <Button

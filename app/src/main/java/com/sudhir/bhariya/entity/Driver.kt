@@ -9,6 +9,7 @@ data class Driver(
     var Fullname: String? = null,
     var Longitude: String? = null,
     var Latitude: String? = null,
+    var Token : String? = null
 ){
 
     @PrimaryKey(autoGenerate = true)
