@@ -235,6 +235,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newPos, 18f))
                 get()
                 //Location Update
+
                 driverLocation(phonenumber!!,fullname!!, p0.lastLocation.latitude.toString(), p0.lastLocation.longitude.toString())
 
                 println("###################")
