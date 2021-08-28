@@ -20,7 +20,24 @@
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/layout/layout_confirm_pickup.xml" value="0.184375" />
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/layout/layout_confirm_ride.xml" value="0.19583333333333333" />
         <entry key="..\:/Local Disk (D)/Project/Bhariya/app/src/main/res/layout/layout_searching_driver.xml" value="0.2" />
+<<<<<<< HEAD
         <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/posts.xml" value="0.1" />
+=======
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_esewa.xml" value="0.1" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_feedback.xml" value="0.1" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_feedback_form.xml" value="0.1160081053698075" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_forgot_password.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_rating.xml" value="0.1" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_reciept.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/activity_request_driver.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/add_item.xml" value="0.1160081053698075" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/destination_info_windows.xml" value="0.1852355072463768" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/fragment_driver.xml" value="0.171875" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/posts.xml" value="0.1160081053698075" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/toolbar.xml" value="0.1160081053698075" />
+        <entry key="..\:/Users/ACER/AndroidStudioProjects/Bhariya/app/src/main/res/layout/user_item.xml" value="0.1160081053698075" />
+>>>>>>> b2f418950c69329f5542381350e1f8cda96e7ba8
       </map>
     </option>
   </component>

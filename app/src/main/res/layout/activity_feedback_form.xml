@@ -1,202 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FeedbackFormActivity">
+
+    <LinearLayout
         android:orientation="vertical"
-        tools:context=".FeedbackFormActivity">
-
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addingBtn"
-            android:src="@drawable/ic_edit"
-            app:tint="@color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addingBtn"
+        android:src="@drawable/ic_edit"
+        app:tint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    </RelativeLayout>
+</RelativeLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:background="#E9395DC8"-->
-<!--        android:orientation="vertical">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="16dp"-->
+    <!--        android:background="#E9395DC8"-->
+    <!--        android:orientation="vertical">-->
 
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:background="@color/purple_500"-->
-<!--            android:elevation="15dp"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="10dp"-->
-<!--            android:text="Give Feedback"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="19sp"-->
-<!--            android:textStyle="bold" />-->
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:background="@color/purple_500"-->
+    <!--            android:elevation="15dp"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Give Feedback"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="19sp"-->
+    <!--            android:textStyle="bold" />-->
 
-<!--        <EditText-->
-<!--            android:id="@+id/etfeedback"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="152dp"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:background="@drawable/shape_bg"-->
-<!--            android:hint="Feedback"-->
-<!--            android:padding="15dp"-->
-<!--            android:textColor="@color/purple_500"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
-<!--        <EditText-->
-<!--            android:id="@+id/etusername"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="52dp"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:background="@drawable/shape_bg"-->
-<!--            android:hint="Username"-->
-<!--            android:padding="15dp"-->
-<!--            android:textColor="@color/purple_500"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/etfeedback"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="152dp"-->
+    <!--            android:layout_marginLeft="15dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginRight="15dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            android:background="@drawable/shape_bg"-->
+    <!--            android:hint="Feedback"-->
+    <!--            android:padding="15dp"-->
+    <!--            android:textColor="@color/purple_500"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/etusername"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="52dp"-->
+    <!--            android:layout_marginLeft="15dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginRight="15dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            android:background="@drawable/shape_bg"-->
+    <!--            android:hint="Username"-->
+    <!--            android:padding="15dp"-->
+    <!--            android:textColor="@color/purple_500"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginLeft="25dp"-->
-<!--            android:padding="5dp">-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginLeft="25dp"-->
+    <!--            android:padding="5dp">-->
 
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:layout_width="150dp"-->
-<!--                android:text="Cancel"-->
-<!--                android:background="#d50000"-->
+    <!--            <androidx.appcompat.widget.AppCompatButton-->
+    <!--                android:layout_width="150dp"-->
+    <!--                android:text="Cancel"-->
+    <!--                android:background="#d50000"-->
 
 
-<!--                android:textColor="@color/white"-->
-<!--                android:id="@+id/btnCancel"-->
-<!--                android:layout_height="wrap_content"/>-->
+    <!--                android:textColor="@color/white"-->
+    <!--                android:id="@+id/btnCancel"-->
+    <!--                android:layout_height="wrap_content"/>-->
 
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:layout_width="150dp"-->
-<!--                android:text="Send"-->
-<!--                android:id="@+id/btnSend"-->
-<!--                android:background="#0d47a1"-->
-<!--                android:textColor="@color/bluelight"-->
-<!--                android:layout_marginLeft="25dp"-->
-<!--                android:layout_height="wrap_content"/>-->
-<!--        </LinearLayout>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".FeedbackFormActivity">-->
-
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:background="#E9395DC8"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:background="@color/purple_500"-->
-<!--            android:elevation="15dp"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="10dp"-->
-<!--            android:text="Give Feedback"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="19sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/etfeedback"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="152dp"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:background="@drawable/shape_bg"-->
-<!--            android:hint="Feedback"-->
-<!--            android:padding="15dp"-->
-<!--            android:textColor="@color/purple_500"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
-<!--        <EditText-->
-<!--            android:id="@+id/etusername"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="52dp"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:background="@drawable/shape_bg"-->
-<!--            android:hint="Username"-->
-<!--            android:padding="15dp"-->
-<!--            android:textColor="@color/purple_500"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginLeft="25dp"-->
-<!--            android:padding="5dp">-->
-
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:layout_width="150dp"-->
-<!--                android:text="Cancel"-->
-<!--                android:background="#d50000"-->
+    <!--            <androidx.appcompat.widget.AppCompatButton-->
+    <!--                android:layout_width="150dp"-->
+    <!--                android:text="Send"-->
+    <!--                android:id="@+id/btnSend"-->
+    <!--                android:background="#0d47a1"-->
+    <!--                android:textColor="@color/bluelight"-->
+    <!--                android:layout_marginLeft="25dp"-->
+    <!--                android:layout_height="wrap_content"/>-->
+    <!--        </LinearLayout>-->
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--    xmlns:tools="http://schemas.android.com/tools"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    tools:context=".FeedbackFormActivity">-->
 
 
-<!--                android:textColor="@color/white"-->
-<!--                android:id="@+id/btnCancel"-->
-<!--                android:layout_height="wrap_content"/>-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="16dp"-->
+    <!--        android:background="#E9395DC8"-->
+    <!--        android:orientation="vertical">-->
 
-<!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:layout_width="150dp"-->
-<!--                android:text="Send"-->
-<!--                android:id="@+id/btnSend"-->
-<!--                android:background="#0d47a1"-->
-<!--                android:textColor="@color/bluelight"-->
-<!--                android:layout_marginLeft="25dp"-->
-<!--                android:layout_height="wrap_content"/>-->
-<!--        </LinearLayout>-->
+    <!--        <TextView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:background="@color/purple_500"-->
+    <!--            android:elevation="15dp"-->
+    <!--            android:gravity="center"-->
+    <!--            android:padding="10dp"-->
+    <!--            android:text="Give Feedback"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="19sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <EditText-->
+    <!--            android:id="@+id/etfeedback"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="152dp"-->
+    <!--            android:layout_marginLeft="15dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginRight="15dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            android:background="@drawable/shape_bg"-->
+    <!--            android:hint="Feedback"-->
+    <!--            android:padding="15dp"-->
+    <!--            android:textColor="@color/purple_500"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/etusername"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="52dp"-->
+    <!--            android:layout_marginLeft="15dp"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginRight="15dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            android:background="@drawable/shape_bg"-->
+    <!--            android:hint="Username"-->
+    <!--            android:padding="15dp"-->
+    <!--            android:textColor="@color/purple_500"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:layout_marginTop="5dp"-->
+    <!--            android:layout_marginLeft="25dp"-->
+    <!--            android:padding="5dp">-->
+
+    <!--            <androidx.appcompat.widget.AppCompatButton-->
+    <!--                android:layout_width="150dp"-->
+    <!--                android:text="Cancel"-->
+    <!--                android:background="#d50000"-->
+
+
+    <!--                android:textColor="@color/white"-->
+    <!--                android:id="@+id/btnCancel"-->
+    <!--                android:layout_height="wrap_content"/>-->
+
+    <!--            <androidx.appcompat.widget.AppCompatButton-->
+    <!--                android:layout_width="150dp"-->
+    <!--                android:text="Send"-->
+    <!--                android:id="@+id/btnSend"-->
+    <!--                android:background="#0d47a1"-->
+    <!--                android:textColor="@color/bluelight"-->
+    <!--                android:layout_marginLeft="25dp"-->
+    <!--                android:layout_height="wrap_content"/>-->
+    <!--        </LinearLayout>-->
 
 
 
 
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
-<!--</LinearLayout>-->
-<!--    </LinearLayout>-->
+    <!--</LinearLayout>-->
+    <!--    </LinearLayout>-->
 
-<!--</LinearLayout>-->
+    <!--</LinearLayout>-->

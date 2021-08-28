@@ -8,9 +8,13 @@ object ServiceBuilder {
     private const val BASE_URL =
 //         For Running on Emulator
 //    "http://10.0.2.2:3000/"
+<<<<<<< HEAD
 
         "http://bhariyaa.herokuapp.com/"
 //    "http://10.0.2.2:3000/"
+=======
+        "http://bhariyaa.herokuapp.com/"
+>>>>>>> b2f418950c69329f5542381350e1f8cda96e7ba8
 
 //        "https://bhariya.herokuapp.com/"
         // For Running on a real Device

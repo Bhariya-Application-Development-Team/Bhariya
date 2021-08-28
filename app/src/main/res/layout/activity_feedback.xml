@@ -7,13 +7,15 @@
     tools:context=".FeedbackActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/feedbackList"
+        android:id="@+id/feedbacklist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/user_item"/>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="117dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="sakjdnaksbaskbas"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
