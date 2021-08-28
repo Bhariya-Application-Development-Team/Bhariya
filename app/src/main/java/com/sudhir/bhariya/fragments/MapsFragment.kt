@@ -342,8 +342,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
             database.child("Driver-Location").child(phonenumber).setValue(driver)
             getData()
-            println("###################")
-            println(driverInformation)
         }
     }
 
@@ -361,12 +359,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     var model = data.getValue(Driver::class.java)
                     list.add(model as Driver)
                 }
-                Log.e("Drivers are: ", list.toString())
+                Log.e("Users are: ", list.toString())
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Cancel", error.toString())
             }
         })
     }
+
 
 }
