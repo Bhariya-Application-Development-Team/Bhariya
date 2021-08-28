@@ -170,6 +170,7 @@ class LoginActivity : AppCompatActivity() {
                     println("Successful Login")
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
+
                     val user = repository.viewUser()
 
                     startActivity(
@@ -180,6 +181,7 @@ class LoginActivity : AppCompatActivity() {
                             .putExtra("fullname", user.Fullname.toString())
                             .putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
+                            .putExtra("token","Bearer ${response.token}")
                         )
                     finish()
                 } else {

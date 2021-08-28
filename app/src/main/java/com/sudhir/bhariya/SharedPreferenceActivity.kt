@@ -10,7 +10,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
     var phonenumber = ""
     var password = ""
     var fullname = ""
-
+    var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +32,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
         editor.putString("phonenumber",phonenumber)
         editor.putString("password",password)
         editor.putString("fullname",fullname)
+        editor.putString("token",token)
         editor.apply()
         Toast.makeText(this@SharedPreferenceActivity, "Saved Data!", Toast.LENGTH_SHORT).show()
     }
@@ -40,6 +41,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
         fullname = sharedPreference.getString("fullname","").toString()
         phonenumber = sharedPreference.getString("phonenumber", "").toString()
         password = sharedPreference.getString("password", "").toString()
+        token = sharedPreference.getString("token","").toString()
         Toast.makeText(this, "LOGIN SUCESSFUL", Toast.LENGTH_SHORT).show()
 
         startActivity(

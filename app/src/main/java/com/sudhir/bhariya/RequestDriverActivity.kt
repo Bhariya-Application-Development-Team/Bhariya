@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import com.google.maps.android.ui.IconGenerator
 import com.sudhir.bhariya.Remote.IGoogleAPI
 import com.sudhir.bhariya.Remote.RetrofitClient
@@ -38,11 +39,15 @@ import com.sudhir.bhariya.entity.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import org.w3c.dom.Text
+import java.lang.Exception
 
 const val  TOPIC1 = "/topics/myTopic1"
 class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -247,7 +252,10 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 //            Toast.makeText(this, "No Data!", Toast.LENGTH_SHORT).show()
 //        }
 
+
+
         val postListener = object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 val user = dataSnapshot.getValue()
@@ -280,6 +288,23 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         animator!!.start()
 
 
+
+
+    }
+
+    private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
+
+        try{
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful){
+                Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
+            }
+            else{
+                Log.e("error", response.errorBody().toString())
+            }
+        } catch (e: Exception){
+            Log.e("Main", e.toString())
+        }
     }
 
     override fun onDestroy() {

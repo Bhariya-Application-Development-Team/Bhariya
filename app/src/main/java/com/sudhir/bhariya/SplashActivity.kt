@@ -134,7 +134,9 @@ class SplashActivity : AppCompatActivity() {
         var password = ""
         phonenumber = sharedPref.getString("phonenumber","").toString()
         password = sharedPref.getString("password","").toString()
-        if(phonenumber!="" || phonenumber!=null && password!="" || password!=null){
+        var token = sharedPref.getString("token","").toString()
+        if(phonenumber!=null && password!=null){
+            ServiceBuilder.token = token
             return true
         }
         else
