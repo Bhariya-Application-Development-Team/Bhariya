@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -22,6 +23,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.sudhir.bhariya.fragments.DashboardFragment
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var  topanimation : Animation
@@ -96,26 +98,48 @@ class SplashActivity : AppCompatActivity() {
 
         }
         else{
-            val secondsDelayed = 1
-            if (phonenumber == "" && password == "") {
-
-                Handler().postDelayed(Runnable {
-                    val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SplashActivity,
-                        Pair.create(logo, "logo_image"))
-                    startActivity(Intent(this, LoginActivity::class.java),
-                        options.toBundle()
-                    )
-                    finish()
-                }, (secondsDelayed * 3000).toLong())
-            } else {
-                Handler().postDelayed(Runnable {
-                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                    finish()
-                }, (secondsDelayed * 2000).toLong())
-
+            if(get() == true){
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                startActivity(intent)
             }
+            else {
+                val secondsDelayed = 1
+                if (phonenumber == "" && password == "") {
 
+                    Handler().postDelayed(Runnable {
+                        val options: ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                            this@SplashActivity,
+                            Pair.create(logo, "logo_image")
+                        )
+                        startActivity(
+                            Intent(this, LoginActivity::class.java),
+                            options.toBundle()
+                        )
+                        finish()
+                    }, (secondsDelayed * 3000).toLong())
+                } else {
+                    Handler().postDelayed(Runnable {
+                        startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                        finish()
+                    }, (secondsDelayed * 2000).toLong())
+
+                }
+            }
         }
         }
+
+    fun get() : Boolean{
+        var sharedPref : SharedPreferences = getSharedPreferences("MyPreference", MODE_PRIVATE)
+        var phonenumber = ""
+        var password = ""
+        phonenumber = sharedPref.getString("phonenumber","").toString()
+        password = sharedPref.getString("password","").toString()
+        if(phonenumber!="" || phonenumber!=null && password!="" || password!=null){
+            return true
+        }
+        else
+            return false
+
+    }
 
 }

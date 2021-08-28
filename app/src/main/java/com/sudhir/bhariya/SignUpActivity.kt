@@ -54,7 +54,6 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var hello : TextView
     private lateinit var welcome : TextView
 
-    var firebaseToken = ""
 
 
 //    private lateinit var adds : TextView

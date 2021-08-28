@@ -2,12 +2,14 @@ package com.sudhir.bhariya.fragments
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Looper
+import android.text.method.TextKeyListener.clear
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,8 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.database.core.RepoManager.clear
+import com.google.firebase.installations.FirebaseInstallations
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -39,6 +43,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.R
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.RequestDriverActivity
@@ -77,25 +82,35 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     //Data Online
     private lateinit var onlineRef: DatabaseReference
-//    private lateinit var currentUserRef : DatabaseReference
+    //    private lateinit var currentUserRef : DatabaseReference
     private lateinit var driversLocationRef: DatabaseReference
     private lateinit var geoFire : GeoFire
     lateinit var database: DatabaseReference
+    lateinit var firebase : DatabaseReference
     var fullname : String? = ""
     var phonenumber : String? = ""
+    var firebaseToken : String? = ""
+    private val driverInformation: MutableList<Driver> = mutableListOf()
+
+
 
     //
+
+    override fun onDestroy() {
+        database.child("Driver-Location").removeValue()
+        super.onDestroy()
+    }
     private val onlineValueEventListener = object : ValueEventListener {
-    override fun onDataChange(snapshot: DataSnapshot) {
+        override fun onDataChange(snapshot: DataSnapshot) {
 //        if (snapshot.exists())
 //            println("Working")
 //            currentUserRef.onDisconnect().removeValue()
-    }
+        }
 
-    override fun onCancelled(error: DatabaseError) {
-        Snackbar.make(mapFragment.requireView(), error.message, Snackbar.LENGTH_LONG).show()
+        override fun onCancelled(error: DatabaseError) {
+            Snackbar.make(mapFragment.requireView(), error.message, Snackbar.LENGTH_LONG).show()
+        }
     }
-}
 
 
 
@@ -129,6 +144,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             param2 = it.getString(ARG_PARAM2)
         }
         database = FirebaseDatabase.getInstance().reference
+        firebase = FirebaseDatabase.getInstance().getReference().child("Driver-Location/")
 
         val vehicleType = getArguments()?.getString("VehicleType")
         val Labour = getArguments()?.getString("num_Workers")
@@ -172,9 +188,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         Places.initialize(requireContext(),getString(R.string.google_maps_key))
         autocompleteSupportFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,
-        Place.Field.ADDRESS,
-        Place.Field.LAT_LNG,
-        Place.Field.NAME))
+            Place.Field.ADDRESS,
+            Place.Field.LAT_LNG,
+            Place.Field.NAME))
         autocompleteSupportFragment.setHint(getString(R.string.where_to))
         autocompleteSupportFragment.setOnPlaceSelectedListener(object:PlaceSelectionListener{
             override fun onPlaceSelected(p0: Place) {
@@ -315,9 +331,20 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun driverLocation(phonenumber : String, name : String, latitude: String, longitude : String) {
-        val driver = Driver(phonenumber, name, longitude, latitude)
 
-        database.child("Driver-Location").child(phonenumber).setValue(driver)
+        FirebaseService.sharedPref = requireActivity()!!.getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
+            firebaseToken = it.result!!.token
+            Log.e("main", "token is $firebaseToken")
+            FirebaseService.token = it.result!!.token
+            val driver = Driver(phonenumber, name, longitude, latitude,firebaseToken.toString())
+
+
+            database.child("Driver-Location").child(phonenumber).setValue(driver)
+            getData()
+            println("###################")
+            println(driverInformation)
+        }
     }
 
     fun get(){
@@ -325,4 +352,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         fullname = sharefPref.getString("fullname", "").toString()
         phonenumber = sharefPref.getString("phonenumber","").toString()
     }
+
+    private fun getData(){
+        firebase.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var list = ArrayList<Driver>()
+                for (data in snapshot.children){
+                    var model = data.getValue(Driver::class.java)
+                    list.add(model as Driver)
+                }
+                Log.e("Drivers are: ", list.toString())
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Cancel", error.toString())
+            }
+        })
+    }
+
 }
