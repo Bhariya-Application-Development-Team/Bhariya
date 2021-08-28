@@ -37,7 +37,8 @@ class NotifyallActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notifyall)
 //        FirebaseInstanceIdReceiver.getInstance()
         etToken = findViewById(R.id.ettoken)
-        openActivity = findViewById(R.id.openActivity)
+        openActivity = findViewById(R.id.etCode)
+//        openActivity = findViewById(R.id.openActivity)
 //        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
 //            etToken.setText(it.token)
 //        }
@@ -60,7 +61,7 @@ class NotifyallActivity : AppCompatActivity() {
             if (title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty() ){
                 PushNotification(
                     NotificationData(title, message, click_action),
-                    TOPIC,
+                    recipientToken,
 
                 ).also {
                     sendNotification(it)
