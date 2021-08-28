@@ -14,9 +14,6 @@ import com.sudhir.bhariya.entity.Feedback
 
 class FeedbackAdapter(val c: Context, val userList:ArrayList<Feedback>):RecyclerView.Adapter<FeedbackAdapter.UserViewHolder>()
 {
-
-
-
     inner class UserViewHolder(val v:View):RecyclerView.ViewHolder(v){
         var text:TextView
         var name:TextView

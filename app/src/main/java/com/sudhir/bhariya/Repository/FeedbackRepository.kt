@@ -18,6 +18,13 @@ class FeedbackRepository : MyApiRequest(){
             feedbackAPI.insertFeedback(feedback)
         }
     }
+
+    suspend fun showFeedback(feedback : Feedback): FeedbackResponse {
+        return apiRequest {
+            feedbackAPI.showFeedback(feedback)
+        }
+    }
+
 //    private val feedbackAPI =
 //        ServiceBuilder.buildService(FeedbackAPI::class.java)
 //
@@ -27,4 +34,9 @@ class FeedbackRepository : MyApiRequest(){
 //        }
 //    }
 
+//    suspend fun getAllFeedback(feedback : Feedback):FeedbackResponse{
+//        return apiRequest {
+//            feedbackAPI.getAllFeedback(feedback)
+//        }
+//    }
 }
