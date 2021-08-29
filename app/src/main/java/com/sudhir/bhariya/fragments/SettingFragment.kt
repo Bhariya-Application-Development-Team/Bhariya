@@ -76,6 +76,7 @@ class SettingFragment : Fragment() {
                 editor.remove("phonenumber")
 
                 editor.remove("password")
+                editor.remove("token")
                 editor.commit()
                 activity?.finish()
                 startActivity(

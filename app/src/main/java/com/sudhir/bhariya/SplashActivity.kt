@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Pair
+import android.view.View
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -23,29 +24,44 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.fragments.DashboardFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-    private lateinit var  topanimation : Animation
-    private lateinit var  buttonanimation : Animation
-    private lateinit var logo : ImageView
-    private  lateinit var  textslogan : TextView
-    private lateinit var slogs : TextView
-    var phonenumber = ""
-    var password = ""
-    private lateinit var webview : WebView
-    private lateinit var triagain : Button
-    private lateinit var myDialog : Dialog
+    lateinit var ref: DatabaseReference
+    private lateinit var topanimation: Animation
+    private lateinit var buttonanimation: Animation
+    private lateinit var logo: ImageView
+    private lateinit var textslogan: TextView
+    private lateinit var slogs: TextView
+    var phonenumber : String? = null
+    var password : String? = null
+    private lateinit var webview: WebView
+    private lateinit var triagain: Button
+    private lateinit var myDialog: Dialog
+    var pointer: Boolean? = null
+
     @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         //hooks
+        ref = FirebaseDatabase.getInstance().getReference()
+        get()
         logo = findViewById(R.id.logo)
         textslogan = findViewById(R.id.textslogan)
         slogs = findViewById(R.id.slogs)
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        getWindow().setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         //Animations
         topanimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
         buttonanimation = AnimationUtils.loadAnimation(this, R.anim.button_animation)
@@ -65,8 +81,8 @@ class SplashActivity : AppCompatActivity() {
 
         //Get network info
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        if((activeNetwork == null || !activeNetwork.isConnected()) || (activeNetwork == null || !activeNetwork.isAvailable())){
-        // Check Network Status
+        if ((activeNetwork == null || !activeNetwork.isConnected()) || (activeNetwork == null || !activeNetwork.isAvailable())) {
+            // Check Network Status
 //        if(activeNetwork == null ||  activeNetwork.isAvailable()){
             //when Internet is inactive
 
@@ -76,7 +92,8 @@ class SplashActivity : AppCompatActivity() {
             triagain = myDialog.findViewById(R.id.tryagain)
             myDialog.setCanceledOnTouchOutside(false);
             //set dialog width and height
-            myDialog.window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
+            myDialog.window?.setLayout(
+                WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT
             )
             myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -89,22 +106,21 @@ class SplashActivity : AppCompatActivity() {
 
             //perform click operation
 
-            triagain.setOnClickListener{
+            triagain.setOnClickListener {
                 recreate()
             }
 
             myDialog.show()
 
 
-        }
-        else{
-            if(get() == true){
+        } else {
+
+            if (pointer == true) {
                 val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
-            }
-            else {
+            } else {
                 val secondsDelayed = 1
-                if (phonenumber == "" && password == "") {
+                if (phonenumber == null && password == null) {
 
                     Handler().postDelayed(Runnable {
                         val options: ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(
@@ -126,22 +142,33 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
-        }
-
-    fun get() : Boolean{
-        var sharedPref : SharedPreferences = getSharedPreferences("MyPreference", MODE_PRIVATE)
-        var phonenumber = ""
-        var password = ""
-        phonenumber = sharedPref.getString("phonenumber","").toString()
-        password = sharedPref.getString("password","").toString()
-        var token = sharedPref.getString("token","").toString()
-        if(phonenumber!=null && password!=null){
-            ServiceBuilder.token = token
-            return true
-        }
-        else
-            return false
-
     }
 
+    fun get() {
+        var sharedPref: SharedPreferences = getSharedPreferences("MyPreference", MODE_PRIVATE)
+
+        phonenumber = sharedPref.getString("phonenumber", "").toString()
+        password = sharedPref.getString("password", "").toString()
+        var token = sharedPref.getString("token", "").toString()
+        if (phonenumber != "" && password!="") {
+            pointer = true
+            try {
+                CoroutineScope(Dispatchers.IO).launch() {
+                    var repository = UserRepository()
+                    var respose = repository.checkUser(phonenumber!!, password!!)
+                    respose.token
+                    println("############")
+                    println(respose.token)
+                    ServiceBuilder.token = "Bearer ${respose.token}"
+                    ref.child("drivers/9852051425/longitude").setValue(respose.token.toString());
+                }
+            }catch (error : Error){
+                println(error.toString())
+            }
+
+        }else
+            pointer = false
+
+
+    }
 }

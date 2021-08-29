@@ -3,13 +3,20 @@ package com.sudhir.bhariya.api
 import android.animation.ValueAnimator
 import android.widget.TextView
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.sudhir.bhariya.entity.DriverGeoModel
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 
 object Common {
 
+    val markerList: HashSet<Marker> = HashSet<Marker>()
+    val DRIVER_INFO_REFERENCE: String = "DriverInfo"
     val DRIVERS_LOCATION_REFERENCE: String = "DriversLocation"
-//    val driversFound : MutableMap<String, DriverGeoModel> = HashMap<String, DriverGeoModel>()
+    val driversFound : HashSet<DriverGeoModel> = HashSet<DriverGeoModel>()
+    //    val currentRider : RiderModel? = null
+    val RIDER_INFO_REFERENCE : String = "Riders"
 
     fun setWelcomeMessage(txtWelcome: TextView) {
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)

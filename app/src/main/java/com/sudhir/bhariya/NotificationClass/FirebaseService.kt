@@ -49,6 +49,9 @@ class FirebaseService : FirebaseMessagingService() {
     }
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
+        println(message.data["latitude"])
+        println(message.data["longitude"])
+        println("##################")
 
 
         val intent = Intent(this, MainActivity::class.java)

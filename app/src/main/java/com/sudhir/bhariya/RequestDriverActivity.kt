@@ -2,12 +2,14 @@ package com.sudhir.bhariya
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Layout
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
@@ -30,10 +32,12 @@ import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.maps.android.ui.IconGenerator
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Remote.IGoogleAPI
 import com.sudhir.bhariya.Remote.RetrofitClient
 import com.sudhir.bhariya.api.Common
 import com.sudhir.bhariya.databinding.ActivityRequestDriverBinding
+import com.sudhir.bhariya.entity.Driver
 import com.sudhir.bhariya.entity.EventBus.SelectedPlaceEvent
 import com.sudhir.bhariya.entity.User
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +53,7 @@ import org.json.JSONObject
 import org.w3c.dom.Text
 import java.lang.Exception
 
-const val  TOPIC1 = "/topics/myTopic1"
+
 class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //Animation for Spinning
@@ -83,6 +87,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var txt_distance : TextView
     private lateinit var txt_time : TextView
     private lateinit var txt_fare : TextView
+    private lateinit var database : FirebaseDatabase
+    private lateinit var reference: DatabaseReference
     private lateinit var btn_confirm_ride : Button
     private lateinit var txt_address : TextView
     private  lateinit var  btnAcceptTrip : Button
@@ -92,9 +98,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
 
-    private val TAG = "ReadAndWriteSnippets"
-
-    lateinit var database: DatabaseReference
+    var listtoken = ArrayList<String>()
 
 
 
@@ -117,6 +121,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         selectedPlaceEvent = event
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -124,14 +130,12 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityRequestDriverBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        database = FirebaseDatabase.getInstance().reference
+
         txt_distance = findViewById(R.id.txt_distance)
         txt_time = findViewById(R.id.txt_time)
         txt_fare = findViewById(R.id.txt_fare)
         txt_address = findViewById(R.id.txt_address)
         btn_confirm_ride = findViewById(R.id.btn_confirm_ride)
-
-
 
 
         confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
@@ -141,18 +145,17 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         accepttrip = findViewById(R.id.accepttrip)
         btnAcceptTrip = findViewById(R.id.btn_acccpet_trip)
         //Changed code
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("drivers")
 
-
-
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         init()
-        btnAcceptTrip.setOnClickListener{
 
 
-        }
 
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-         mapFragment = supportFragmentManager
+        mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -160,7 +163,6 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         if(intent.extras !=null){
             val worker = intent.getStringExtra("Number_Of_Worker")
             val type = intent.getStringExtra("Vehicle")
-
             val num = worker.toString()
             val cat = type.toString()
             Log.e("main", " $num is for $cat")
@@ -171,18 +173,32 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun init() {
         iGoogleAPI = RetrofitClient.getInstance()!!.create(IGoogleAPI::class.java)
 
-        //Event
-        btn_confirm_ride.setOnClickListener {
-
-
-            confirm_pickup_layout.visibility = View.VISIBLE
-            confirm_ride_layout.visibility = View.GONE
-
-
-            setDataPickup()
-        }
-
+        getData()
+//        //Event
+//        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         btn_confirm_ride.setOnClickListener{
+
+
+            getData()
+
+            Log.e("hellooooooooooooo token", listtoken.toString())
+            val  title = "Trip Request"
+            val   message ="You have new trip"
+            if (title.isNotEmpty() && message.isNotEmpty() ){
+                for(i in listtoken){
+                    println("############3000")
+                    println(i)
+                    PushNotification("27.01","81.05",
+                        NotificationData(title, message),
+                        i
+                    ).also {
+                        sendNotification(it)
+                    }
+                }
+            }
+
+
+            Log.e("main  ######", title)
             if(mMap == null) return@setOnClickListener
             if(selectedPlaceEvent == null) return@setOnClickListener
 
@@ -197,18 +213,58 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                 .build()
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
 
+
+
             addMarkerWithPulseAnimation()
+
+
+
         }
 
     }
+    private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
+
+        try{
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful){
+                Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
+            }
+            else{
+                Log.e("error", response.errorBody().toString())
+            }
+        } catch (e: Exception){
+            Log.e("Main", e.toString())
+        }
+    }
 
 
+    private fun getData(){
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                var list = ArrayList<Driver>()
+
+                for (data in snapshot.children){
+                    var model = data.getValue(Driver::class.java)
+                    list.add(model as Driver)
+                    var tllist = model.Token
+                    listtoken.add(tllist.toString())
+                    Log.e("Users are: ", tllist.toString())
+                }
+                println("#########################")
+
+                Log.e("Token are", listtoken.toString())
 
 
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Cancel", error.toString())
+            }
 
+        })
 
-
+    }
 
 
     private fun addMarkerWithPulseAnimation() {
@@ -219,7 +275,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         originMarker = mMap.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker())
             .position(selectedPlaceEvent!!.origin))
 
-            addPulsatingEffect(selectedPlaceEvent!!.origin)
+        addPulsatingEffect(selectedPlaceEvent!!.origin)
     }
 
     private fun addPulsatingEffect(origin: LatLng) {
@@ -244,32 +300,6 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun startMapCameraSpinningAnimation(target: LatLng?) {
-//        database.child("Driver-Location").child("DriverPhone").get().addOnSuccessListener {
-//            Log.i("firebase", "Got value ${it.value}")
-//            Toast.makeText(this, it.value.toString(), Toast.LENGTH_SHORT).show()
-//        }.addOnFailureListener{
-//            Log.e("firebase", "Error getting data", it)
-//            Toast.makeText(this, "No Data!", Toast.LENGTH_SHORT).show()
-//        }
-
-
-
-        val postListener = object : ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                val user = dataSnapshot.getValue()
-                print(user.toString())
-                println("##############")
-                    // ...
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-        postListener
         if(animator!= null) animator!!.cancel()
         animator = ValueAnimator.ofFloat(0f,(DESIRED_NUM_OF_SPINS*360).toFloat())
         animator!!.duration = (DESIRED_NUM_OF_SPINS*DESIRED_SECONDS_PER_ONE_FULL_SPIN * 1000).toLong()
@@ -286,25 +316,6 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             ))
         }
         animator!!.start()
-
-
-
-
-    }
-
-    private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
-
-        try{
-            val response = RetrofitInstance.api.postNotification(notification)
-            if(response.isSuccessful){
-                Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
-            }
-            else{
-                Log.e("error", response.errorBody().toString())
-            }
-        } catch (e: Exception){
-            Log.e("Main", e.toString())
-        }
     }
 
     override fun onDestroy() {
@@ -369,90 +380,90 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun drawPath(selectedPlaceEvent: SelectedPlaceEvent) {
 
         compositeDisposable.add(iGoogleAPI.getDirections("driving",
-        "less_driving",
-        selectedPlaceEvent.originString,selectedPlaceEvent.destinationString,
-       "AIzaSyC88v00XL7qZe0KaylSIKUmNRjBQ1wII9Q")!!.subscribeOn(Schedulers.io())
+            "less_driving",
+            selectedPlaceEvent.originString,selectedPlaceEvent.destinationString,
+            "AIzaSyC88v00XL7qZe0KaylSIKUmNRjBQ1wII9Q")!!.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { returnResult ->
-            Log.d("API_RETURN",returnResult)
-            try{
-                val jsonObject = JSONObject(returnResult)
-                val jsonArray = jsonObject.getJSONArray("routes");
-                for(i in 0 until jsonArray.length())
+                Log.d("API_RETURN",returnResult)
+                try{
+                    val jsonObject = JSONObject(returnResult)
+                    val jsonArray = jsonObject.getJSONArray("routes");
+                    for(i in 0 until jsonArray.length())
+                    {
+                        val route = jsonArray.getJSONObject(i)
+                        val poly = route.getJSONObject("overview_polyline")
+                        val polyline = poly.getString("points")
+                        polylineList = com.sudhir.bhariya.entity.Common.decodePoly(polyline) as ArrayList<LatLng>?
+                    }
+
+                    polylineOptions = PolylineOptions()
+                    polylineOptions!!.color(Color.GRAY)
+                    polylineOptions!!.width(12f)
+                    polylineOptions!!.startCap(SquareCap())
+                    polylineOptions!!.jointType(JointType.ROUND)
+                    polylineOptions!!.addAll(polylineList)
+                    greyPolyline = mMap.addPolyline(polylineOptions)
+
+
+                    blackPolyLineOptions = PolylineOptions()
+                    blackPolyLineOptions!!.color(Color.GRAY)
+                    blackPolyLineOptions!!.width(12f)
+                    blackPolyLineOptions!!.startCap(SquareCap())
+                    blackPolyLineOptions!!.jointType(JointType.ROUND)
+                    blackPolyLineOptions!!.addAll(polylineList)
+                    blackPolyline = mMap.addPolyline(blackPolyLineOptions)
+
+                    //Animator
+                    val valueAnimator = ValueAnimator.ofInt(0,100)
+                    valueAnimator.duration = 1100
+                    valueAnimator.repeatCount = ValueAnimator.INFINITE
+                    valueAnimator.interpolator = LinearInterpolator()
+                    valueAnimator.addUpdateListener { value ->
+                        val points = greyPolyline!!.points
+                        val percentValue = value.animatedValue.toString().toInt()
+                        val size = points.size
+                        val newpoints = (size * (percentValue/100.0f)).toInt()
+                        val p = points.subList(0,newpoints)
+                        blackPolyline!!.points = p
+                    }
+                    valueAnimator.start()
+
+                    val latLngBound = LatLngBounds.Builder().include(selectedPlaceEvent.origin)
+                        .include(selectedPlaceEvent.destination)
+                        .build()
+
+                    //Add car icon for origin
+                    val objects = jsonArray.getJSONObject(0)
+                    val legs = objects.getJSONArray("legs")
+                    val legsObject = legs.getJSONObject(0)
+
+                    val time = legsObject.getJSONObject("duration")
+                    val duration = time.getString("text")
+                    val distance = legsObject.getJSONObject("distance")
+                    val distanceText = distance.getString("text")
+
+                    val start_address = legsObject.getString("start_address")
+                    val end_address = legsObject.getString("end_address")
+
+                    //Value Setting
+
+                    txt_distance.text = distanceText
+                    txt_time.text = duration
+
+                    fare(distanceText.toString(),3)
+
+                    addOriginMarker(duration,start_address)
+                    addDestinationMarker(end_address)
+
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBound,160))
+                    mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.cameraPosition!!.zoom-1))
+
+                }
+                catch(e:java.lang.Exception)
                 {
-                    val route = jsonArray.getJSONObject(i)
-                    val poly = route.getJSONObject("overview_polyline")
-                    val polyline = poly.getString("points")
-                    polylineList = com.sudhir.bhariya.entity.Common.decodePoly(polyline) as ArrayList<LatLng>?
+                    Toast.makeText(this, e.message!!, Toast.LENGTH_SHORT).show()
                 }
-
-                polylineOptions = PolylineOptions()
-                polylineOptions!!.color(Color.GRAY)
-                polylineOptions!!.width(12f)
-                polylineOptions!!.startCap(SquareCap())
-                polylineOptions!!.jointType(JointType.ROUND)
-                polylineOptions!!.addAll(polylineList)
-                greyPolyline = mMap.addPolyline(polylineOptions)
-
-
-                blackPolyLineOptions = PolylineOptions()
-                blackPolyLineOptions!!.color(Color.GRAY)
-                blackPolyLineOptions!!.width(12f)
-                blackPolyLineOptions!!.startCap(SquareCap())
-                blackPolyLineOptions!!.jointType(JointType.ROUND)
-                blackPolyLineOptions!!.addAll(polylineList)
-                blackPolyline = mMap.addPolyline(blackPolyLineOptions)
-
-                //Animator
-                val valueAnimator = ValueAnimator.ofInt(0,100)
-                valueAnimator.duration = 1100
-                valueAnimator.repeatCount = ValueAnimator.INFINITE
-                valueAnimator.interpolator = LinearInterpolator()
-                valueAnimator.addUpdateListener { value ->
-                    val points = greyPolyline!!.points
-                    val percentValue = value.animatedValue.toString().toInt()
-                    val size = points.size
-                    val newpoints = (size * (percentValue/100.0f)).toInt()
-                    val p = points.subList(0,newpoints)
-                    blackPolyline!!.points = p
-                }
-                valueAnimator.start()
-
-                val latLngBound = LatLngBounds.Builder().include(selectedPlaceEvent.origin)
-                    .include(selectedPlaceEvent.destination)
-                    .build()
-
-                //Add car icon for origin
-                val objects = jsonArray.getJSONObject(0)
-                val legs = objects.getJSONArray("legs")
-                val legsObject = legs.getJSONObject(0)
-
-                val time = legsObject.getJSONObject("duration")
-                val duration = time.getString("text")
-                val distance = legsObject.getJSONObject("distance")
-                val distanceText = distance.getString("text")
-
-                val start_address = legsObject.getString("start_address")
-                val end_address = legsObject.getString("end_address")
-
-                //Value Setting
-
-                txt_distance.text = distanceText
-                txt_time.text = duration
-
-                fare(distanceText.toString(),3)
-
-                addOriginMarker(duration,start_address)
-                addDestinationMarker(end_address)
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBound,160))
-                mMap.moveCamera(CameraUpdateFactory.zoomTo(mMap.cameraPosition!!.zoom-1))
-
-            }
-            catch(e:java.lang.Exception)
-            {
-                Toast.makeText(this, e.message!!, Toast.LENGTH_SHORT).show()
-            }
             })
 
     }

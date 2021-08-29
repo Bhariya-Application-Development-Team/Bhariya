@@ -23,6 +23,8 @@ abstract class MyApiRequest {
             }
             message.append("Error code : ${response.code()}")
             throw IOException(message.toString())
+            println("#########")
+            println(message.toString())
         }
     }
 }
