@@ -37,7 +37,7 @@ class NotifyallActivity : AppCompatActivity() {
         setContentView(R.layout.activity_notifyall)
 //        FirebaseInstanceIdReceiver.getInstance()
         etToken = findViewById(R.id.ettoken)
-        openActivity = findViewById(R.id.etCode)
+//        openActivity = findViewById(R.id.etCode)
 //        openActivity = findViewById(R.id.openActivity)
 //        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
 //            etToken.setText(it.token)
@@ -74,15 +74,14 @@ class NotifyallActivity : AppCompatActivity() {
 
     private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
 
-        try{
+        try {
             val response = RetrofitInstance.api.postNotification(notification)
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
+            } else {
+                Log.e("error", response.errorBody().toString())
             }
-            else{
-               Log.e("error", response.errorBody().toString())
-            }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             Log.e("Main", e.toString())
         }
     }

@@ -24,7 +24,7 @@ import android.util.Pair as UtilPair
 
 
 
-class LoginActivity : AppCompatActivity() {
+class DriverLoginActivity : AppCompatActivity() {
 
     private val permissions = arrayOf(
         android.Manifest.permission.CAMERA,
@@ -42,8 +42,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var hello : TextView
     private lateinit var tvSignupdriver: TextView
     private lateinit var textdriver : TextView
-    private lateinit var tvlogindriver: TextView
-    private lateinit var textdriverlogin : TextView
 
 
 
@@ -55,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_driver_login)
 
 
         etphonenumber = findViewById(R.id.etphonenumber)
@@ -72,8 +70,6 @@ class LoginActivity : AppCompatActivity() {
         welcome = findViewById(R.id.welcome)
         tvSignupdriver = findViewById(R.id.tvSignupdriver)
         textdriver = findViewById(R.id.textdriver)
-        tvlogindriver = findViewById(R.id.tvlogindriver)
-        textdriverlogin = findViewById(R.id.textdriverlogin)
 
         checkRunTimePermission()
 
@@ -89,24 +85,19 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        tvlogindriver.setOnClickListener{
-            val intent = Intent(this,DriverLoginActivity::class.java)
-            startActivity(intent)
-        }
-
         tvSignup.setOnClickListener {
             val intent = Intent(LoginActivity@this, SignUpActivity::class.java)
 
-          val options :   ActivityOptions  = ActivityOptions.makeSceneTransitionAnimation(LoginActivity@this,
-              UtilPair.create(image, "logo_image"),
-              UtilPair.create(etphonenumber, "edit_trans"),
-              UtilPair.create(etpassword, "edit_trans"),
-              UtilPair.create(btnLogin, "btn_trans"),
-              UtilPair.create(tvSignup, "btn_trans"),
-              UtilPair.create(textothers, "already"),
-              UtilPair.create(hello, "logo_text"),
-              UtilPair.create(welcome, "logo_desc")
-              )
+            val options :   ActivityOptions  = ActivityOptions.makeSceneTransitionAnimation(LoginActivity@this,
+                UtilPair.create(image, "logo_image"),
+                UtilPair.create(etphonenumber, "edit_trans"),
+                UtilPair.create(etpassword, "edit_trans"),
+                UtilPair.create(btnLogin, "btn_trans"),
+                UtilPair.create(tvSignup, "btn_trans"),
+                UtilPair.create(textothers, "already"),
+                UtilPair.create(hello, "logo_text"),
+                UtilPair.create(welcome, "logo_desc")
+            )
             startActivity(intent, options.toBundle())
         }
         tvSignupdriver.setOnClickListener {
@@ -150,7 +141,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(this@LoginActivity, permissions, 1)
+        ActivityCompat.requestPermissions(this@DriverLoginActivity, permissions, 1)
     }
 
     private  fun validatePhonenumber(): Boolean{
@@ -193,25 +184,25 @@ class LoginActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val repository = UserRepository()
-//                val repository = DriverRepository()
+//                val repository = UserRepository()
+                val repository = DriverRepository()
 
-                val response = repository.checkUser(phonenumber, password)
+                val response = repository.checkDriver(phonenumber, password)
                 if (response.success == true) {
                     println("Successful Login")
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
-                    val user = repository.viewUser()
+                    val driver = repository.viewDriver()
 
                     startActivity(
                         Intent(
-                            this@LoginActivity,
+                            this@DriverLoginActivity,
                             SharedPreferenceActivity::class.java
                         )
-                            .putExtra("fullname", user.Fullname.toString())
+                            .putExtra("fullname", driver.Fullname.toString())
                             .putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
-                        )
+                    )
                     finish()
                 } else {
                     withContext(Dispatchers.Main) {
