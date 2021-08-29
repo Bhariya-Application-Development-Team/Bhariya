@@ -1,11 +1,13 @@
 package com.sudhir.bhariya
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -14,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +44,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var tvSignup: TextView
     private lateinit var textothers : TextView
     private lateinit var welcome : TextView
+    private lateinit var database : FirebaseDatabase
+    private lateinit var reference: DatabaseReference
     private lateinit var hello : TextView
 
 
@@ -66,6 +74,9 @@ class LoginActivity : AppCompatActivity() {
         hello = findViewById(R.id.hello)
         welcome = findViewById(R.id.welcome)
 
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("users")
+
         checkRunTimePermission()
 
         btnLogin.setOnClickListener {
@@ -83,16 +94,16 @@ class LoginActivity : AppCompatActivity() {
         tvSignup.setOnClickListener {
             val intent = Intent(LoginActivity@this, SignUpActivity::class.java)
 
-          val options :   ActivityOptions  = ActivityOptions.makeSceneTransitionAnimation(LoginActivity@this,
-              UtilPair.create(image, "logo_image"),
-              UtilPair.create(etphonenumber, "edit_trans"),
-              UtilPair.create(etpassword, "edit_trans"),
-              UtilPair.create(btnLogin, "btn_trans"),
-              UtilPair.create(tvSignup, "btn_trans"),
-              UtilPair.create(textothers, "already"),
-              UtilPair.create(hello, "logo_text"),
-              UtilPair.create(welcome, "logo_desc")
-              )
+            val options :   ActivityOptions  = ActivityOptions.makeSceneTransitionAnimation(LoginActivity@this,
+                UtilPair.create(image, "logo_image"),
+                UtilPair.create(etphonenumber, "edit_trans"),
+                UtilPair.create(etpassword, "edit_trans"),
+                UtilPair.create(btnLogin, "btn_trans"),
+                UtilPair.create(tvSignup, "btn_trans"),
+                UtilPair.create(textothers, "already"),
+                UtilPair.create(hello, "logo_text"),
+                UtilPair.create(welcome, "logo_desc")
+            )
             startActivity(intent, options.toBundle())
         }
 
@@ -168,21 +179,16 @@ class LoginActivity : AppCompatActivity() {
                 val response = repository.checkUser(phonenumber, password)
                 if (response.success == true) {
                     println("Successful Login")
+                    UpdateUserToken()
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
-
-                    val user = repository.viewUser()
-
                     startActivity(
                         Intent(
                             this@LoginActivity,
                             SharedPreferenceActivity::class.java
-                        )
-                            .putExtra("fullname", user.Fullname.toString())
-                            .putExtra("phonenumber", phonenumber)
+                        ).putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
-                            .putExtra("token","Bearer ${response.token}")
-                        )
+                    )
                     finish()
                 } else {
                     withContext(Dispatchers.Main) {
@@ -204,6 +210,28 @@ class LoginActivity : AppCompatActivity() {
                 println(ex.toString())
             }
         }
+    }
+
+
+    var firebaseToken = ""
+    public fun UpdateUserToken(){
+        val phonenumber = "9823349901"
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(it.isComplete){
+                firebaseToken = it.result
+                Log.e("My token is ", firebaseToken)
+                reference.child(phonenumber).child("token").setValue(firebaseToken).addOnSuccessListener {
+                    Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to Update", Toast.LENGTH_LONG)
+                }
+            }
+        }
+
+
+
     }
 }
 

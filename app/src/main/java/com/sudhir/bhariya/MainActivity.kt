@@ -10,7 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import com.sudhir.bhariya.fragments.*
 
 class MainActivity : AppCompatActivity() {
-    private val dashboardFragment = DriverFragment()
+    private val dashboardFragment = DashboardFragment()
     private val historyFragment = HistoryFragment()
     private val settingFragment = SettingFragment()
     private val profileFragment = ProfileFragment()
