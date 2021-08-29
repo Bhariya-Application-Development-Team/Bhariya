@@ -42,6 +42,9 @@ class DriverLoginActivity : AppCompatActivity() {
     private lateinit var hello : TextView
     private lateinit var tvSignupdriver: TextView
     private lateinit var textdriver : TextView
+    private lateinit var textuserlogin: TextView
+    private lateinit var tvloginuser : TextView
+
 
 
 
@@ -70,6 +73,8 @@ class DriverLoginActivity : AppCompatActivity() {
         welcome = findViewById(R.id.welcome)
         tvSignupdriver = findViewById(R.id.tvSignupdriver)
         textdriver = findViewById(R.id.textdriver)
+        textuserlogin = findViewById(R.id.textuserlogin)
+        tvloginuser = findViewById(R.id.tvloginuser)
 
         checkRunTimePermission()
 
@@ -82,6 +87,10 @@ class DriverLoginActivity : AppCompatActivity() {
 
         tvForgotpassword.setOnClickListener{
             val intent = Intent(this,ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
+        tvloginuser.setOnClickListener{
+            val intent = Intent(this,SignUpActivity::class.java)
             startActivity(intent)
         }
 

@@ -28,6 +28,7 @@ import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.DriverRepository
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.ServiceBuilder.token
+import com.sudhir.bhariya.entity.ActiveDriver
 import com.sudhir.bhariya.entity.Driver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -323,27 +324,18 @@ class SignupDriverActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (it.isComplete) {
                 val firebaseToken = it.result
-                val driver = Driver(phonenumber, name, location, password, firebaseToken)
+                val driver = Driver(phonenumber, name, location, password, firebaseToken,"Driver")
                 println("#########")
                 println(firebaseToken)
 
                 database.child("drivers").child(phonenumber).setValue(driver)
             }
 
-            Toast.makeText(this, "Firebase Stored Data!", Toast.LENGTH_SHORT).show()
-            FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-            FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
-                firebaseToken = it.result!!.token
-                Log.e("main", "token is $firebaseToken")
-                FirebaseService.token = it.result!!.token
-                val driver = Driver(phonenumber, name, location, password, firebaseToken, "Driver")
 
-                database.child("drivers").child(phonenumber).setValue(driver)
             }
 
         }
 
 
-    }
 
 }

@@ -58,8 +58,8 @@ class ProfileActivity : AppCompatActivity() {
             val editor = sharedPreference?.edit()
             if (editor != null) {
                 editor.remove("phonenumber")
-
                 editor.remove("password")
+                editor.remove("token")
                 editor.commit()
                 finish()
                 startActivity(
