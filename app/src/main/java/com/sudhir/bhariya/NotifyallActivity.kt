@@ -77,19 +77,19 @@ class NotifyallActivity : AppCompatActivity() {
             Log.e("hellooooooooooooo token", listtoken.toString())
             title = name.text.toString()
             message = texts.text.toString()
-//            if (title.isNotEmpty() && message.isNotEmpty() ){
-//                for(i in listtoken){
-//                    println("############")
-//                    println(i)
-//                    PushNotification(
-//                        NotificationData("27.05","87.01",title, message),
-//                        i
-//
-//                    ).also {
-//                        sendNotification(it)
-//                    }
-//                }
-//            }
+            if (title.isNotEmpty() && message.isNotEmpty() ){
+                for(i in listtoken){
+                    println("############")
+                    println(i)
+                    PushNotificationtoAll(
+                        TitleMessageData(title, message),
+                        i
+
+                    ).also {
+                        sendNotification(it)
+                    }
+                }
+            }
 
 
         }
@@ -97,19 +97,19 @@ class NotifyallActivity : AppCompatActivity() {
 
     }
 
-    private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
+    private fun sendNotification(notification: PushNotificationtoAll)= CoroutineScope(Dispatchers.IO).launch {
 
-        try{
-            val response = RetrofitInstance.api.postNotification(notification)
-            if(response.isSuccessful){
-                Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
-            }
-            else{
-                Log.e("error", response.errorBody().toString())
-            }
-        } catch (e:Exception){
-            Log.e("Main", e.toString())
-        }
+//        try{
+//            val response = RetrofitInstance.api.postNotification(notification)
+//            if(response.isSuccessful){
+//                Log.e("mainSuccess", "Message: ${Gson().toJson(response)}")
+//            }
+//            else{
+//                Log.e("error", response.errorBody().toString())
+//            }
+//        } catch (e:Exception){
+//            Log.e("Main", e.toString())
+//        }
     }
 
     private fun getData(){

@@ -1,11 +1,13 @@
 package com.sudhir.bhariya
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -14,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.DriverRepository
 import com.sudhir.bhariya.Repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +57,10 @@ class DriverLoginActivity : AppCompatActivity() {
     private lateinit var passwordtxt : TextInputLayout
     private lateinit var linearLayout: LinearLayout
 
+    var firebaseToken = ""
+    var database = FirebaseDatabase.getInstance();
+    var reference = database.getReference("users")
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +84,9 @@ class DriverLoginActivity : AppCompatActivity() {
         textdriver = findViewById(R.id.textdriver)
         textuserlogin = findViewById(R.id.textuserlogin)
         tvloginuser = findViewById(R.id.tvloginuser)
+
+        reference = FirebaseDatabase.getInstance().getReference("drivers")
+
 
         checkRunTimePermission()
 
@@ -185,6 +197,7 @@ class DriverLoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
+        UpdateDriverToken()
 
         val phonenumber = etphonenumber.text.toString()
         val password = etpassword.text.toString()
@@ -231,6 +244,23 @@ class DriverLoginActivity : AppCompatActivity() {
 
             } catch (ex: Exception) {
                 println(ex.toString())
+            }
+        }
+    }
+
+    public fun UpdateDriverToken() {
+        val phonenumber = "9852051425"
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isComplete) {
+                firebaseToken = it.result
+                Log.e("My token is ", firebaseToken)
+                reference.child(phonenumber).child("token").setValue(firebaseToken)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT)
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "Failed to Update", Toast.LENGTH_LONG)
+                    }
             }
         }
     }

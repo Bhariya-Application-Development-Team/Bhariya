@@ -9,8 +9,8 @@ object ServiceBuilder {
 //         For Running on Emulator
 //    "http://10.0.2.2:3000/"
 
-        "http://bhariyaa.herokuapp.com/"
-//    "http://10.0.2.2:3000/"
+//        "http://bhariyaa.herokuapp.com/"
+    "http://10.0.2.2:3000/"
 //        "https://bhariya.herokuapp.com/"
         // For Running on a real Device
 //        "http://192.168.0.124:3000/"

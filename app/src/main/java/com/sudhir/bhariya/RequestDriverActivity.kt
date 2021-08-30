@@ -182,34 +182,35 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
             confirm_ride_layout.visibility = View.GONE
             confirm_pickup_layout.visibility = View.VISIBLE
+            txt_address.text = startAddress
+
 
 
 
         }
 
         btn_meetup_point.setOnClickListener {
-            txt_address.text = startAddress
             Log.e("hellooooooooooooo token", listtoken.toString())
             val  title = "Trip Request"
             val   message ="You have new trip"
+//            PushNotification(
+//                NotificationData(selectedPlaceEvent, title, message),
+//                "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
+//            ).also {
+//                sendNotification(it)
+//            }
+            if (title.isNotEmpty() && message.isNotEmpty() ){
+                for(i in listtoken){
+                    println("############3000")
+                    println(i)
             PushNotification(
                 NotificationData(selectedPlaceEvent, title, message),
-                "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
+                i
             ).also {
                 sendNotification(it)
             }
-//            if (title.isNotEmpty() && message.isNotEmpty() ){
-//                for(i in listtoken){
-//                    println("############3000")
-//                    println(i)
-//                    PushNotification("27.01","81.05",
-//                        NotificationData(title, message),
-//                        i
-//                    ).also {
-//                        sendNotification(it)
-//                    }
-//                }
-//            }
+                }
+            }
 
 
             Log.e("main  ######", title)
