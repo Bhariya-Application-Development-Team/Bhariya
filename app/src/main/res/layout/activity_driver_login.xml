@@ -9,7 +9,7 @@
     android:paddingTop="10dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    tools:context=".LoginActivity">
+    tools:context=".DriverLoginActivity">
     <ImageView
         android:id="@+id/imagel"
         android:layout_width="228dp"
@@ -149,20 +149,21 @@
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Are you a driver "
+            android:text="Are you a User "
             android:textAlignment="center"
             android:textColor="#000"
             android:transitionName="already"
-            android:id="@+id/textdriverlogin"
+            android:id="@+id/textuserlogin"
             android:textStyle="bold" />
+
 
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:gravity="center_horizontal"
-            android:text="Login as driver"
-            android:id="@+id/tvlogindriver"
+            android:text="Login as user"
+            android:id="@+id/tvloginuser"
             android:textAlignment="center"
 
             android:textColor="#0E7ED8"
@@ -201,6 +202,21 @@
 
             android:textStyle="bold" />
 
+        <!--        <Button-->
+        <!--            android:visibility="invisible"-->
+        <!--            android:id="@+id/btnPhone"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Gmail"-->
+        <!--            />-->
+
+        <!--        <Button-->
+        <!--            android:visibility="invisible"-->
+        <!--            android:id="@+id/btnGmail"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Gmail"-->
+        <!--            />-->
 
     </LinearLayout>
     <LinearLayout

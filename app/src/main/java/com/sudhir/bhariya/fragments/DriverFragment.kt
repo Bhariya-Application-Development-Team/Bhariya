@@ -143,6 +143,8 @@ class DriverFragment : Fragment(), OnMapReadyCallback {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
         database = FirebaseDatabase.getInstance().reference
         firebase = FirebaseDatabase.getInstance().getReference().child("Driver-Location/")
 

@@ -1,14 +1,36 @@
 package com.sudhir.bhariya.api
 
+import com.sudhir.bhariya.Response.DriverLoginResponse
 import com.sudhir.bhariya.Response.DriverResponse
 import com.sudhir.bhariya.Response.LoginResponse
+import com.sudhir.bhariya.Response.UserResponse
+import com.sudhir.bhariya.entity.Driver
+import com.sudhir.bhariya.entity.User
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.Multipart
-import retrofit2.http.PUT
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface  DriverAPI {
+
+
+    @POST("/driver/register")
+    suspend fun signupDriver(
+        @Body driver: Driver
+    ): Response<DriverLoginResponse>
+
+    @GET("driver/single/")
+    suspend fun viewDriver(
+        @Header("Authorization") token: String,
+    ):Response<DriverResponse>
+
+    @FormUrlEncoded
+    @POST("driver/login/")
+    suspend fun checkDriver(
+        @Field("Phonenumber") phonenumber :String,
+        @Field("password") password :String,
+
+        ):Response<DriverLoginResponse>
+
 
     @Multipart
     @PUT("/driver/registration/citizenship")

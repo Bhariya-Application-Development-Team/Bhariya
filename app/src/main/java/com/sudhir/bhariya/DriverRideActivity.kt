@@ -54,7 +54,7 @@ import org.w3c.dom.Text
 import java.lang.Exception
 
 
-class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
+class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //Animation for Spinning
     var animator : ValueAnimator? = null
@@ -293,7 +293,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                         .center(origin)
                         .radius(p0!!.animatedValue.toString().toDouble())
                         .strokeColor(Color.WHITE)
-                        .fillColor(ContextCompat.getColor(this@RequestDriverActivity,R.color.darker_map)))
+                        .fillColor(ContextCompat.getColor(this@DriverRideActivity,R.color.darker_map)))
 
                 }
             }

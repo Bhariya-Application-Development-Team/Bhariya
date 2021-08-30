@@ -25,9 +25,11 @@ import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sudhir.bhariya.NotificationClass.FirebaseService
+import com.sudhir.bhariya.Repository.DriverRepository
 import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.ServiceBuilder.token
-import com.sudhir.bhariya.entity.User
+import com.sudhir.bhariya.entity.ActiveDriver
+import com.sudhir.bhariya.entity.Driver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +38,7 @@ import java.lang.Exception
 import android.util.Pair as UtilPair
 
 
-class SignUpActivity : AppCompatActivity() {
+class SignupDriverActivity : AppCompatActivity() {
     private lateinit var  fullname : EditText
     private lateinit var  phonenumber : EditText
     private lateinit var  address : EditText
@@ -77,7 +79,7 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_signup_driver)
 
         fullname = findViewById(R.id.fullname)
         phonenumber = findViewById(R.id.phonenumber)
@@ -129,7 +131,7 @@ class SignUpActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignUpActivity,
+            val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignupDriverActivity,
                 UtilPair.create(image, "logo_image"),
                 UtilPair.create(phonenumber, "edit_trans"),
                 UtilPair.create(password, "edit_trans"),
@@ -258,18 +260,18 @@ class SignUpActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun register(){
-        val customer =
-            User(Phonenumber = phone, Fullname = name, Address = location, password = paswd, Token = firebaseToken)
+        val driver =
+            Driver(Phonenumber = phone, Fullname = name, Address = location, password = paswd, Token = firebaseToken)
 
-        registerNewUser(phone,name, location,paswd)
+        registerNewDriver(phone,name, location,paswd)
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val repository = UserRepository()
-                val response = repository.signupUser(customer)
+                val repository = DriverRepository()
+                val response = repository.signupDriver(driver)
                 if (response.success == true) {
 
                     withContext(Dispatchers.Main) {
-                        val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignUpActivity,
+                        val options : ActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this@SignupDriverActivity,
                             UtilPair.create(image, "logo_image"),
                             UtilPair.create(phonenumber, "edit_trans"),
                             UtilPair.create(password, "edit_trans"),
@@ -285,13 +287,13 @@ class SignUpActivity : AppCompatActivity() {
                         startActivity(
 
                             Intent(
-                                this@SignUpActivity,
+                                this@SignupDriverActivity,
                                 LoginActivity::class.java
                             ), options.toBundle())
 
                         Toast.makeText(
-                            this@SignUpActivity,
-                            "Registered Successfully",
+                            this@SignupDriverActivity,
+                            "Driver Registered Successfully",
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -301,7 +303,7 @@ class SignUpActivity : AppCompatActivity() {
                 }
             } catch (ex: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@SignUpActivity, ex.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(this@SignupDriverActivity, ex.toString(), Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -311,33 +313,28 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    fun registerNewUser(phonenumber : String, name : String, location: String, password : String) {
-
-        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener{
-            firebaseToken = it.result!!.token
-
-        }
-
-        val user = User(phonenumber, name, location, password, firebaseToken)
-        println("#########")
-        println(firebaseToken)
-
-        database.child("users").child(phonenumber).setValue(user)
-
-        Toast.makeText(this, "Firebase Stored Data!", Toast.LENGTH_SHORT).show()
+    fun registerNewDriver(phonenumber : String, name : String, location: String, password : String) {
         FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener {
-            firebaseToken = it.result!!.token
-            Log.e("main", "token is $firebaseToken")
-            FirebaseService.token = it.result!!.token
-            val user = User(phonenumber, name, location, password, firebaseToken, "User")
 
-            database.child("users").child(phonenumber).setValue(user)
+
+//        FirebaseInstallations.getInstance().getToken(true).addOnCompleteListener{
+//            firebaseToken = it.result!!.token
+//
+//        }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (it.isComplete) {
+                val firebaseToken = it.result
+                val driver = Driver(phonenumber, name, location, password, firebaseToken,"Driver")
+                println("#########")
+                println(firebaseToken)
+
+                database.child("drivers").child(phonenumber).setValue(driver)
+            }
+
+
+            }
+
         }
-
-    }
-
-
 
 
 
