@@ -1,11 +1,13 @@
 package com.sudhir.bhariya
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
@@ -14,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Repository.DriverRepository
 import com.sudhir.bhariya.Repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -50,6 +56,10 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var phonenumbertxt: TextInputLayout
     private lateinit var passwordtxt : TextInputLayout
     private lateinit var linearLayout: LinearLayout
+    var firebaseToken = ""
+    var database = FirebaseDatabase.getInstance();
+    var reference = database.getReference("users")
+
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +84,7 @@ class LoginActivity : AppCompatActivity() {
         textdriver = findViewById(R.id.textdriver)
         tvlogindriver = findViewById(R.id.tvlogindriver)
         textdriverlogin = findViewById(R.id.textdriverlogin)
+        reference = FirebaseDatabase.getInstance().getReference("users")
 
         checkRunTimePermission()
 
@@ -90,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvlogindriver.setOnClickListener{
-            val intent = Intent(this,DriverRideActivity::class.java)
+            val intent = Intent(this,DriverLoginActivity::class.java)
             startActivity(intent)
         }
 
@@ -191,6 +202,8 @@ class LoginActivity : AppCompatActivity() {
 
 
 
+
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val repository = UserRepository()
@@ -198,6 +211,7 @@ class LoginActivity : AppCompatActivity() {
 
                 val response = repository.checkUser(phonenumber, password)
                 if (response.success == true) {
+                    UpdateUserToken()
                     println("Successful Login")
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
@@ -233,6 +247,23 @@ class LoginActivity : AppCompatActivity() {
                 println(ex.toString())
             }
         }
+    }
+
+    public fun UpdateUserToken(){
+        val phonenumber = "9852051425"
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(it.isComplete){
+                firebaseToken = it.result
+                Log.e("My token is ", firebaseToken)
+                reference.child(phonenumber).child("token").setValue(firebaseToken).addOnSuccessListener {
+                    Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT)
+                }.addOnFailureListener {
+                    Toast.makeText(this, "Failed to Update", Toast.LENGTH_LONG)
+                }
+            }
+        }
+
     }
 }
 

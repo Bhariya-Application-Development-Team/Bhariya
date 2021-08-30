@@ -3,6 +3,7 @@ package com.sudhir.bhariya
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
@@ -153,6 +154,8 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
+        selectedPlaceEvent = intent.getSerializableExtra("SelectedPlaceEvent") as? SelectedPlaceEvent
+        println(selectedPlaceEvent.toString())
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         init()
