@@ -20,6 +20,7 @@ import com.esewa.android.sdk.payment.ESewaPayment
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.sudhir.bhariya.DriverRideActivity
 import com.sudhir.bhariya.MainActivity
 import com.sudhir.bhariya.NotifyallActivity
 import com.sudhir.bhariya.R
@@ -50,15 +51,13 @@ class FirebaseService : FirebaseMessagingService() {
     }
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        println(message.data["latitude"])
-        println(message.data["longitude"])
         println("##################")
-        println(message.data["longitude"]+" Longitude")
-        println(message.data["latitude"] + "Latitude")
+        println(message.data["selectedPlaceEvent"])
+//        println(message.data["latitude"] + "Latitude")
 
 
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, DriverRideActivity::class.java)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
