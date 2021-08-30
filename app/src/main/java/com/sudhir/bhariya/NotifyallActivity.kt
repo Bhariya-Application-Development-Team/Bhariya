@@ -82,7 +82,7 @@ class NotifyallActivity : AppCompatActivity() {
                     println("############")
                     println(i)
                     PushNotification(
-                        NotificationData(title, message),
+                        NotificationData("27.05","87.01",title, message),
                         i
 
                     ).also {

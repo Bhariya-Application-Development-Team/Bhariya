@@ -24,7 +24,7 @@ import android.util.Pair as UtilPair
 
 
 
-class LoginActivity : AppCompatActivity() {
+class DriverLoginActivity : AppCompatActivity() {
 
     private val permissions = arrayOf(
         android.Manifest.permission.CAMERA,
@@ -42,8 +42,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var hello : TextView
     private lateinit var tvSignupdriver: TextView
     private lateinit var textdriver : TextView
-    private lateinit var tvlogindriver: TextView
-    private lateinit var textdriverlogin : TextView
+    private lateinit var textuserlogin: TextView
+    private lateinit var tvloginuser : TextView
+
 
 
 
@@ -55,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_driver_login)
 
 
         etphonenumber = findViewById(R.id.etphonenumber)
@@ -72,8 +73,8 @@ class LoginActivity : AppCompatActivity() {
         welcome = findViewById(R.id.welcome)
         tvSignupdriver = findViewById(R.id.tvSignupdriver)
         textdriver = findViewById(R.id.textdriver)
-        tvlogindriver = findViewById(R.id.tvlogindriver)
-        textdriverlogin = findViewById(R.id.textdriverlogin)
+        textuserlogin = findViewById(R.id.textuserlogin)
+        tvloginuser = findViewById(R.id.tvloginuser)
 
         checkRunTimePermission()
 
@@ -88,9 +89,8 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this,ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
-
-        tvlogindriver.setOnClickListener{
-            val intent = Intent(this,DriverLoginActivity::class.java)
+        tvloginuser.setOnClickListener{
+            val intent = Intent(this,SignUpActivity::class.java)
             startActivity(intent)
         }
 
@@ -150,7 +150,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(this@LoginActivity, permissions, 1)
+        ActivityCompat.requestPermissions(this@DriverLoginActivity, permissions, 1)
     }
 
     private  fun validatePhonenumber(): Boolean{
@@ -193,22 +193,22 @@ class LoginActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val repository = UserRepository()
-//                val repository = DriverRepository()
+//                val repository = UserRepository()
+                val repository = DriverRepository()
 
-                val response = repository.checkUser(phonenumber, password)
+                val response = repository.checkDriver(phonenumber, password)
                 if (response.success == true) {
                     println("Successful Login")
                     // Open Dashboard
                     ServiceBuilder.token = "Bearer ${response.token}"
-                    val user = repository.viewUser()
+                    val driver = repository.viewDriver()
 
                     startActivity(
                         Intent(
-                            this@LoginActivity,
+                            this@DriverLoginActivity,
                             SharedPreferenceActivity::class.java
                         )
-                            .putExtra("fullname", user.Fullname.toString())
+                            .putExtra("fullname", driver.Fullname.toString())
                             .putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
                     )
