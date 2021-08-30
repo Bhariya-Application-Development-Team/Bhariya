@@ -85,22 +85,21 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private var destinationMarker : Marker?= null
 
     private lateinit var txt_distance : TextView
+    private lateinit var txt_origin : TextView
     private lateinit var txt_time : TextView
     private lateinit var txt_fare : TextView
     private lateinit var database : FirebaseDatabase
     private lateinit var reference: DatabaseReference
     private lateinit var btn_confirm_ride : Button
+    private lateinit var btn_meetup_point : Button
     private lateinit var txt_address : TextView
-    private  lateinit var  btnAcceptTrip : Button
     private lateinit var confirm_pickup_layout : View
     private lateinit var confirm_ride_layout : View
-    private lateinit var accepttrip : View
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
 
     var listtoken = ArrayList<String>()
-
-
+    var startAddress : String? = null
 
     override fun onStart() {
         if(!EventBus.getDefault().isRegistered(this))
@@ -136,14 +135,14 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         txt_fare = findViewById(R.id.txt_fare)
         txt_address = findViewById(R.id.txt_address)
         btn_confirm_ride = findViewById(R.id.btn_confirm_ride)
+        btn_meetup_point = findViewById(R.id.btn_meetup)
+
 
 
         confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
         confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
         fill_maps = findViewById(R.id.fill_maps)
         searching_driver = findViewById(R.id.searching_driver)
-        accepttrip = findViewById(R.id.accepttrip)
-        btnAcceptTrip = findViewById(R.id.btn_acccpet_trip)
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
@@ -181,11 +180,20 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
             getData()
 
+            confirm_ride_layout.visibility = View.GONE
+            confirm_pickup_layout.visibility = View.VISIBLE
+
+
+
+        }
+
+        btn_meetup_point.setOnClickListener {
+            txt_address.text = startAddress
             Log.e("hellooooooooooooo token", listtoken.toString())
             val  title = "Trip Request"
             val   message ="You have new trip"
             PushNotification(
-                NotificationData("27.01","81.05", title, message),
+                NotificationData(selectedPlaceEvent, title, message),
                 "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
             ).also {
                 sendNotification(it)
@@ -222,9 +230,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             addMarkerWithPulseAnimation()
-
-
-
+            addPickupMarker()
         }
 
     }
@@ -449,6 +455,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                     val distanceText = distance.getString("text")
 
                     val start_address = legsObject.getString("start_address")
+                    startAddress = start_address
                     val end_address = legsObject.getString("end_address")
 
                     //Value Setting

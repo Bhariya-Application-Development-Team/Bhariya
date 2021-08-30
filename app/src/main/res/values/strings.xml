@@ -32,4 +32,7 @@
     <string name="confirm_pickup">Confirm Pickup</string>
     <string name="meet_driver_here">Meetup Point</string>
     <string name="searching_driver">Finding Driver</string>
+    <string name="accept_pickup">Accept Ride</string>
+    <string name="decline_pickup">Decline Ride</string>
+    <string name="cancel_ride">Cancel Ride</string>
 </resources>

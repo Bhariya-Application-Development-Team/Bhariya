@@ -77,19 +77,19 @@ class NotifyallActivity : AppCompatActivity() {
             Log.e("hellooooooooooooo token", listtoken.toString())
             title = name.text.toString()
             message = texts.text.toString()
-            if (title.isNotEmpty() && message.isNotEmpty() ){
-                for(i in listtoken){
-                    println("############")
-                    println(i)
-                    PushNotification(
-                        NotificationData("27.05","87.01",title, message),
-                        i
-
-                    ).also {
-                        sendNotification(it)
-                    }
-                }
-            }
+//            if (title.isNotEmpty() && message.isNotEmpty() ){
+//                for(i in listtoken){
+//                    println("############")
+//                    println(i)
+//                    PushNotification(
+//                        NotificationData("27.05","87.01",title, message),
+//                        i
+//
+//                    ).also {
+//                        sendNotification(it)
+//                    }
+//                }
+//            }
 
 
         }

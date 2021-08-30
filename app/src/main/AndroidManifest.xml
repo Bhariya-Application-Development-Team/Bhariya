@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sudhir.bhariya">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -25,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".DriverRIdingActivity"
+            android:exported="true" />
         <activity
             android:name=".DriverLoginActivity"
             android:exported="true" />
@@ -71,6 +75,11 @@
             android:name=".RequestDriverActivity"
             android:label="@string/title_activity_request_driver"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".DriverRideActivity"
+            android:label="@string/title_activity_request_driver"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            tools:ignore="MissingClass" />
         <activity android:name=".DriverRegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".EsewaActivity" />
@@ -88,8 +97,7 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".RatingActivity" />
-        <activity android:name=".LoginActivity" />
-<!--        <activity android:name=".FeedbackActivity" />-->
+        <activity android:name=".LoginActivity" /> <!-- <activity android:name=".FeedbackActivity" /> -->
         <activity android:name=".FeedbackFormActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SharedPreferenceActivity" />

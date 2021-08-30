@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         tvlogindriver.setOnClickListener{
-            val intent = Intent(this,DriverLoginActivity::class.java)
+            val intent = Intent(this,DriverRideActivity::class.java)
             startActivity(intent)
         }
 

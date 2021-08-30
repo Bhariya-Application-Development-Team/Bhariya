@@ -93,12 +93,16 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var txt_address : TextView
     private  lateinit var  btnAcceptTrip : Button
     private lateinit var confirm_pickup_layout : View
-    private lateinit var confirm_ride_layout : View
+    private lateinit var accept_ride : View
     private lateinit var accepttrip : View
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
+    private lateinit var btn_meetup : Button
+    private lateinit var btn_begin : Button
+    private lateinit var btn_cancel : Button
 
     var listtoken = ArrayList<String>()
+    var startaddress : String? = null
 
 
 
@@ -135,15 +139,17 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         txt_time = findViewById(R.id.txt_time)
         txt_fare = findViewById(R.id.txt_fare)
         txt_address = findViewById(R.id.txt_address)
+        btn_meetup = findViewById(R.id.btn_meetup)
+        btn_begin = findViewById(R.id.btn_begin)
+        btn_cancel = findViewById(R.id.btn_cancel_ride)
         btn_confirm_ride = findViewById(R.id.btn_confirm_ride)
 
 
-        confirm_pickup_layout = findViewById(R.id.confirm_pickup_layout)
-        confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
+        accept_ride = findViewById(R.id.confirm_pickup_layout)
+        confirm_pickup_layout = findViewById(R.id.confirm_ride_layout)
         fill_maps = findViewById(R.id.fill_maps)
         searching_driver = findViewById(R.id.searching_driver)
-        accepttrip = findViewById(R.id.accepttrip)
-        btnAcceptTrip = findViewById(R.id.btn_acccpet_trip)
+//        btnAcceptTrip = findViewById(R.id.btn_accept_ride)
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
@@ -172,24 +178,47 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun init() {
         iGoogleAPI = RetrofitClient.getInstance()!!.create(IGoogleAPI::class.java)
+        btn_cancel.visibility = View.VISIBLE
+
 
         getData()
 //        //Event
 //        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-        btn_confirm_ride.setOnClickListener{
+//
+//
+//            getData()
+//            accept_ride.visibility = View.GONE
+        btn_confirm_ride.setOnClickListener {
+
+            confirm_pickup_layout.visibility = View.GONE
+            accept_ride.visibility = View.VISIBLE
+            txt_address.text = startaddress
+
+        }
+
+        btn_meetup.setOnClickListener {
+            btn_meetup.setText("Cancel Ride")
+            btn_begin.visibility = View.VISIBLE
+
+            addPickupMarker()
+        }
+        
+        btn_begin.setOnClickListener {
+            Toast.makeText(this, "RIDE HAS BEGUN!", Toast.LENGTH_SHORT).show()
+        }
 
 
-            getData()
+    }
 
-            Log.e("hellooooooooooooo token", listtoken.toString())
-            val  title = "Trip Request"
-            val   message ="You have new trip"
-            PushNotification(
-                NotificationData("27.01","81.05", title, message),
-                "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
-            ).also {
-                sendNotification(it)
-            }
+//            Log.e("hellooooooooooooo token", listtoken.toString())
+//            val  title = "Trip Request"
+//            val   message ="You have new trip"
+//            PushNotification(
+//                NotificationData("27.01","81.05", title, message),
+//                "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
+//            ).also {
+//                sendNotification(it)
+//            }
 //            if (title.isNotEmpty() && message.isNotEmpty() ){
 //                for(i in listtoken){
 //                    println("############3000")
@@ -204,30 +233,8 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 //            }
 
 
-            Log.e("main  ######", title)
-            if(mMap == null) return@setOnClickListener
-            if(selectedPlaceEvent == null) return@setOnClickListener
+//            Log.e("main  ######", title)
 
-            //Map Clearing
-            mMap.clear()
-
-            //Tilting
-
-            val cameraPos = CameraPosition.Builder().target(selectedPlaceEvent!!.origin)
-                .tilt(45f)
-                .zoom(16f)
-                .build()
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
-
-
-
-            addMarkerWithPulseAnimation()
-
-
-
-        }
-
-    }
     private fun sendNotification(notification: PushNotification)= CoroutineScope(Dispatchers.IO).launch {
 
         try{
@@ -273,7 +280,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private fun addMarkerWithPulseAnimation() {
-        confirm_pickup_layout.visibility = View.GONE
+//        confirm_pickup_layout.visibility = View.GONE
         fill_maps.visibility = View.VISIBLE
         searching_driver.visibility = View.VISIBLE
 
@@ -338,6 +345,9 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun addPickupMarker() {
+        mMap.clear()
+        mMap.uiSettings.isZoomControlsEnabled = true
+
         val view = layoutInflater.inflate(R.layout.pickup_info_window, null)
 
         val generator = IconGenerator(this)
@@ -449,6 +459,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
                     val distanceText = distance.getString("text")
 
                     val start_address = legsObject.getString("start_address")
+                    startaddress = start_address
                     val end_address = legsObject.getString("end_address")
 
                     //Value Setting

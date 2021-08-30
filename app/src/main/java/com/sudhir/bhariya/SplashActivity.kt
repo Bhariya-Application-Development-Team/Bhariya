@@ -27,7 +27,9 @@ import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sudhir.bhariya.Repository.UserRepository
+import com.sudhir.bhariya.entity.Driver
 import com.sudhir.bhariya.fragments.DashboardFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var triagain: Button
     private lateinit var myDialog: Dialog
     var pointer: Boolean? = null
-
+    var firebaseToken = ""
     @SuppressLint("ServiceCast")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +80,7 @@ class SplashActivity : AppCompatActivity() {
 
         //Initialized Connectivity Manager
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
 
         //Get network info
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -158,9 +161,19 @@ class SplashActivity : AppCompatActivity() {
                     var respose = repository.checkUser(phonenumber!!, password!!)
                     respose.token
                     println("############")
+
                     println(respose.token)
                     ServiceBuilder.token = "Bearer ${respose.token}"
-                    ref.child("drivers/9852051425/longitude").setValue(respose.token.toString());
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                        if (it.isComplete) {
+                            firebaseToken = it.result
+
+                            println("####################" + firebaseToken+"#####################")
+                        }
+
+
+                    }
+                    ref.child("drivers/9860859091/token").setValue(firebaseToken);
                 }
             }catch (error : Error){
                 println(error.toString())
