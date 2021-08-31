@@ -100,6 +100,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     var listtoken = ArrayList<String>()
     var startAddress : String? = null
+    var origin : LatLng? = null
+    var destination : LatLng? = null
 
     override fun onStart() {
         if(!EventBus.getDefault().isRegistered(this))
@@ -117,7 +119,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onSelectPlaceEvent(event:SelectedPlaceEvent){
-        selectedPlaceEvent = event
+//        selectedPlaceEvent = event
     }
 
 
@@ -159,6 +161,10 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         val intent = intent
+        selectedPlaceEvent = intent.getParcelableExtra("selectedPlaceEvent") as SelectedPlaceEvent?
+        println("########### ORIGIN ################")
+        println(selectedPlaceEvent.toString())
+
         if(intent.extras !=null){
             val worker = intent.getStringExtra("Number_Of_Worker")
             val type = intent.getStringExtra("Vehicle")
@@ -204,6 +210,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                     println("############3000")
                     println(i)
             PushNotification(
+
                 NotificationData(selectedPlaceEvent, title, message),
                 i
             ).also {

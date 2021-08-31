@@ -46,6 +46,14 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var data = "{\"origin\":{\"latitude\":27.717245,\"longitude\":85.32396},\"destination\":{\"latitude\":27.7309123,\"longitude\":85.2955242}}"
+        var originlatitude = data.substringAfter("e\":").substringBefore(',')
+        var originlongitude = data.substringAfter("longitude\":").substringBefore('}')
+        var destinationlatitide = data.substringAfter("destination\":{\"latitude\":").substringBefore(',')
+        data = data.substringAfter("},\"")
+        var destinationlongitude = data.substringAfter("longitude\":").substringBefore("}")
+        println("This is the Origin " + originlatitude + " " + originlongitude + "  " + destinationlatitide + "  " + destinationlongitude)
+
         // Inflate the layout for this fragment
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
 

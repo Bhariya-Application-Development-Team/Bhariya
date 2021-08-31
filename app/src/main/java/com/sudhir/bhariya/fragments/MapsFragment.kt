@@ -2,17 +2,14 @@ package com.sudhir.bhariya.fragments
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.content.SharedPreferences
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.text.method.TextKeyListener.clear
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +19,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.firebase.geofire.GeoFire
-import com.firebase.geofire.GeoLocation
-import com.firebase.geofire.GeoQuery
-import com.firebase.geofire.GeoQueryEventListener
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,15 +26,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.core.RepoManager.clear
 import com.google.firebase.installations.FirebaseInstallations
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -51,7 +42,6 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.R
-import com.sudhir.bhariya.Repository.UserRepository
 import com.sudhir.bhariya.RequestDriverActivity
 import com.sudhir.bhariya.api.Common
 import com.sudhir.bhariya.callback.FirebaseDriverInfoListener
@@ -67,6 +57,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import java.io.IOException
+import java.io.Serializable
 import java.util.*
 import java.util.Collections.list
 import kotlin.collections.ArrayList
@@ -81,7 +72,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MapsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MapsFragment : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener {
+class MapsFragment() : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener, Serializable, Parcelable {
     // TODO: Rename and change types of parameters
     private lateinit var mMap: GoogleMap
     private lateinit var mapFragment: SupportMapFragment
@@ -105,6 +96,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener 
     var fullname : String? = ""
     var phonenumber : String? = ""
     var firebaseToken : String? = ""
+    var selectedPlaceEvent : SelectedPlaceEvent? = null
     private val driverInformation: MutableList<Driver> = mutableListOf()
 
 
@@ -143,6 +135,22 @@ class MapsFragment : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener 
 
     private var param1: String? = null
     private var param2: String? = null
+
+    constructor(parcel: Parcel) : this() {
+        locationRequest = parcel.readParcelable(LocationRequest::class.java.classLoader)!!
+        location = parcel.readParcelable(Location::class.java.classLoader)
+        fullname = parcel.readString()
+        phonenumber = parcel.readString()
+        firebaseToken = parcel.readString()
+        selectedPlaceEvent = parcel.readParcelable(SelectedPlaceEvent::class.java.classLoader)
+        distance = parcel.readDouble()
+        previousLocation = parcel.readParcelable(Location::class.java.classLoader)
+        currentLocation = parcel.readParcelable(Location::class.java.classLoader)
+        firstTime = parcel.readByte() != 0.toByte()
+        cityName = parcel.readString()!!
+        param1 = parcel.readString()
+        param2 = parcel.readString()
+    }
 
 //    override fun onDestroy() {
 //        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
@@ -230,8 +238,14 @@ class MapsFragment : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener 
                         val origin = LatLng(location.latitude,location.longitude)
                         val destination = LatLng(p0.latLng!!.latitude,p0.latLng!!.longitude)
 
-                        startActivity(Intent(requireContext(),RequestDriverActivity::class.java))
+
+                        selectedPlaceEvent = SelectedPlaceEvent(origin, destination)
+                        val intent = Intent(requireContext(),RequestDriverActivity::class.java)
+                        intent.putExtra("selectedPlaceEvent",selectedPlaceEvent as SelectedPlaceEvent)
+                        startActivity(intent)
                         EventBus.getDefault().postSticky(SelectedPlaceEvent(origin,destination))
+
+
 
                     }
             }
@@ -568,6 +582,35 @@ class MapsFragment : Fragment(), OnMapReadyCallback, FirebaseDriverInfoListener 
 //                .flat(true)
 //                .title(Common.buildName(driverGeoModel.driverInfoModel!!.fullname,driverGeoModel.driverInfoModel!!.phonenumber))))
 //    }
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeParcelable(locationRequest, flags)
+        parcel.writeParcelable(location, flags)
+        parcel.writeString(fullname)
+        parcel.writeString(phonenumber)
+        parcel.writeString(firebaseToken)
+        parcel.writeParcelable(selectedPlaceEvent, flags)
+        parcel.writeDouble(distance)
+        parcel.writeParcelable(previousLocation, flags)
+        parcel.writeParcelable(currentLocation, flags)
+        parcel.writeByte(if (firstTime) 1 else 0)
+        parcel.writeString(cityName)
+        parcel.writeString(param1)
+        parcel.writeString(param2)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MapsFragment> {
+        override fun createFromParcel(parcel: Parcel): MapsFragment {
+            return MapsFragment(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MapsFragment?> {
+            return arrayOfNulls(size)
+        }
+    }
 
 
 }

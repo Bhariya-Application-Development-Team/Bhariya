@@ -154,9 +154,18 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
-        selectedPlaceEvent = intent.getSerializableExtra("SelectedPlaceEvent") as? SelectedPlaceEvent
-        println(selectedPlaceEvent.toString())
+        var data = intent.getStringExtra("selectedPlaceEvent")
 
+        var originlatitude = data!!.substringAfter("e\":").substringBefore(',')
+        var originlongitude = data!!.substringAfter("longitude\":").substringBefore('}')
+        var destinationlatitide = data!!.substringAfter("destination\":{\"latitude\":").substringBefore(',')
+        data = data!!.substringAfter("},\"")
+        var destinationlongitude = data!!.substringAfter("longitude\":").substringBefore("}")
+        println("This is the Origin " + originlatitude + " " + originlongitude + "  " + destinationlatitide + "  " + destinationlongitude)
+
+        val origin = LatLng(originlatitude.toDouble(), originlongitude.toDouble())
+        val destination = LatLng(destinationlatitide.toDouble(), destinationlongitude.toDouble())
+        selectedPlaceEvent = SelectedPlaceEvent(origin, destination)
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         init()
 
