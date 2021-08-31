@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import com.esewa.android.sdk.payment.ESewaPayment
+import com.google.android.gms.maps.model.LatLng
 
 
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -56,7 +57,8 @@ class FirebaseService : FirebaseMessagingService() {
 //        println(message.data["latitude"] + "Latitude")
 
 
-
+        println("######### Selected Place Event #########")
+        println(message.data["selectedPlaceEvent"])
         val intent = Intent(this, DriverRideActivity::class.java)
         intent.putExtra("selectedPlaceEvent",message.data["selectedPlaceEvent"])
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
