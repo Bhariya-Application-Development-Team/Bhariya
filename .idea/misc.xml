@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/wangc/OneDrive/Desktop/jio/Bhariya/app/src/main/res/layout/activity_driver_login.xml" value="0.21875" />
+        <entry key="..\:/Users/wangc/OneDrive/Desktop/jio/Bhariya/app/src/main/res/layout/fragment_dashboard.xml" value="0.25364583333333335" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
