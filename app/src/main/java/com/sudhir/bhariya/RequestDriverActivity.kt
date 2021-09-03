@@ -100,6 +100,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
 
     var listtoken = ArrayList<String>()
     var startAddress : String? = null
+    var endAddress : String? = null
     var origin : LatLng? = null
     var destination : LatLng? = null
 
@@ -465,6 +466,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                     val start_address = legsObject.getString("start_address")
                     startAddress = start_address
                     val end_address = legsObject.getString("end_address")
+                    endAddress = end_address
 
                     //Value Setting
 

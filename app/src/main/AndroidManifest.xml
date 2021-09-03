@@ -27,6 +27,9 @@
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RideActivity"
+            android:exported="true" />
+        <activity
             android:name=".DriverRIdingActivity"
             android:exported="true" />
         <activity

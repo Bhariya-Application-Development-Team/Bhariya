@@ -1,9 +1,7 @@
 package com.sudhir.bhariya
 
-import android.Manifest
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -12,7 +10,6 @@ import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Layout
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -22,11 +19,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -38,12 +33,6 @@ import com.google.firebase.database.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.maps.android.ui.IconGenerator
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 import com.sudhir.bhariya.NotificationClass.FirebaseService
 import com.sudhir.bhariya.Remote.IGoogleAPI
 import com.sudhir.bhariya.Remote.RetrofitClient
@@ -66,7 +55,7 @@ import org.w3c.dom.Text
 import java.lang.Exception
 
 
-class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
+class RideActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //Animation for Spinning
     var animator : ValueAnimator? = null
@@ -112,13 +101,6 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var btn_meetup : Button
     private lateinit var btn_begin : Button
     private lateinit var btn_cancel : Button
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    var totaldistance : String? = null
-    var total_fare : String? = null
-    var startPoint : String? = null
-    var endPoint : String? = null
-
-    var data :String? = null
 
     var listtoken = ArrayList<String>()
     var startaddress : String? = null
@@ -172,7 +154,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
-        data = intent.getStringExtra("selectedPlaceEvent")
+        var data = intent.getStringExtra("data")
 
         var originlatitude = data!!.substringAfter("e\":").substringBefore(',')
         var originlongitude = data!!.substringAfter("longitude\":").substringBefore('}')
@@ -218,6 +200,10 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 //
 //            getData()
 //            accept_ride.visibility = View.GONE
+
+        confirm_pickup_layout.visibility = View.GONE
+        accept_ride.visibility = View.VISIBLE
+
         btn_confirm_ride.setOnClickListener {
 
             confirm_pickup_layout.visibility = View.GONE
@@ -228,27 +214,16 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         btn_meetup.setOnClickListener {
-            btn_meetup.setText("Cancel Ride")
+            btn_meetup.setText("End Ride")
             btn_begin.visibility = View.VISIBLE
 
             addPickupMarker()
         }
-        
+
         btn_begin.setOnClickListener {
 //            Toast.makeText(this, "RIDE HAS BEGUN!", Toast.LENGTH_SHORT).show()
+            //Ride Begin after Rider has been found!
 
-        //Ride Begin after Rider has been found!
-
-//            val intent = Intent(this, RideActivity::class.java)
-//            intent.putExtra("data",data)
-//            startActivity(intent)
-
-            btn_begin.setText("End Ride")
-            btn_cancel.visibility = View.GONE
-
-            if(btn_begin.text =="End Ride"){
-                Toast.makeText(this, "Ride Has Ended!", Toast.LENGTH_SHORT).show()
-            }
 
 
         }
@@ -346,7 +321,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
                         .center(origin)
                         .radius(p0!!.animatedValue.toString().toDouble())
                         .strokeColor(Color.WHITE)
-                        .fillColor(ContextCompat.getColor(this@DriverRideActivity,R.color.darker_map)))
+                        .fillColor(ContextCompat.getColor(this@RideActivity,R.color.darker_map)))
 
                 }
             }
@@ -391,7 +366,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun addPickupMarker() {
-//        mMap.clear()
+        mMap.clear()
         mMap.uiSettings.isZoomControlsEnabled = true
 
         val view = layoutInflater.inflate(R.layout.pickup_info_window, null)
@@ -425,74 +400,6 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 //            true
 //
 //        }
-
-        Dexter.withActivity(this as Activity?)
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-                    mMap.isMyLocationEnabled = true
-                    mMap.uiSettings.isMyLocationButtonEnabled = true
-                    mMap.setOnMyLocationClickListener {
-                        fusedLocationProviderClient.lastLocation
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this@DriverRideActivity, e.message, Toast.LENGTH_SHORT).show()
-                            }.addOnSuccessListener { location ->
-                                val userLatLng = LatLng(location.latitude, location.longitude)
-                                mMap.animateCamera(
-                                    CameraUpdateFactory.newLatLngZoom(
-                                        userLatLng,
-                                        18f
-                                    )
-                                )
-                            }
-                        true
-                    }
-
-                    val view = mapFragment.view
-                        ?.findViewById<View>("1".toInt())
-                        ?.parent as View
-
-                    val location = view.findViewById<View>("2".toInt())
-                    val params = location.layoutParams as RelativeLayout.LayoutParams
-                    params.addRule(RelativeLayout.ALIGN_TOP, 0)
-                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE)
-                    params.bottomMargin = 250
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        response.toString() + "- Permission not Granted!",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) {
-                    TODO("Not yet implemented")
-                }
-
-            }).check()
-
-        //Enable Zoom
-        mMap.uiSettings.isZoomControlsEnabled = true
-
-
-        // ### Code for Decorating the style of the Maps Displayed
-
-//        try {
-//            val success = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.))
-//        }catch (e:Resources.NotFoundException{
-//        Log.e("EDMT_ERROR", e.message)
-//    }
-
-        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))    }
-
 
         drawPath(selectedPlaceEvent!! )
 //        val locationButton = (findViewById<View>("1".toInt())!!.parent!! as View)
@@ -583,11 +490,6 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     fare(distanceText.toString(),3)
 
-                    totaldistance = txt_distance.toString()
-                    total_fare = txt_fare.toString()
-                    startPoint = startaddress
-                    endPoint = endPoint
-
                     addOriginMarker(duration,start_address)
                     addDestinationMarker(end_address)
 
@@ -646,9 +548,6 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
             .position(selectedPlaceEvent!!.origin))
 
     }
-
-
-
 
 
 }

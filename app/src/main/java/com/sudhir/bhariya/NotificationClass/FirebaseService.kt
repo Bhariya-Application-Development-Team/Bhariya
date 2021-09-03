@@ -61,6 +61,13 @@ class FirebaseService : FirebaseMessagingService() {
         println(message.data["selectedPlaceEvent"])
         val intent = Intent(this, DriverRideActivity::class.java)
         intent.putExtra("selectedPlaceEvent",message.data["selectedPlaceEvent"])
+//        intent.putExtra("distance",message.data["distance"])
+//        intent.putExtra("total_fare",message.data["total_fare"])
+//        intent.putExtra("startPoint",message.data["startPoint"])
+//        intent.putExtra("endPoint",message.data["endPoint"])
+
+
+
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notificationID = Random.nextInt()
 
