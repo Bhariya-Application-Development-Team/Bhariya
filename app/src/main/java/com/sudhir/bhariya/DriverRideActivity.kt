@@ -117,6 +117,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     var total_fare : String? = null
     var startPoint : String? = null
     var endPoint : String? = null
+    var driverId : String? = null
 
     var data :String? = null
 
