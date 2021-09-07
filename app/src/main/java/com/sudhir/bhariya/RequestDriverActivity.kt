@@ -2,12 +2,14 @@ package com.sudhir.bhariya
 
 import android.animation.Animator
 import android.animation.ValueAnimator
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Layout
 import android.util.AttributeSet
 import android.util.Log
@@ -18,6 +20,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
 import com.bumptech.glide.Glide
@@ -97,6 +100,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var confirm_ride_layout : View
     private lateinit var fill_maps : View
     private lateinit var searching_driver : View
+    private lateinit var btn_cancel : Button
+    var pointer : Boolean? = null
 
     var listtoken = ArrayList<String>()
     var startAddress : String? = null
@@ -139,6 +144,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         txt_address = findViewById(R.id.txt_address)
         btn_confirm_ride = findViewById(R.id.btn_confirm_ride)
         btn_meetup_point = findViewById(R.id.btn_meetup)
+        pointer = true
 
 
 
@@ -146,6 +152,7 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         confirm_ride_layout = findViewById(R.id.confirm_ride_layout)
         fill_maps = findViewById(R.id.fill_maps)
         searching_driver = findViewById(R.id.searching_driver)
+        btn_cancel= findViewById(R.id.btn_cancel_search)
         //Changed code
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
@@ -197,6 +204,28 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         btn_meetup_point.setOnClickListener {
+            if(pointer==false) {
+                Log.e("hellooooooooooooo token", listtoken.toString())
+                val title = "Trip Request"
+                val message = "You have new trip"
+//            PushNotification(
+//                NotificationData(selectedPlaceEvent, title, message),
+//                "fnpb_PrVRtGPopf30WKU3C:APA91bE8AxoxLBFuQwU0Ax1ExoE1bvxIrulEoalh50Fzxx8799ukOO4ifHRfFEE6lycId1dM8sWSoQTbcKyDKRcQWbVdgl2KYGBh4GWs27LidJ8cK40VyYlMSLvYJLGGbjw3JWmDpppX"
+//            ).also {
+//                sendNotification(it)
+//            }
+                if (title.isNotEmpty() && message.isNotEmpty()) {
+                    for (i in listtoken) {
+                        println("############3000")
+                        println(i)
+                        PushNotification(
+
+                            NotificationData(selectedPlaceEvent, title, message),
+                            i
+                        ).also {
+                            sendNotification(it)
+                        }
+                    }
             Log.e("hellooooooooooooo token", listtoken.toString())
             val  title = "Trip Request"
             val   message ="You have new trip"
@@ -216,28 +245,39 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                 sendNotification(it)
             }
                 }
+
+
+
+                Log.e("main  ######", title)
+                if (mMap == null) return@setOnClickListener
+                if (selectedPlaceEvent == null) return@setOnClickListener
+
+                //Map Clearing
+                mMap.clear()
+
+                //Tilting
+
+                val cameraPos = CameraPosition.Builder().target(selectedPlaceEvent!!.origin)
+                    .tilt(45f)
+                    .zoom(16f)
+                    .build()
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
+
+
+
+                addMarkerWithPulseAnimation()
             }
+            else{
+                addPickupMarker()
+                mMap.clear()
+                pointer = false
+            }
+        }
 
-
-            Log.e("main  ######", title)
-            if(mMap == null) return@setOnClickListener
-            if(selectedPlaceEvent == null) return@setOnClickListener
-
-            //Map Clearing
-            mMap.clear()
-
-            //Tilting
-
-            val cameraPos = CameraPosition.Builder().target(selectedPlaceEvent!!.origin)
-                .tilt(45f)
-                .zoom(16f)
-                .build()
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
-
-
-
-            addMarkerWithPulseAnimation()
-            addPickupMarker()
+        btn_cancel.setOnClickListener {
+            Toast.makeText(this, "Ride Has Been Cancelled", Toast.LENGTH_SHORT).show()
+            finish()
+            startActivity(intent)
         }
 
     }
@@ -336,6 +376,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
             ))
         }
         animator!!.start()
+
+        Handler().postDelayed(Runnable { Toast.makeText(this, "Rider Could not be Found!", Toast.LENGTH_SHORT).show(); finish(); startActivity(intent) }, 100000)
     }
 
     override fun onDestroy() {
