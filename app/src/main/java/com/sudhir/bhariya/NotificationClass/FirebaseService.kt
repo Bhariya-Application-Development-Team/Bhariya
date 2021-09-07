@@ -59,8 +59,21 @@ class FirebaseService : FirebaseMessagingService() {
 
         println("######### Selected Place Event #########")
         println(message.data["selectedPlaceEvent"])
+        println("#######################Token##############")
+        println(message.data)
+        println("##############phonenumber################")
+        println(message.data["phonenumber"])
+        println(message.data["token"])
+
+
+//        if(message.data["title"] == "Trip Request"){
+//
+//        }
+
+
         val intent = Intent(this, DriverRideActivity::class.java)
         intent.putExtra("selectedPlaceEvent",message.data["selectedPlaceEvent"])
+        intent.putExtra("token", message.data["token"])
 //        intent.putExtra("distance",message.data["distance"])
 //        intent.putExtra("total_fare",message.data["total_fare"])
 //        intent.putExtra("startPoint",message.data["startPoint"])

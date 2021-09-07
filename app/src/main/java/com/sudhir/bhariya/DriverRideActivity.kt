@@ -117,6 +117,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     var total_fare : String? = null
     var startPoint : String? = null
     var endPoint : String? = null
+    var tokenuser : String? = null
 
     var data :String? = null
 
@@ -173,7 +174,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("drivers")
         data = intent.getStringExtra("selectedPlaceEvent")
-
+        tokenuser = intent.getStringExtra("token").toString()
         var originlatitude = data!!.substringAfter("e\":").substringBefore(',')
         var originlongitude = data!!.substringAfter("longitude\":").substringBefore('}')
         var destinationlatitide = data!!.substringAfter("destination\":{\"latitude\":").substringBefore(',')
@@ -183,6 +184,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val origin = LatLng(originlatitude.toDouble(), originlongitude.toDouble())
         val destination = LatLng(destinationlatitide.toDouble(), destinationlongitude.toDouble())
+
         selectedPlaceEvent = SelectedPlaceEvent(origin, destination)
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
         init()
@@ -211,25 +213,47 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         btn_cancel.visibility = View.VISIBLE
 
 
-        getData()
+//        getData()
 //        //Event
 //        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 //
-//
+
+        Log.e("Usertoken", tokenuser.toString())
+        Log.e("this is token", tokenuser.toString())
 //            getData()
 //            accept_ride.visibility = View.GONE
         btn_confirm_ride.setOnClickListener {
-
+            val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
+            val phone = sharedPreference.getString("phonenumber", "").toString()
+            val title = "Ride Confirmation."
+            val message = "Your Request has been confirmed."
+            PushNotification(
+                NotificationData(selectedPlaceEvent, title, message,phone, tokenuser.toString()),
+                tokenuser.toString()
+            ).also {
+                sendNotification(it)
+            }
             confirm_pickup_layout.visibility = View.GONE
             accept_ride.visibility = View.VISIBLE
             btn_meetup.setText("Cancel Ride")
             txt_address.text = startaddress
+
 
         }
 
         btn_meetup.setOnClickListener {
             btn_meetup.setText("Cancel Ride")
             btn_begin.visibility = View.VISIBLE
+            val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
+            val phone = sharedPreference.getString("phonenumber", "").toString()
+            val title = "Ride Confirmation."
+            val message = "Your Request has been confirmed."
+            PushNotification(
+                NotificationData(selectedPlaceEvent, title, message,phone, tokenuser.toString()),
+                tokenuser.toString()
+            ).also {
+                sendNotification(it)
+            }
 
             addPickupMarker()
         }
@@ -255,6 +279,11 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
+
+
+
+
+
 
 //            Log.e("hellooooooooooooo token", listtoken.toString())
 //            val  title = "Trip Request"
