@@ -226,6 +226,24 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                             sendNotification(it)
                         }
                     }
+            Log.e("hellooooooooooooo token", listtoken.toString())
+            val  title = "Trip Request"
+            val   message ="You have new trip"
+            val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
+            val phone = sharedPreference.getString("phonenumber", "").toString()
+            val firebaseToken = sharedPreference.getString("firebaseToken", "").toString()
+            if (title.isNotEmpty() && message.isNotEmpty() ){
+                for(i in listtoken){
+                    println("############3000")
+                    println(i)
+                    println(firebaseToken)
+            PushNotification(
+
+                NotificationData(selectedPlaceEvent, title, message, phone,firebaseToken),
+                i
+            ).also {
+                sendNotification(it)
+            }
                 }
 
 
@@ -305,6 +323,8 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
     }
+
+
 
 
     private fun addMarkerWithPulseAnimation() {

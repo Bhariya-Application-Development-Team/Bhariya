@@ -246,9 +246,10 @@ class DriverLoginActivity : AppCompatActivity() {
         }
     }
 
-    public fun UpdateDriverToken() {
-        val phonenumber = "9852051425"
+   fun UpdateDriverToken() {
+        val phonenumber = etphonenumber.text.toString()
 //        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if (it.isComplete) {
                 firebaseToken = it.result
@@ -256,6 +257,7 @@ class DriverLoginActivity : AppCompatActivity() {
                 reference.child(phonenumber).child("token").setValue(firebaseToken)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT)
+
                     }.addOnFailureListener  {
                         Toast.makeText(this, "Failed to Update", Toast.LENGTH_LONG)
                     }
