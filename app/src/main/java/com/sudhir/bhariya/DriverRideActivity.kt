@@ -257,11 +257,11 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
             addPickupMarker()
         }
-        
+
         btn_begin.setOnClickListener {
 //            Toast.makeText(this, "RIDE HAS BEGUN!", Toast.LENGTH_SHORT).show()
 
-        //Ride Begin after Rider has been found!
+            //Ride Begin after Rider has been found!
 
 //            val intent = Intent(this, RideActivity::class.java)
 //            intent.putExtra("data",data)
@@ -271,6 +271,16 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
             btn_cancel.visibility = View.GONE
 
             if(btn_begin.text =="End Ride"){
+
+                val title = "Ride Completed!"
+                val message = "Your Ride has been Completed!"
+                PushNotification(
+                    NotificationData(selectedPlaceEvent, title, message,"endride " + total_fare, tokenuser.toString()),
+                    tokenuser.toString()
+                ).also {
+                    sendNotification(it)
+                }
+
                 Toast.makeText(this, "Ride Has Ended!", Toast.LENGTH_SHORT).show()
             }
 
@@ -614,6 +624,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     totaldistance = txt_distance.toString()
                     total_fare = txt_fare.toString()
+
                     startPoint = startaddress
                     endPoint = endPoint
 

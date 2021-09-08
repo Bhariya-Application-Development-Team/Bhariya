@@ -208,13 +208,13 @@ class RequestDriverActivity : AppCompatActivity(), OnMapReadyCallback {
                     println("############3000")
                     println(i)
                     println(firebaseToken)
-            PushNotification(
+                    PushNotification(
 
-                NotificationData(selectedPlaceEvent, title, message, phone,firebaseToken),
-                i
-            ).also {
-                sendNotification(it)
-            }
+                        NotificationData(selectedPlaceEvent, title, message, phone,firebaseToken),
+                        i
+                    ).also {
+                        sendNotification(it)
+                    }
                 }
             }
 

@@ -27,6 +27,9 @@
         android:theme="@style/Theme.Bhariya"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".UserRideBegin"
+            android:exported="true" />
+        <activity
             android:name=".RideActivity"
             android:exported="true" />
         <activity
@@ -74,6 +77,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".MyBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.UPDATE_STATUS" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".RequestDriverActivity"
             android:label="@string/title_activity_request_driver"
