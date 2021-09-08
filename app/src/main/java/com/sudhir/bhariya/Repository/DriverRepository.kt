@@ -25,6 +25,12 @@ class DriverRepository : MyApiRequest() {
         }
     }
 
+    suspend fun retrieveDriver(phonenumber: String): DriverResponse {
+        return apiRequest {
+            driverApi.retrieveDriver(phonenumber)
+        }
+    }
+
     suspend fun  viewDriver(): DriverResponse {
         return apiRequest {
             driverApi.viewDriver(ServiceBuilder.token!!)

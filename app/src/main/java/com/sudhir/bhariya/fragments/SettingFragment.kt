@@ -74,7 +74,7 @@ class SettingFragment : Fragment() {
             val editor = sharedPreference?.edit()
             if (editor != null) {
                 editor.remove("phonenumber")
-
+                editor.remove("firebaseToken")
                 editor.remove("password")
                 editor.remove("token")
                 editor.commit()

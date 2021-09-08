@@ -21,10 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.sudhir.bhariya.DriverRideActivity
-import com.sudhir.bhariya.MainActivity
-import com.sudhir.bhariya.NotifyallActivity
-import com.sudhir.bhariya.R
+import com.sudhir.bhariya.*
 import com.sudhir.bhariya.fragments.DriverFragment
 import com.sudhir.bhariya.fragments.ProfileFragment
 import org.json.JSONObject
@@ -59,34 +56,97 @@ class FirebaseService : FirebaseMessagingService() {
 
         println("######### Selected Place Event #########")
         println(message.data["selectedPlaceEvent"])
-        val intent = Intent(this, DriverRideActivity::class.java)
-        intent.putExtra("selectedPlaceEvent",message.data["selectedPlaceEvent"])
+        println("#######################Token##############")
+        println(message.data)
+        println("##############phonenumber################")
+        println(message.data["phonenumber"])
+        println(message.data["token"])
+
+
+//        if(message.data["title"] == "Trip Request"){
+//
+//        }
+
+        if (message.data["phonenumber"] != "") {
+            val intent = Intent(this, UserRideBegin::class.java)
+            intent.putExtra("phonenumber", message.data["phonenumber"])
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationID = Random.nextInt()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel(notificationManager)
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(message.data["title"])
+                .setContentText(message.data["message"])
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
+
+            notificationManager.notify(notificationID, notification)
+        } else if(message.data["phonenumber"] == "endride"){
+
+            val intent = Intent(this, UserRideBegin::class.java)
+            intent.putExtra("phonenumber", message.data["phonenumber"])
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationID = Random.nextInt()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel(notificationManager)
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(message.data["title"])
+                .setContentText(message.data["message"])
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
+
+            notificationManager.notify(notificationID, notification)
+
+        } else {
+
+            val intent = Intent(this, DriverRideActivity::class.java)
+            intent.putExtra("selectedPlaceEvent", message.data["selectedPlaceEvent"])
+            intent.putExtra("token", message.data["token"])
 //        intent.putExtra("distance",message.data["distance"])
 //        intent.putExtra("total_fare",message.data["total_fare"])
 //        intent.putExtra("startPoint",message.data["startPoint"])
 //        intent.putExtra("endPoint",message.data["endPoint"])
 
 
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationID = Random.nextInt()
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notificationID = Random.nextInt()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 createNotificationChannel(notificationManager)
             }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
+            val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_ONE_SHOT)
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(message.data["title"])
-            .setContentText(message.data["message"])
-            .setSmallIcon(R.drawable.logo)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .build()
+            val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(message.data["title"])
+                .setContentText(message.data["message"])
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .build()
 
-        notificationManager.notify(notificationID, notification)
+            notificationManager.notify(notificationID, notification)
+        }
     }
 
 

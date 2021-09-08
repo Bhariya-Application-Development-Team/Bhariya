@@ -225,6 +225,7 @@ class LoginActivity : AppCompatActivity() {
                             .putExtra("fullname", user.Fullname.toString())
                             .putExtra("phonenumber", phonenumber)
                             .putExtra("password", password)
+                            .putExtra("firebaseToken", firebaseToken)
                     )
                     finish()
                 } else {
@@ -249,14 +250,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    public fun UpdateUserToken(){
-        val phonenumber = "9852051425"
+        fun UpdateUserToken(){
+        val phonenumber = etphonenumber.text.toString()
         FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+            val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             if(it.isComplete){
                 firebaseToken = it.result
+                val editor = sharedPreference.edit()
+                editor.putString("firebaseToken",firebaseToken)
                 Log.e("My token is ", firebaseToken)
                 reference.child(phonenumber).child("token").setValue(firebaseToken).addOnSuccessListener {
+
                     Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT)
                 }.addOnFailureListener {
                     Toast.makeText(this, "Failed to Update", Toast.LENGTH_LONG)

@@ -18,6 +18,12 @@ interface  DriverAPI {
         @Body driver: Driver
     ): Response<DriverLoginResponse>
 
+    @FormUrlEncoded
+    @POST("/driver/retrieve")
+    suspend fun retrieveDriver(
+        @Field("Phonenumber") phonenumber: String
+    ) : Response<DriverResponse>
+
     @GET("driver/single/")
     suspend fun viewDriver(
         @Header("Authorization") token: String,
