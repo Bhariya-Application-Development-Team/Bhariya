@@ -24,6 +24,9 @@ class UserRideBegin : AppCompatActivity() {
     var driver_phone_number : String? = null
     var phonenumber : String? = null
     var total_fare : String? = null
+    var startaddress : String? = null
+    var endaddress : String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class UserRideBegin : AppCompatActivity() {
         txt_driver_name = findViewById(R.id.txt_driver_name)
         txt_driver_phonenumber = findViewById(R.id.txt_driver_phonenumber)
         layout_begin = findViewById(R.id.layout_ride_started)
-        layout_end = findViewById(R.id.ride_ended)
+        layout_end = findViewById(R.id.layout_endride)
         btn_esewa = findViewById(R.id.btn_esewa)
         btn_cash = findViewById(R.id.btn_cash)
 
@@ -42,25 +45,47 @@ class UserRideBegin : AppCompatActivity() {
 
         }
         val intent = intent
-        phonenumber = intent.getStringExtra("phonenumber")
-        phonenumber = "98"
-        var fare = phonenumber
-        fare = fare!!.substringAfter("endride ")
-        phonenumber = phonenumber!!.substringBefore(" ")
+        phonenumber = intent.getStringExtra("phonenumber").toString()
+//        phonenumber = "9860859091"
+//        phonenumber = "endride 2345 startpoint:balaju endpoint:vanasthali phonenumber:9812"
+        var fare = ""
+        fare = fare!!.substringAfter("endride ").substringBefore(" ")
+        phonenumber = phonenumber!!.substringAfter("phonenumber:")
+        startaddress = phonenumber!!.substringAfter("startpoint:").substringBefore(" ")
+        endaddress = phonenumber!!.substringAfter("endpoint:").substringBefore(" ")
+        if(phonenumber!=""){
+            layout_end.visibility = View.VISIBLE
+            layout_begin.visibility = View.GONE
+        }
+        else{
+            layout_begin.visibility = View.VISIBLE
+            layout_end.visibility = View.GONE
+        }
+        println("Phone number " + phonenumber + "fare $fare startaddress: $startaddress endaddress $endaddress")
 
         println("Driver Phone Number")
         println(driver_name)
-        if(phonenumber == "endride"){
-            layout_begin.visibility = View.GONE
-            layout_end.visibility = View.VISIBLE
-            btn_esewa.setText(fare)
-        }
+//        if(phonenumber == "endride"){
+//            layout_begin.visibility = View.GONE
+//            layout_end.visibility = View.VISIBLE
+//            btn_esewa.setText(fare)
+//        }
 
 
 
         get_driver(phonenumber!!)
 
         btn_esewa.setOnClickListener {
+            val intent = Intent()
+            startActivity(
+                Intent(
+                    this@UserRideBegin,
+                    EsewaActivity::class.java
+                )
+                    .putExtra("phonennumber", phonenumber)
+                    .putExtra("startpoint", startaddress)
+                    .putExtra("endpoint", endaddress)
+                    .putExtra("fare", fare))
 
         }
 
@@ -89,7 +114,7 @@ class UserRideBegin : AppCompatActivity() {
                     driver_name = response.Fullname.toString()
                     driver_phone_number = response.PhoneNumber.toString()
                     runOnUiThread {
-                        this@UserRideBegin.txt_driver_name.setText(response.Fullname.toString())
+                        txt_driver_name.setText(response.Fullname.toString())
                         txt_driver_phonenumber.setText(response.PhoneNumber.toString())
                     }
                     println("####### Response #######")

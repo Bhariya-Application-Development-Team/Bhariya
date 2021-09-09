@@ -6,6 +6,6 @@ data class NotificationData (
     private var selectedPlaceEvent : SelectedPlaceEvent?=null,
     val title: String,
     val message : String,
-    val phonenumber : String ="9823349901",
+    val phonenumber : String,
     val token : String,
         )

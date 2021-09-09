@@ -117,12 +117,14 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
     var total_fare : String? = null
     var startPoint : String? = null
     var endPoint : String? = null
+    var driverId : String? = null
     var tokenuser : String? = null
 
     var data :String? = null
 
     var listtoken = ArrayList<String>()
     var startaddress : String? = null
+    var phonenumber : String? = null
 
 
 
@@ -187,6 +189,8 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
         selectedPlaceEvent = SelectedPlaceEvent(origin, destination)
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+        var sharedPreference = SharedPreferenceActivity()
+        phonenumber = sharedPreference.phonenumber
         init()
 
 
@@ -242,7 +246,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         btn_meetup.setOnClickListener {
-            btn_meetup.setText("Cancel Ride")
+            btn_meetup.setText("Toggle Ride")
             btn_begin.visibility = View.VISIBLE
             val sharedPreference = getSharedPreferences("MyPreference", MODE_PRIVATE)
             val phone = sharedPreference.getString("phonenumber", "").toString()
@@ -274,8 +278,15 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val title = "Ride Completed!"
                 val message = "Your Ride has been Completed!"
+//                PushNotification(
+//                    NotificationData(selectedPlaceEvent, title, message,("endride " + total_fare + " startpoint:" + startPoint + " endpoint:" + endPoint + " phonenumber:" + phonenumber), tokenuser.toString()),
+//                    tokenuser.toString()
+//                ).also {
+//                    sendNotification(it)
+//                }
+
                 PushNotification(
-                    NotificationData(selectedPlaceEvent, title, message,"endride " + total_fare, tokenuser.toString()),
+                    NotificationData(selectedPlaceEvent, title, message,"endride", tokenuser.toString()),
                     tokenuser.toString()
                 ).also {
                     sendNotification(it)
@@ -626,7 +637,7 @@ class DriverRideActivity : AppCompatActivity(), OnMapReadyCallback {
                     total_fare = txt_fare.toString()
 
                     startPoint = startaddress
-                    endPoint = endPoint
+                    endPoint = end_address
 
                     addOriginMarker(duration,start_address)
                     addDestinationMarker(end_address)

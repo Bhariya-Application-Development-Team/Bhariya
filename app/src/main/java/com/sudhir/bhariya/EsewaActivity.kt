@@ -18,30 +18,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.util.*
 
 class EsewaActivity : AppCompatActivity() {
     private lateinit var pay: ImageButton
     private var REQUEST_CODE_PAYMENT: Int = 1
     private var txnRefId = " "
-    private var Source = " "
-    private var Destination = " "
+    private var Source = "Balaju"
+    private var Destination = "Maitidevi"
     private var Date = " "
-    private var Cost = " "
-    private var Vehicle = " "
-    private var DriverId = "60eed1c6f17a2e328c7d5eb0"
+    private var Cost = "227"
+    private var Vehicle = "Truck"
+    private var DriverId = "9852051425"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_esewa)
-
+        val pid = 100000 + Random().nextInt(900000)
         pay = findViewById(R.id.pay)
-
+//        DriverId = intent.getStringExtra("phonenumber").toString()
+//        Cost = intent.getStringExtra("fare").toString()
+        Log.e("Amount", Cost)
+        Log.e("id", pid.toString())
+//        Source = intent.getStringExtra("startpoint").toString()
+//        Destination = intent.getStringExtra("endpoint").toString()
         pay.setOnClickListener {
             val eSewaPayment: ESewaPayment = ESewaPayment(
-                "900",
-                "Truck Heavy",
-                "abjakjsb121",
+                "${Cost.toString()}",
+                "Truck",
+                "${pid.toString()}"+"ESEWA",
                 "https://60efeb43a276b8d5e8ceaa9f--jolly-torvalds-099307.netlify.app/"
             )
 
@@ -66,15 +72,14 @@ class EsewaActivity : AppCompatActivity() {
                 val result: JSONObject = jsonObject.getJSONObject("transactionDetails")
 
                 Date  = result.getString("date")
-                Source = "Ratopool"
-                Destination = "Putalisadak"
                 Cost = jsonObject.optString("totalAmount")
                 Vehicle = jsonObject.optString("productName")
                 txnRefId = result.getString("referenceId").toString()
 //                val name = result.getString("productName").toString()
 
                 Log.e("main", "Sudhir travelled from $Source to $Destination utilizing $Cost  on $Date and his referenceId $txnRefId by $Vehicle")
-                    Toast.makeText(this, "Payment Successfully Done.", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this,FeedbackFormActivity::class.java))
+                Toast.makeText(this, "Payment Successfully Done.", Toast.LENGTH_LONG).show()
 
                saveTrip()
 

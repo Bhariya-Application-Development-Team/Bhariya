@@ -78,6 +78,7 @@
 
         <TextView
             android:id="@+id/ride_ended"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your Ride Has Ended! "

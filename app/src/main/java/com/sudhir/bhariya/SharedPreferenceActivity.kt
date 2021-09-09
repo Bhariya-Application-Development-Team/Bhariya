@@ -12,6 +12,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
     var fullname = ""
     var token = ""
     var firebaseToken =""
+    var pointer = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +24,10 @@ class SharedPreferenceActivity : AppCompatActivity() {
         password = intent.getStringExtra("password").toString()
         firebaseToken = intent.getStringExtra("firebaseToken").toString()
 
+
         save()
         get()
+
 
 
     }
@@ -36,6 +39,7 @@ class SharedPreferenceActivity : AppCompatActivity() {
         editor.putString("fullname",fullname)
         editor.putString("token",token)
         editor.putString("firebaseToken", firebaseToken)
+        editor.putString("pointer",pointer)
         editor.apply()
         Toast.makeText(this@SharedPreferenceActivity, "Saved Data!", Toast.LENGTH_SHORT).show()
     }
@@ -46,13 +50,14 @@ class SharedPreferenceActivity : AppCompatActivity() {
         password = sharedPreference.getString("password", "").toString()
         token = sharedPreference.getString("token","").toString()
         firebaseToken = sharedPreference.getString("firebaseToken", "").toString()
+        pointer = sharedPreference.getString("pointer","").toString()
         Toast.makeText(this, "LOGIN SUCESSFUL", Toast.LENGTH_SHORT).show()
 
-        startActivity(
-            Intent(
-                this@SharedPreferenceActivity, MainActivity::class.java
+            startActivity(
+                Intent(
+                    this@SharedPreferenceActivity, MainActivity::class.java
+                )
             )
-        )
 
     }
 }
