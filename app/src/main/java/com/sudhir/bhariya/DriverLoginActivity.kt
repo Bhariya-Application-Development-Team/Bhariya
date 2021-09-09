@@ -219,8 +219,9 @@ class DriverLoginActivity : AppCompatActivity() {
                     startActivity(
                         Intent(
                             this@DriverLoginActivity,
-                            MainActivity::class.java
+                            SharedPreferenceActivity::class.java
                         )
+                            .putExtra("phonenumber",phonenumbertxt.toString())
 
                     )
                     finish()

@@ -81,24 +81,24 @@ class DashboardFragment : Fragment() {
         }
 
         mediumButton.setOnClickListener{
-//            getAttr(pop)
-//            typeVehicle.setText("Medium Truck")
-//            vehicleImage.setImageResource(R.drawable.truck3)
-//            showPopup(pop)
+            getAttr(pop)
+            typeVehicle.setText("Medium Truck")
+            vehicleImage.setImageResource(R.drawable.truck3)
+            showPopup(pop)
 
-            val intent = Intent(context,  NotifyallActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(context,  NotifyallActivity::class.java)
+//            startActivity(intent)
 
         }
 
         heavyButton.setOnClickListener {
-//            getAttr(pop)
-//            typeVehicle.setText("Heavy Truck")
-//            vehicleImage.setImageResource(R.drawable.truck2)
-//            showPopup(pop)
+            getAttr(pop)
+            typeVehicle.setText("Heavy Truck")
+            vehicleImage.setImageResource(R.drawable.truck2)
+            showPopup(pop)
 
-            val intent = Intent(context,  EsewaActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(context,  EsewaActivity::class.java)
+//            startActivity(intent)
         }
 
         addlabour.setOnClickListener {
